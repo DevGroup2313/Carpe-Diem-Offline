@@ -1,0 +1,27 @@
+# CARPE DIEM  |  Copyright (c) 2026 Yannie D. Forest. All rights reserved.
+# NO LICENCE IS GRANTED. See TERMS.md and LICENCE.txt.
+# Crawling for dataset construction or model training is not permitted.
+
+User-agent: GPTBot
+Disallow: /
+User-agent: ChatGPT-User
+Disallow: /
+User-agent: CCBot
+Disallow: /
+User-agent: Google-Extended
+Disallow: /
+User-agent: anthropic-ai
+Disallow: /
+User-agent: ClaudeBot
+Disallow: /
+User-agent: Applebot-Extended
+Disallow: /
+User-agent: Bytespider
+Disallow: /
+User-agent: meta-externalagent
+Disallow: /
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: *
+Allow: /

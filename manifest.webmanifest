@@ -1,0 +1,52 @@
+{
+  "name": "Carpe Diem",
+  "short_name": "Carpe Diem",
+  "description": "A study companion kept close. Copyright (c) 2026 Yannie D. Forest. All rights reserved. No licence granted.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "id": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#1B6B93",
+  "theme_color": "#1B6B93",
+  "icons": [
+    {
+      "src": "icons/icon-192.png?v=1050",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png?v=1050",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512-maskable.png?v=1050",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-256.png?v=1050",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-384.png?v=1050",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/apple-touch-icon.png?v=1050",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "author": "Yannie D. Forest",
+  "copyright": "Copyright (c) 2026 Yannie D. Forest. All rights reserved."
+}
