@@ -4,23 +4,11 @@ engineering or commercial use without the author's written permission.
 See LICENCE.txt. Every distributed copy carries a build marker.
 --------------------------------------------------------------------------
 
-# Carpe Diem — the committee demo, as a website
+# Carpe Diem: the committee demonstration, as a website
 
 **Build 1051, 12 October 2026.** The About panel ends with "1051 · 528171051 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
 
-**New in build 1051.** This demonstration carries no writing model: the optional model that writes
-Scriba's summaries in the owner's own copy is left out here, with its engines and downloads, so no
-model in this demonstration writes, summarises or interprets text, and Scriba says so plainly if a
-summary is asked for. A copy of this page saved from a browser preview had picked up a script the app
-never had; it is gone. Opening the page and moving through every section makes no request beyond its
-own folder, as checked below. Only Scriba's speech tools (an open speech recognition model, Whisper or
-Moonshine, that transcribes a recording, and two small models that tell speakers apart) and the PDF
-reader it uses for slides are fetched, once and only when first asked for, from public repositories
-(the engine is about 22 MB, a speech model 33 to 150 MB); after that they work with no connection. Tabula's and
-Abacus's ribbons move sideways with any mouse or trackpad. Scriba says plainly what "no microphone"
-means. A room can open in its own light window (the ↗ key), sharing one desk of notes, thoughts,
-reminders and Clepsydra with the main window. The tab icon is the dark navy and gold seal whenever the
-page or the device is dark, in Safari as well. Every page carries the number 1051.
+**New in build 1051.** The demonstration names itself for the committees, colleges and scholarship panels who will open it: the page title, the loading screen, the introduction, the footer and the badge at the lower left all read "the committee demonstration", in English and in French. The introduction keeps its opening and says that the demonstration accompanies its author’s research application and shows the study instrument described in its appendix. It offers three ways in: a short tour for assessors of about ten minutes, which ends with three checks an assessor can make, the full tour, and the desk to explore. "Build your own" has left the introduction and waits in the Guidebook. The tour says what this demonstration carries (the first term, half of its modules whole, four of the twelve Ascensus courses), its chapter pauses and its last card name every room, and its cards no longer slip past the top of the screen. The writing model is not part of this edition, so Scriba offers no summaries here. The service worker below is unchanged apart from its name.
 
 **Earlier, in build 1050.** Inside the Author Studio, the Forge's side buttons are drawn as Carpe Diem's own:
 no heavy shadow, a small lift under the pointer, the hourglass and the note turning now and then and the
@@ -163,17 +151,19 @@ build indefinitely. Each build you receive already has this set correctly.
 
 ## Verified on this build
 
-Served over http and checked in a browser (Chromium) on 13 October 2026:
+Served over http and checked in a browser (Chromium) on 14 October 2026:
 
 - Service worker registers and reaches the *activated* state.
-- All twenty-five assets cached, under `carpe-diem-demo-committee-v202610121051`.
+- All twenty-five assets cached (the icons also at their new address), under `carpe-diem-demo-committee-v202610121051`.
 - **Offline reload works.** With the network switched off, the page reloads from
-  the cache and shows build 1051.
+  the cache and the introduction screen renders.
 - The page's build record reads 2026-10-12 · 1051 · 528171051 · Committee demo.
-- **No request leaves the computer** on opening or while every section was visited:
-  every request the page made went to its own folder. (Scriba's speech tools and
-  its PDF reader, when first asked for, fetch their files once, as described above;
-  they were not started in this check.)
-- The writing model is absent: its panel and its engines are not in the page, and
-  Scriba reports that this copy carries none.
-- Zero page errors.
+- Backup is shown.
+- Zero page errors on opening, through the rooms, and through the short tour.
+
+Not checked here: Safari on a real iPhone or iPad.
+
+Apart from the service worker fetching these files, the application reaches
+the network only when the visitor asks it to: Scriba fetching its speech model
+the first time it is used, or Fontes looking a source up by DOI or ISBN.
+Nothing is sent anywhere by itself.
