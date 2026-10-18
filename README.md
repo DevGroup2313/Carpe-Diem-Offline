@@ -135,7 +135,9 @@ guided tour one press away:
   demonstration (carrying Carpe Diem alone) and Ingenium 5.5.
 
 Each is a folder of plain files, hosted as it is (GitHub Pages serves them at `.../offline-project/` and
-`.../offline-project-without-inkwell/`). Each app keeps its work in the visitor's browser under a name of its own.
+`.../offline-project-without-inkwell/`). The site's icon in the browser tab, the address bar, bookmarks and a phone's
+home screen is the Offline Project's master shield (`assets/icons`). Each app keeps its work in the visitor's browser
+under a name of its own.
 The app's keeper (`sw.js`) leaves both folders alone, so a new build of the site is never held back by it.
 
 ---
