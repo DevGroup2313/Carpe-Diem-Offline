@@ -128,8 +128,8 @@ laptop, and once loaded it works with no connection at all.
 Two folders hold the Offline Project's own website, which opens each app live in the visitor's browser, with its
 guided tour one press away:
 
-- `offline-project/`: the four apps. Carpe Diem's Committee demo (1056), the Forge's demonstration (638, which
-  shows every step of making an app and makes none), Ingenium 5.6 and Inkwell 7.48, with Inkwell's word lists,
+- `offline-project/`: the four apps. Carpe Diem's Committee demo (1056), the Forge's demonstration (639, which
+  shows every step of making an app and makes none, and has Fabrica, its own GitHub with no model), Ingenium 5.6 and Inkwell 7.48, with Inkwell's word lists,
   citation styles and PDF reader in `apps/vendor`.
 - `offline-project-without-inkwell/`: the same site with three apps: Carpe Diem's Committee demo, the Forge's
   demonstration (carrying Carpe Diem alone) and Ingenium 5.6.
