@@ -129,10 +129,10 @@ Two folders hold the Offline Project's own website, which opens each app live in
 guided tour one press away:
 
 - `offline-project/`: the four apps. Carpe Diem's Committee demo (1056), the Forge's demonstration (638, which
-  shows every step of making an app and makes none), Ingenium 5.5 and Inkwell 7.48, with Inkwell's word lists,
+  shows every step of making an app and makes none), Ingenium 5.6 and Inkwell 7.48, with Inkwell's word lists,
   citation styles and PDF reader in `apps/vendor`.
 - `offline-project-without-inkwell/`: the same site with three apps: Carpe Diem's Committee demo, the Forge's
-  demonstration (carrying Carpe Diem alone) and Ingenium 5.5.
+  demonstration (carrying Carpe Diem alone) and Ingenium 5.6.
 
 Each is a folder of plain files, hosted as it is (GitHub Pages serves them at `.../offline-project/` and
 `.../offline-project-without-inkwell/`). The site's icon in the browser tab, the address bar, bookmarks and a phone's
