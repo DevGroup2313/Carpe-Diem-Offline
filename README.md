@@ -6,14 +6,19 @@ See LICENCE.txt. Every distributed copy carries a build marker.
 
 # Carpe Diem — the committee demo, as a website
 
-**Build 1054, 18 October 2026.** The About panel ends with "1054 · 528171054 · Committee demo".
+**Build 1055, 18 October 2026.** The About panel ends with "1055 · 528171055 · Committee demo".
 
-**New in build 1054.** The tour says what Tabula's autosave now keeps: a new card, in English and French,
+**New in build 1055.** Tabula holds a thesis of 100,000 words, by Inkwell 7.44's recipe: a keystroke is
+answered at once, because only the pages an edit moves are laid out again, and a long document is kept in the
+browser's larger store (IndexedDB), so it is not lost when it outgrows the small one. The tour's card on autosave
+says so, in English and French. The mini Forge edits Carpe Diem alone: its Editor no longer offers the other apps.
+
+**New in build 1054, the build before.** The tour says what Tabula's autosave now keeps: a new card, in English and French,
 follows Real files, saved to your device, and explains that the footnotes, endnotes, bibliography, header, footer
 and contents travel with the text into autosave, into a floating window and back after a restart, and that Tabula
 says so on the page, with a .docx or PDF copy to hand, if a document ever grows past what autosave can keep.
 
-**New in build 1053, the build before.** Tabula keeps every part of a document when it saves itself or moves between windows: the
+**New in build 1053.** Tabula keeps every part of a document when it saves itself or moves between windows: the
 footnotes, endnotes, bibliography, header, footer and contents now travel with the text into autosave, into a
 floating window or a window of its own, and back after a restart (before this, only the text did, and the notes
 were lost). If a document ever grows past what autosave can keep on the device, Tabula says so on the page and offers
