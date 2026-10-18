@@ -6,9 +6,22 @@ See LICENCE.txt. Every distributed copy carries a build marker.
 
 # Carpe Diem — the committee demo, as a website
 
-**Build 1051, 12 October 2026.** The About panel ends with "1051 · 528171051 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
+**Build 1052, 18 October 2026.** The About panel ends with "1052 · 528171052 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
 
-**New in build 1051.** This demonstration carries no writing model: the optional model that writes
+**New in build 1052.** The supports have a page of their own, **Focus** (Concentration in French), on the bar beside Home,
+laid out as Ingenium's Focus page is: Now, Steps (a task in small steps, one at a time, with a two-minute Just start),
+Time (the hour, the bar of the time left, and the Clepsydra), the Inbox, Calm (with a still, dim quiet screen and
+low-energy days), Routines, Today asks of you, and a switch for each support. Nothing of them sits on the Overview any
+more, where it could be forgotten. The 💭 beside the bell opens a light raised thoughts panel, dragged and resized from
+any edge: − puts the words away and the 💭 keeps them, with a count of what waits and gentle reminders that take turns
+between the parts of your life; ✕ asks before it lets anything go. The guided tour walks the new page. The Author
+Studio, the mini Forge's rooms and Guidebook, and the chapters of the Guidebook that had no French now read in French
+when the app is in French (the mini Forge's code lessons keep their English for now). The mini Forge's live preview no
+longer shakes while its Editor scrolls. The tab icon is the dark navy and gold seal whenever the app or the device is
+dark: where the page is a website it now names real icon files (favicon-dark.ico and icons/icon-dark-*.png, new in
+this folder), chosen before the browser reads any icon, which Safari needs. Upload the whole folder, every file.
+
+**Earlier, in build 1051.** This demonstration carries no writing model: the optional model that writes
 Scriba's summaries in the owner's own copy is left out here, with its engines and downloads, so no
 model in this demonstration writes, summarises or interprets text, and Scriba says so plainly if a
 summary is asked for. A copy of this page saved from a browser preview had picked up a script the app

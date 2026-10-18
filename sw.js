@@ -4,7 +4,7 @@
    engineering or commercial use without the author's written permission.
    See LICENCE.txt. Every distributed copy carries a build marker.
 */
-const CACHE = "carpe-diem-demo-committee-v202610121051";
+const CACHE = "carpe-diem-demo-committee-v202610181052";
 // this keeper's own name without its build number: only stores that begin
 // with it are this keeper's older versions
 const OWN = CACHE.replace(/v\d+$/, "");
@@ -13,7 +13,7 @@ const ASSETS = [
   "./icons/icon-192.png","./icons/icon-512.png","./icons/icon-512-maskable.png",
   "./icons/icon-256.png","./icons/icon-384.png","./icons/apple-touch-icon.png",
   "./icons/icon-180.png","./icons/icon-167.png","./icons/icon-152.png",
-  "./icons/icon-120.png","./icons/icon-32.png","./icons/icon-16.png", "favicon.ico?v=1050", "./icons/icon-192.png?v=1050", "./icons/icon-512.png?v=1050", "./icons/icon-512-maskable.png?v=1050", "./icons/icon-256.png?v=1050", "./icons/icon-384.png?v=1050", "./icons/apple-touch-icon.png?v=1050"
+  "./icons/icon-120.png","./icons/icon-32.png","./icons/icon-16.png", "favicon.ico?v=1050", "./icons/icon-192.png?v=1050", "./icons/icon-512.png?v=1050", "./icons/icon-512-maskable.png?v=1050", "./icons/icon-256.png?v=1050", "./icons/icon-384.png?v=1050", "./icons/apple-touch-icon.png?v=1050", "favicon-dark.ico", "./icons/icon-dark-32.png", "./icons/icon-dark-180.png", "./icons/icon-dark-192.png", "./icons/icon-dark-512.png", "favicon.ico?v=1052", "favicon-dark.ico?v=1052", "./icons/icon-32.png?v=1052", "./icons/icon-dark-32.png?v=1052", "./icons/icon-192.png?v=1052", "./icons/icon-dark-192.png?v=1052", "./icons/icon-512.png?v=1052", "./icons/icon-dark-512.png?v=1052", "./icons/apple-touch-icon.png?v=1052", "./icons/icon-dark-180.png?v=1052"
 ];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
