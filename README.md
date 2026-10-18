@@ -6,14 +6,23 @@ See LICENCE.txt. Every distributed copy carries a build marker.
 
 # Carpe Diem — the committee demo, as a website
 
-**Build 1055, 18 October 2026.** The About panel ends with "1055 · 528171055 · Committee demo".
+**Build 1056, 18 October 2026.** The About panel ends with "1056 · 528171056 · Committee demo".
 
-**New in build 1055.** Tabula holds a thesis of 100,000 words, by Inkwell 7.44's recipe: a keystroke is
+**New in build 1056.** In Tabula, a paragraph that meets the foot of a page runs on to the next one, at least
+two lines on each side, as in Word, so no page ends in a blank gap; and a footnote is placed in a moment, even in a
+thesis, because only the pages it moves are laid out again (Inkwell 7.45's recipe). Tabula also keeps its raised
+pages and its notes key when it is opened on its own. Its footnotes now stand at the foot of the page that cites
+them, are written where they stand, and go into Word files as real footnotes (Inkwell 7.48's recipe). There is more
+room on the device: Tabula autosaves a document of up to 256 MB, and when the browser's small store (about 5 MB) is
+full, Carpe Diem keeps its desk in the larger store and opens it from there. The tour's card on autosave describes
+the new pages, in English and French.
+
+**New in build 1055, the build before.** Tabula holds a thesis of 100,000 words, by Inkwell 7.44's recipe: a keystroke is
 answered at once, because only the pages an edit moves are laid out again, and a long document is kept in the
 browser's larger store (IndexedDB), so it is not lost when it outgrows the small one. The tour's card on autosave
 says so, in English and French. The mini Forge edits Carpe Diem alone: its Editor no longer offers the other apps.
 
-**New in build 1054, the build before.** The tour says what Tabula's autosave now keeps: a new card, in English and French,
+**New in build 1054.** The tour says what Tabula's autosave now keeps: a new card, in English and French,
 follows Real files, saved to your device, and explains that the footnotes, endnotes, bibliography, header, footer
 and contents travel with the text into autosave, into a floating window and back after a restart, and that Tabula
 says so on the page, with a .docx or PDF copy to hand, if a document ever grows past what autosave can keep.
@@ -114,6 +123,23 @@ laptop, and once loaded it works with no connection at all.
 
 ---
 
+## The Offline Project's site, beside the app
+
+Two folders hold the Offline Project's own website, which opens each app live in the visitor's browser, with its
+guided tour one press away:
+
+- `offline-project/`: the four apps. Carpe Diem's Committee demo (1056), the Forge's demonstration (638, which
+  shows every step of making an app and makes none), Ingenium 5.5 and Inkwell 7.48, with Inkwell's word lists,
+  citation styles and PDF reader in `apps/vendor`.
+- `offline-project-without-inkwell/`: the same site with three apps: Carpe Diem's Committee demo, the Forge's
+  demonstration (carrying Carpe Diem alone) and Ingenium 5.5.
+
+Each is a folder of plain files, hosted as it is (GitHub Pages serves them at `.../offline-project/` and
+`.../offline-project-without-inkwell/`). Each app keeps its work in the visitor's browser under a name of its own.
+The app's keeper (`sw.js`) leaves both folders alone, so a new build of the site is never held back by it.
+
+---
+
 ## Important: this one needs to be hosted
 
 Unlike the other builds, you cannot simply double-click `index.html` and get the
@@ -189,6 +215,8 @@ build indefinitely. Each build you receive already has this set correctly.
 | `sw.js` | The service worker: installs the app and serves it offline. |
 | `manifest.webmanifest` | Name, colours and icons for the installed app. |
 | `icons/` | The Carpe Diem seal at every size the platforms ask for. |
+| `offline-project/` | The Offline Project's site, with the four apps. |
+| `offline-project-without-inkwell/` | The same site, with three apps (no Inkwell). |
 
 ---
 

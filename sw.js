@@ -4,7 +4,7 @@
    engineering or commercial use without the author's written permission.
    See LICENCE.txt. Every distributed copy carries a build marker.
 */
-const CACHE = "carpe-diem-demo-committee-v202610181055";
+const CACHE = "carpe-diem-demo-committee-v202610181056";
 // this keeper's own name without its build number: only stores that begin
 // with it are this keeper's older versions
 const OWN = CACHE.replace(/v\d+$/, "");
@@ -30,6 +30,9 @@ self.addEventListener("fetch", e => {
   // Requests to other sites (Whisper's first fetch, look-ups in Fontes) pass
   // straight through; Scriba keeps its own copy of what it needs.
   if (new URL(req.url).origin !== self.location.origin) return;
+  // The Offline Project's site lives beside the app in this repository (offline-project/ and
+  // offline-project-without-inkwell/); its pages and apps are its own, so they pass through untouched.
+  if (/\/offline-project(-without-inkwell)?\//.test(new URL(req.url).pathname)) return;
   const isDoc = req.mode === "navigate" || req.destination === "document" || /index\.html$|\/$/.test(req.url);
   if (isDoc) {
     // Network-first for the app page, so a new build loads as soon as it is reachable; fall back to cache when offline.
