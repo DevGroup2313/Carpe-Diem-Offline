@@ -6,9 +6,14 @@ See LICENCE.txt. Every distributed copy carries a build marker.
 
 # Carpe Diem — the committee demo, as a website
 
-**Build 1053, 18 October 2026.** The About panel ends with "1053 · 528171053 · Committee demo".
+**Build 1054, 18 October 2026.** The About panel ends with "1054 · 528171054 · Committee demo".
 
-**New in build 1053.** Tabula keeps every part of a document when it saves itself or moves between windows: the
+**New in build 1054.** The tour says what Tabula's autosave now keeps: a new card, in English and French,
+follows Real files, saved to your device, and explains that the footnotes, endnotes, bibliography, header, footer
+and contents travel with the text into autosave, into a floating window and back after a restart, and that Tabula
+says so on the page, with a .docx or PDF copy to hand, if a document ever grows past what autosave can keep.
+
+**New in build 1053, the build before.** Tabula keeps every part of a document when it saves itself or moves between windows: the
 footnotes, endnotes, bibliography, header, footer and contents now travel with the text into autosave, into a
 floating window or a window of its own, and back after a restart (before this, only the text did, and the notes
 were lost). If a document ever grows past what autosave can keep on the device, Tabula says so on the page and offers
@@ -16,7 +21,7 @@ a copy as .docx or PDF, instead of stopping without a word. The thoughts panel n
 open, the Focus page uses the newest support module, and the mini Forge in the Author Studio holds only the Editor,
 Files and Settings, with no Tabula inside it. It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
 
-**New in build 1052, the build before.** The supports have a page of their own, **Focus** (Concentration in French), on the bar beside Home,
+**New in build 1052.** The supports have a page of their own, **Focus** (Concentration in French), on the bar beside Home,
 laid out as Ingenium's Focus page is: Now, Steps (a task in small steps, one at a time, with a two-minute Just start),
 Time (the hour, the bar of the time left, and the Clepsydra), the Inbox, Calm (with a still, dim quiet screen and
 low-energy days), Routines, Today asks of you, and a switch for each support. Nothing of them sits on the Overview any
