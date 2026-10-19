@@ -132,17 +132,30 @@ laptop, and once loaded it works with no connection at all.
 Two folders hold the Offline Project's own website, which opens each app live in the visitor's browser, with its
 guided tour one press away:
 
-- `offline-project/`: the four apps. Carpe Diem's Committee demo (1057), the Forge's demonstration (639, which
-  shows every step of making an app and makes none, and has Fabrica, its own GitHub with no model), Ingenium 5.7 and Inkwell 7.48, with Inkwell's word lists,
-  citation styles and PDF reader in `apps/vendor`.
+- `offline-project/`: the four apps. Carpe Diem's Committee demo (1057), the Forge's demonstration (640, which
+  shows every step of making an app and makes none, and has Fabrica, its own GitHub with no model), Ingenium 5.8 and
+  Inkwell 7.48, with Inkwell's word lists, citation styles and PDF reader in `apps/vendor`.
 - `offline-project-without-inkwell/`: the same site with three apps: Carpe Diem's Committee demo, the Forge's
-  demonstration (carrying Carpe Diem alone) and Ingenium 5.7.
+  demonstration (carrying Carpe Diem alone) and Ingenium 5.8.
+
+**New on 19 October 2026.** A top bar runs across the page: the crest, each app with its seal, and the devices,
+as raised keys; the page you are on is the gilt one. French and night sit at its right end. The Preview tag, the
+pause key and the loose keys above each room are gone. Each seal is a push-button that moves as it does in its own
+app: it sways, turns toward the pointer, lifts, sinks when pressed and rises again. Each folder is now also a web
+app: a `manifest.webmanifest` and its own keeper (`sw.js`) let a phone, a tablet or a computer install it from the
+browser. Once a visitor has opened the site, and each app once, it opens again with no connection. Inkwell's word
+lists and citation styles are kept as soon as Inkwell is first opened.
 
 Each is a folder of plain files, hosted as it is (GitHub Pages serves them at `.../offline-project/` and
 `.../offline-project-without-inkwell/`). The site's icon in the browser tab, the address bar, bookmarks and a phone's
 home screen is the Offline Project's master shield (`assets/icons`). Each app keeps its work in the visitor's browser
 under a name of its own.
-The app's keeper (`sw.js`) leaves both folders alone, so a new build of the site is never held back by it.
+Carpe Diem's keeper at the top of this repository (`sw.js`) leaves both folders alone, and each folder's own keeper
+looks after that folder only, so a new build of the site is never held back by an older one.
+
+Checked in Chromium on 19 October 2026, served over http: the keeper installs; the page opens again from it; with
+the network switched off, the crest, the bar and every app open (Carpe Diem 1057, The Forge 640, Ingenium 5.8,
+Inkwell 7.48), and Inkwell still reads its word lists and citation styles. Safari and Firefox were not tested here.
 
 ---
 
