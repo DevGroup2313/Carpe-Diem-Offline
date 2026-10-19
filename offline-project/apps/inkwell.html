@@ -29,7 +29,7 @@ install(window);
 <!-- INKWELL v6.52 · XXV·SEPTEMBRIS·MMXXVI — see INKWELL_HANDOFF_v6p52.txt. -->
 <html lang="en">
 <head>
-<!-- BUILD='7.48': read by the desktop launchers to choose the newest page -->
+<!-- BUILD='7.49': read by the desktop launchers to choose the newest page -->
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -182,7 +182,7 @@ body.sprinting header{opacity:.55}
 #side .foot .wide{grid-column:1/3}
 #outlineSec{border-top:1px solid var(--line);margin-top:8px;padding-top:8px;max-height:36%;display:flex;flex-direction:column}
 #outline{overflow:auto;min-height:0}
-.oitem{display:flex;align-items:center;gap:8px;padding:7px 10px;font-size:12.5px;border-radius:11px;background:var(--face);border:1px solid var(--line);box-shadow:var(--sh-sm);margin-bottom:6px;cursor:grab;transition:transform .14s var(--pop),opacity .14s}
+.oitem{display:flex;align-items:center;gap:8px;padding:7px 10px;font-size:12.5px;border-radius:11px;background:var(--face);border:1px solid var(--line);box-shadow:var(--sh-sm);margin-bottom:6px;cursor:grab;transition:transform .14s var(--pop),box-shadow .14s,opacity .14s}
 .oitem:hover{transform:translateY(-1px)}
 .oitem.drag{opacity:.35;transform:scale(.98)}
 .oitem .t{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:Georgia,serif}
@@ -383,6 +383,8 @@ body.readable #editor,body.readable #hli{font:19px/2.05 Tahoma,Verdana,Georgia,s
 .hdr{gap:7px;align-items:center}
 #status{display:flex;gap:10px;align-items:center;padding:2px 12px;font-size:9.2px;letter-spacing:.1em;min-height:0;text-transform:uppercase;color:var(--mut);background:var(--card);border-top:1px solid var(--line);box-shadow:0 -8px 20px #24201a08;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none}#status #stWps,#status #stLex,#status #stFlesch,#status #stGain,#status #stModel{display:none !important}
 #status::-webkit-scrollbar{display:none;width:0;height:0;background:transparent}
+/* 7.49: the saved time and the fold button keep the footer's right corner at
+   every width; the saved time carries the push, since #stModel is hidden. */
 /* 7.38: the footer's fold button is a physical one like the rest: a vellum
    face on a brass edge (midnight at night) that lifts and sinks. The soft
    card-coloured fade on its left still hides text passing under it. */
@@ -636,8 +638,11 @@ body[data-motion=minimal] #ctxpanel{animation:none}
 .menuBtn.open{background:var(--faceD);border-color:var(--acc);font-weight:600}
 /* right panel: two tabs instead of one long strip */
 .rtabs{display:flex;background:var(--tray);padding:3px;border-radius:999px;box-shadow:inset 0 2px 5px #0001;gap:2px;margin-bottom:12px}
-.rtabs button{flex:1;padding:6px 10px;border:none;background:transparent;box-shadow:none;font-size:12px;border-radius:999px;color:var(--mut)}
-.rtabs button:hover{transform:none;box-shadow:none}
+.rtabs button{flex:1;padding:6px 10px;border:none;background:transparent;box-shadow:none;font-size:12px;border-radius:999px;color:var(--mut);
+ transition:transform .14s var(--pop),box-shadow .14s,background-color .15s,color .15s}
+.rtabs button:hover{transform:translateY(-1px);background:var(--face);color:var(--ink)}
+.rtabs button.active{animation:tabSettle .3s var(--pop)}
+@keyframes tabSettle{0%{transform:translateY(-2px) scale(.96)}100%{transform:none}}
 .rtabs button.active{background:var(--face);box-shadow:var(--sh-sm);font-weight:600;color:var(--ink)}
 #instrPanel{display:none}
 #instrPanel.on{display:block}
@@ -666,6 +671,40 @@ body[data-motion=minimal] *,body[data-motion=minimal] *:before,body[data-motion=
 button:not(.sn-iconbtn):not(.sn-tool){box-shadow:var(--sh-sm),inset 0 -2px 4px #14100a12}
 [data-theme=dark] button:not(.sn-iconbtn):not(.sn-tool){box-shadow:var(--sh-sm),inset 0 -2px 4px #00000066}
 body[data-motion=minimal] button{box-shadow:none !important}
+/* 7.49: every control lifts on hover with a deeper shadow and sinks when
+   pressed. The bevel rule above outweighed most hover shadows, so buttons only
+   slid 2px; these carry the same weight and come after it. Buttons with a
+   designed press of their own (the physical primaries, the seals, the tour,
+   the menus, the door) keep theirs. */
+:root{--popHov:0 2px 0 rgba(20,16,10,.10),0 6px 14px rgba(20,16,10,.17),inset 0 -2px 4px #14100a12;
+ --popPress:inset 0 2px 5px rgba(20,16,10,.22),0 1px 1px rgba(20,16,10,.06)}
+[data-theme=dark]{--popHov:0 2px 0 rgba(0,0,0,.55),0 6px 16px rgba(0,0,0,.5),inset 0 -2px 4px #00000066,inset 0 1px 0 rgba(255,255,255,.06);
+ --popPress:inset 0 2px 6px rgba(0,0,0,.6)}
+button:not(.sn-iconbtn):not(.sn-tool):where(:not(.primary,.tour3d,.tabula-btn,.heroKey,.b3seal,.menuBtn,.doorRow button,.itCard button)):hover{box-shadow:var(--popHov)}
+button:not(.sn-iconbtn):not(.sn-tool):where(:not(.primary,.tour3d,.tabula-btn,.heroKey,.b3seal,.menuBtn,.doorRow button,.itCard button)):active{transform:translateY(1px) scale(.97);box-shadow:var(--popPress);transition-duration:.05s}
+/* the engine pill opens the Engine panel, so it is a key like the rest */
+.pill[onclick]{cursor:pointer;transition:transform .14s var(--pop),box-shadow .14s,background-color .15s}
+.pill[onclick]:hover{transform:translateY(-2px);box-shadow:var(--popHov);background:var(--faceD)}
+.pill[onclick]:active{transform:translateY(1px) scale(.97);box-shadow:var(--popPress);transition-duration:.05s}
+/* documents, outline rows and suggestion rows lift and sink as cards */
+#docs .doc:hover{box-shadow:var(--popHov)}
+#docs .doc:active,#outline .oitem:active,#cards .crow:active{transform:translateY(1px) scale(.985);box-shadow:var(--popPress);transition-duration:.05s}
+#outline .oitem:hover{transform:translateY(-2px);box-shadow:var(--popHov)}
+/* the word count in the footer opens Performance */
+#stWords{display:inline-block;transition:transform .14s var(--pop),color .14s}
+#stWords:hover{transform:translateY(-1px);color:var(--acc)}
+#stWords:active{transform:translateY(1px)}
+/* Correct and Draft: a clear rise, a brighter face and a deep press */
+.hdr button.primary.hero,.hdr .draftBtn.heroKey{transition:transform .16s var(--pop),box-shadow .16s ease,filter .16s ease !important}
+.hdr button.primary.hero:hover,.hdr .draftBtn.heroKey:hover{transform:translateY(-3px) !important;filter:brightness(1.08)}
+.hdr button.primary.hero:active,.hdr .draftBtn.heroKey:active{transform:translateY(2px) scale(.96) !important;filter:brightness(.96);transition-duration:.05s !important}
+.hdr .draftBtn.heroKey:hover{box-shadow:0 1px 0 rgba(20,16,10,.2),0 4px 8px #14100a26,0 12px 22px #14100a1c,inset 0 1px 0 #ffffff88,inset 0 -3px 5px #14100a12}
+.hdr .draftBtn.heroKey:active{box-shadow:0 1px 2px #14100a1c,inset 0 2px 6px #14100a26}
+[data-theme=dark] .hdr button.primary.hero:hover{box-shadow:0 1px 0 #071e29,0 6px 12px #000000a0,0 14px 26px #00000066,inset 0 1px 0 #ffffff3a !important}
+[data-theme=dark] .hdr button.primary.hero:active{box-shadow:0 0 0 #071e29,0 1px 2px #00000088,inset 0 2px 6px #00000077 !important}
+[data-theme=dark] .hdr .draftBtn.heroKey:hover{box-shadow:0 1px 0 #04080c,0 6px 12px #000000a0,0 14px 26px #00000066,inset 0 1px 0 #ffffff22;filter:brightness(1.15)}
+[data-theme=dark] .hdr .draftBtn.heroKey:active{box-shadow:inset 0 2px 6px #00000088}
+body[data-motion=minimal] .hdr button.primary.hero,body[data-motion=minimal] .hdr .draftBtn.heroKey{transform:none !important;filter:none}
 /* glass cards */
 .card,.inst{background:var(--glass);backdrop-filter:blur(10px) saturate(1.05);-webkit-backdrop-filter:blur(10px) saturate(1.05)}
 /* the page itself: laid paper with the faintest chain lines */
@@ -680,7 +719,20 @@ body[data-motion=minimal] button{box-shadow:none !important}
 .crow .cwhy{margin-left:auto;color:var(--mut);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:38%}
 .crow .cexp{color:var(--acc);font-size:13px;flex-shrink:0}
 .crow .cremove{flex-shrink:0;width:24px;height:24px;padding:0;font-size:11px;border-radius:50%;color:var(--mut);box-shadow:var(--sh-sm);margin-left:2px}
-.crow .cremove:hover{color:var(--red);transform:none}
+.catLeg .catF{background:none;border:0;box-shadow:none;padding:2px 7px;margin:0 2px 0 0;border-radius:10px;font:inherit;color:inherit;cursor:pointer}
+.catLeg button.catF.on{background:var(--acc);color:#fff;font-weight:600}
+/* 7.49: by night the chosen kind wears the same face and colours as its
+   neighbours (white on light brass was hard to read). The chips keep to one
+   line each and wrap whole. */
+[data-theme=dark] .catLeg button.catF.on{background:none;color:inherit;font-weight:inherit}
+[data-theme=dark] .catLeg button.catF.on:hover{background:var(--card-hi)}
+.catLeg.catLegF{flex-wrap:wrap;gap:4px 5px}
+.catLeg .catF{white-space:nowrap;flex-shrink:0}
+.catLeg button.catF .cdot{margin-right:4px}
+.catLeg .catF:hover{background:var(--card-hi)}
+#stWords{cursor:pointer}
+.crow .cadd{flex-shrink:0;height:24px;padding:0 8px;font-size:11px;border-radius:12px;color:var(--gold);box-shadow:var(--sh-sm);margin-left:4px;white-space:nowrap}
+.crow .cremove:hover{color:var(--red);transform:translateY(-1px)}
 /* the door: a real window. Dragged by its head, resized from every edge and corner */
 #door{position:fixed;inset:0;z-index:95;align-items:center;justify-content:center;background:#efe9dbb3;backdrop-filter:blur(12px) saturate(1.05);-webkit-backdrop-filter:blur(12px) saturate(1.05);transition:opacity .45s ease}
 .doorGrab{cursor:grab;user-select:none}
@@ -1933,7 +1985,7 @@ body[data-motion=minimal] .itCard button,body[data-motion=minimal] .itCard butto
  <div class="hdr">
   <span class="actpair" role="group" aria-label="Primary work">
    <button class="primary hero" onclick="correct()" title="Deep pass; ⌘/Ctrl+Enter">✔ Correct</button>
-   <button class="draftBtn heroKey" onclick="compose()" title="AI drafts to order">✨ Draft</button>
+   <button class="draftBtn heroKey" onclick="compose()" title="Draft with me: answer a few questions and Inkwell joins your answers into prose (no model needed)">✨ Draft</button>
   </span>
   <span class="menuset" role="group" aria-label="Desk menus">
    <button class="menuBtn" onclick="showMenu(event,'coach')">Coach ▾</button>
@@ -2006,9 +2058,9 @@ body[data-motion=minimal] .itCard button,body[data-motion=minimal] .itCard butto
    </div>
   </div>
   <div id="status">
-   <span id="stWords">0 words</span><span id="stGain"></span><span id="stRead">1 min read</span><span id="stWps"></span><span id="stLex"></span>
+   <span id="stWords" onclick="openPerformance()" title="Performance: counts, reading and speaking time, readability">0 words</span><span id="stGain"></span><span id="stRead">1 min read</span><span id="stWps"></span><span id="stLex"></span>
    <span id="stFlesch">· readability</span><span id="stScore" style="font-weight:700;color:var(--acc)" title="The writing mark: accuracy, clarity, vocabulary, sentences and register, on the scale you chose">· mark</span><span id="stCerr">0 issues</span><span id="stBuild" style="margin-left:8px;opacity:.85"></span>
-   <span id="stSel"></span><button type="button" id="inkNoteNext" class="inkNoteBtn" onclick="inkNoteNext()" title="Leave yourself a note: it is shown with your place next time" hidden>✎ Note for next time</button><button type="button" id="iwToday" class="inkNoteBtn" onclick="inkTodayCard()" title="Today's words and time, by document" hidden></button><span id="stSave" style="font-size:11px" title="Everything on the page is written to this device."></span><span style="margin-left:auto" id="stModel"></span><button class="foldBtn" style="margin:0;align-self:center" onclick="foldFoot()" title="Fold the footer away">▾</button>
+   <span id="stSel"></span><button type="button" id="inkNoteNext" class="inkNoteBtn" onclick="inkNoteNext()" title="Leave yourself a note: it is shown with your place next time" hidden>✎ Note for next time</button><button type="button" id="iwToday" class="inkNoteBtn" onclick="inkTodayCard()" title="Today's words and time, by document" hidden></button><span id="stSave" style="font-size:11px;margin-left:auto;flex-shrink:0" title="Everything on the page is written to this device."></span><span id="stModel"></span><button class="foldBtn" style="margin:0;align-self:center" onclick="foldFoot()" title="Fold the footer away">▾</button>
   </div>
  </section>
  <aside id="right">
@@ -2883,7 +2935,34 @@ body[data-motion=minimal] .itCard button,body[data-motion=minimal] .itCard butto
     hold.forEach((o, i) => { if (!run.has(i)) out.push(o); });
     return out;
   }
-  const api = { load, known, suggest, check, level };
+  /* 7.49: the writer's own words join the dictionary: known, and offered
+     as corrections ("Gadamar" to "Gadamer"). A capitalised word is kept as
+     a name; a word the list already knows is left as it is. */
+  function addWords(D, words) {
+    D.user = D.user || new Set();
+    for (const raw of words || []) {
+      const w = String(raw || '').trim(); if (!w || /\s/.test(w)) continue;
+      const l = w.toLowerCase(), had = D.lower.get(l);
+      if (had && had.plain) continue;
+      /* a rare name the list knows becomes common once the writer adds it,
+         so its slips are corrected to it */
+      D.userWas = D.userWas || new Map();
+      if (had && had.form === w) { if (had.lv > 15) { D.userWas.set(w, had.lv); had.lv = 15; D.exact.set(w, 15); D.user.add(w); } continue; }
+      if (had && w !== l) continue;
+      D.exact.set(w, 15); D.lower.set(l, { lv: 15, plain: w === l, form: w }); D.user.add(w);
+    }
+    if (D.memo) D.memo.clear();
+  }
+  function dropWord(D, w) {
+    if (!D.user) return; w = String(w || '').trim();
+    for (const u of [...D.user]) if (u.toLowerCase() === w.toLowerCase()) {
+      D.user.delete(u); const e = D.lower.get(u.toLowerCase());
+      if (D.userWas && D.userWas.has(u)) { const lv = D.userWas.get(u); D.userWas.delete(u); D.exact.set(u, lv); if (e) e.lv = lv; continue; }
+      D.exact.delete(u); if (e && e.form === u) D.lower.delete(u.toLowerCase());
+    }
+    if (D.memo) D.memo.clear();
+  }
+  const api = { load, known, suggest, check, level, addWords, dropWord };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.INKSPELL = api;
 })(typeof self !== 'undefined' ? self : this);
 
@@ -8004,6 +8083,572 @@ such as = x: like, including`
 /* INKWELL  |  Copyright (c) 2026 Yannie D. Forest. All rights reserved.
    No licence is granted. See LICENCE.txt.
 
+   7.49: marking without a model (INKGRADE). A rubric line is read for what
+   it asks (structure, argument, evidence, clarity, vocabulary, register,
+   mechanics, the introduction, the conclusion) and marked 1 to 5 from what
+   Inkwell can count on the page: paragraphs and the sentences that open
+   them, the words that signpost, claim, reason, concede and conclude, the
+   citations, quotations, figures and examples. Each mark comes with what
+   was counted, the place on the page that most needs work, and one way to
+   raise it. A line Inkwell cannot count is left to the writer, with a
+   question to ask of the page.
+
+   These are counts, not an examiner's judgement: a page can tick every
+   box and still argue badly. The bands were set by hand so that the
+   measures rise with known level: learner essays (Write & Improve, CEFR A,
+   B and C), native student essays (LOCNESS) and published scholarship
+   (open-access articles); none of those texts is kept in this repository.
+
+   INKGRADE.kind(name, desc)     the kind of a rubric line, or ''
+   INKGRADE.measure(text)        the counts (paragraphs, signposts, sources)
+   INKGRADE.criterion(kind, m, o) {mark, said: [...], at: {start, end} | null,
+                                  tip}; o.lang is INKMARK.mark's result,
+                                  o.scholarly the register */
+(function (root) {
+  'use strict';
+  const WORD = /[A-Za-z][A-Za-z'’-]*/g;
+  const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+  const STOP = new Set(('the of and to a in is that it for as with was on be by this are or not from at which an have has but their they his her its were been also we our can more one all would there what so if about into than them these those such may other some its when who will no only how most any each both very much many do does did could should might must just over between through after before because while where up out then however also own same well even our us you your i me my he she him we they')
+    .split(' '));
+  const lc = s => String(s || '').toLowerCase();
+
+  /* paragraphs: blank-line or line-break separated prose, headings and the
+     notes section left out; each with its place in the text */
+  function paragraphs(text) {
+    const t = String(text || ''), out = [];
+    const re = /[^\n]+(?:\n(?!\s*\n)[^\n]+)*/g; let m, notes = false;
+    while ((m = re.exec(t))) {
+      const s = m[0].trim(); if (!s) continue;
+      if (/^#{1,6}\s*notes\s*$/i.test(s) || /^(?:notes|references|bibliography|works cited|sources)\s*:?$/i.test(s)) { notes = true; continue; }
+      if (/^\[\^[^\]]+\]:/.test(s) || /^#{1,6}\s/.test(s)) continue;
+      const words = (s.match(WORD) || []).length;
+      if (words <= 12 && !/[.!?:;"”)\]]$/.test(s)) continue;     /* a heading */
+      if (notes) continue;
+      out.push({ start: m.index + m[0].indexOf(s), text: s, words });
+    }
+    return out;
+  }
+  function sentences(p) {
+    const out = []; const re = /[^.!?]+(?:[.!?]+["”’)\]]*|$)/g; let m;
+    while ((m = re.exec(p.text))) { const s = m[0].trim(); if ((s.match(WORD) || []).length >= 2) out.push({ start: p.start + m.index + m[0].indexOf(s), text: s }); }
+    return out;
+  }
+  const content = s => (lc(s).match(/[a-z][a-z'’-]{2,}/g) || []).filter(w => !STOP.has(w)).map(w => w.replace(/(?:ies|es|s|ing|ed|ly)$/, ''));
+
+  const R = {
+    signpost: /^(?:however|moreover|furthermore|in addition|additionally|first(?:ly)?|second(?:ly)?|third(?:ly)?|finally|lastly|in contrast|by contrast|similarly|likewise|therefore|thus|hence|consequently|as a result|on the other hand|on the one hand|another|also|equally|in turn|this|these|such|yet|nevertheless|nonetheless|meanwhile|next|then|to begin|to start|in conclusion|to conclude|overall|in sum|in short|for example|for instance|turning to|beyond this|at the same time|despite this)\b/i,
+    thesis: /\b(?:I (?:will )?(?:argue|contend|suggest|propose|show|claim|maintain|examine|explore|consider)|we (?:will )?(?:argue|contend|suggest|propose|show|claim|examine|explore)|this (?:essay|paper|article|chapter|thesis|study|report|piece) (?:will |aims to |seeks to |sets out to )?(?:argue|argues|show|shows|examine|examines|explore|explores|consider|considers|suggest|suggests|propose|proposes|contend|contends|discuss|discusses|focus|focuses)|in this (?:essay|paper|article|chapter|study)|the aim of this|my (?:argument|claim|view|position|contention) is|I believe|in my (?:opinion|view)|I think that)\b/i,
+    stance: /\b(?:should|must|ought to|is essential|is necessary|is crucial|is vital|is better|is worse|is right|is wrong|is the best|is the most)\b/i,
+    reason: /\b(?:because|since|therefore|thus|hence|consequently|as a result|so that|which means|it follows|for this reason|this means|this shows|this suggests|this indicates|due to|owing to|given that|in order to)\b/gi,
+    concede: /\b(?:however|although|though|whereas|on the other hand|admittedly|critics|opponents|some (?:argue|claim|believe|may argue|might argue|would argue)|it (?:could|might|may) be argued|nevertheless|nonetheless|despite|even so|granted|to be sure|by contrast|in contrast|yet)\b/gi,
+    hedge: /\b(?:may|might|could|perhaps|possibly|likely|unlikely|appears?|seems?|suggests?|indicates?|arguably|tends? to|in part|to some extent)\b/gi,
+    boost: /\b(?:clearly|obviously|undoubtedly|certainly|definitely|of course|always|never|everyone|nobody|proves?|without (?:a )?doubt)\b/gi,
+    conclude: /\b(?:in conclusion|to conclude|to sum up|in sum|in summary|overall|all in all|to summari[sz]e|in short|this (?:essay|paper|article|chapter) has|I have (?:argued|shown|suggested)|we have (?:argued|shown|seen)|taken together|ultimately)\b/i,
+    citeAY: /\([A-Z][A-Za-z'’\-]+(?: (?:et al\.|and|&) [A-Z][A-Za-z'’\-]+)?,? (?:1[5-9]|20)\d\d[a-z]?(?:[,:] ?(?:p{1,2}\. ?)?[\d–-]+)?(?:; ?[^)]{3,60})?\)|[A-Z][A-Za-z'’\-]+(?: (?:et al\.|and|&) [A-Z][A-Za-z'’\-]+)? \((?:1[5-9]|20)\d\d[a-z]?(?:[,:] ?(?:p{1,2}\. ?)?[\d–-]+)?\)/g,
+    citeNum: /\[(?:\d{1,3}(?:[,–-] ?\d{1,3})*)\]|\[\^[^\]\s]{1,12}\]|\(\d{1,3}(?:[,–-] ?\d{1,3})*\)(?=[\s.,;:])/g,
+    quote: /["“][^"”\n]{12,}?["”]/g,
+    data: /\b\d+(?:[.,]\d+)?\s?(?:%|per ?cent|percent|million|billion|thousand|km|kg|cm|mm|hours?|years?|people|patients|participants|respondents)\b|\b(?:1[5-9]|20)\d\d\b/g,
+    example: /\b(?:for example|for instance|such as|e\.g\.|in the case of|to illustrate|as an example|a case in point|namely)\b/gi,
+    refList: /(?:^|\n)\s*(?:#{1,6}\s*)?(?:references|bibliography|works cited|sources|notes)\s*:?\s*\n/i
+  };
+  const count = (re, s) => (String(s).match(re) || []).length;
+
+  function measure(text) {
+    const t = String(text || ''), P = paragraphs(t);
+    const words = P.reduce((a, p) => a + p.words, 0);
+    const per = n => words ? 100 * n / words : 0;
+    const body = P.length >= 3 ? P.slice(1, -1) : P.slice();
+    /* a paragraph's opening sentence names its topic when it shares a word
+       with what the paragraph goes on to say most */
+    const opens = P.map(p => {
+      const S = sentences(p); if (S.length < 2) return { p, ok: null, first: S[0] || null };
+      const rest = {}; S.slice(1).forEach(s => content(s.text).forEach(w => { rest[w] = (rest[w] || 0) + 1; }));
+      const key = new Set(Object.keys(rest).filter(w => rest[w] >= 2));
+      return { p, ok: content(S[0].text).some(w => key.has(w)) || key.size === 0, first: S[0] };
+    });
+    const links = P.slice(1).map((p, i) => {
+      const S = sentences(p), first = S[0] ? S[0].text : p.text;
+      const prev = new Set(content(P[i].text));
+      return { p, ok: R.signpost.test(first.replace(/^[^A-Za-z]+/, '')) || content(first).some(w => prev.has(w)), first: S[0] || null };
+    });
+    const intro = P[0] ? P[0].text : '', last = P.length > 1 ? P[P.length - 1].text : '';
+    const thesisAt = (() => {
+      const scope = P.slice(0, Math.max(1, Math.ceil(P.length * 0.25)));
+      for (const p of scope) for (const s of sentences(p)) if (R.thesis.test(s.text) || R.stance.test(s.text)) return s;
+      return null;
+    })();
+    /* the body only: headings, notes and the reference list are not support */
+    const B = P.map(p => p.text).join('\n');
+    const cites = count(R.citeAY, B) + count(R.citeNum, B);
+    const bodyEv = body.map(p => ({ p, n: count(R.citeAY, p.text) + count(R.citeNum, p.text) + count(R.quote, p.text) + count(R.data, p.text) + count(R.example, p.text) }));
+    return {
+      words, paragraphs: P.length, P,
+      paraMedian: P.length ? P.map(p => p.words).sort((a, b) => a - b)[Math.floor(P.length / 2)] : 0,
+      opens, links,
+      openShare: (() => { const o = opens.filter(x => x.ok !== null); return o.length ? o.filter(x => x.ok).length / o.length : 0; })(),
+      linkShare: links.length ? links.filter(x => x.ok).length / links.length : 0,
+      thesis: thesisAt, concludes: !!last && (R.conclude.test(last) || (thesisAt && content(thesisAt.text).filter(w => content(last).includes(w)).length >= 2)),
+      reasons: per(count(R.reason, B)), concessions: count(R.concede, B), concedePer: per(count(R.concede, B)),
+      hedges: per(count(R.hedge, B)), boosts: per(count(R.boost, B)),
+      cites, citesPer500: words ? 500 * cites / words : 0,
+      quotes: count(R.quote, B), data: count(R.data, B), examples: count(R.example, B),
+      evidencePer500: words ? 500 * (cites + count(R.quote, B) + count(R.data, B) + count(R.example, B)) / words : 0,
+      bodyEv, refList: R.refList.test(t) || /\n\s*\[\^[^\]]+\]:/.test(t)
+    };
+  }
+
+  /* the kind of a rubric line, from its words */
+  /* the name decides ("Conclusion: draws the argument together" is a
+     conclusion); the description only when the line has no name */
+  function kind(name, desc) {
+    const s = lc(name || desc);
+    const k = [
+      ['mechanics', /mechanic|grammar|spelling|punctuation|accuracy|proofread|conventions/],
+      ['evidence', /evidence|source|research|citation|cite|referenc|support|example|data|literature|scholarship|reading/],
+      ['argument', /argument|thesis|claim|reason|critical|analysis|analys|evaluat|position|persuas|counter|logic|thinking/],
+      ['introduction', /introduc|opening|hook/],
+      ['conclusion', /conclu|ending|closing/],
+      ['structure', /structure|organi[sz]|coheren|cohesion|flow|paragraph|layout|sequenc|progression|transition/],
+      ['clarity', /clarity|clear|style|expression|readab|concis|fluen|sentence/],
+      ['vocabulary', /vocabular|word choice|diction|lexi|language use|range of language|precision/],
+      ['register', /register|tone|audience|formal|voice|purpose/]
+    ];
+    for (const [n, re] of k) if (re.test(s)) return n;
+    return '';
+  }
+
+  const band = (x, cuts) => { let m = 1; for (const c of cuts) if (x >= c) m++; return clamp(m, 1, 5); };
+  const short = s => { s = String(s || '').replace(/\s+/g, ' ').trim(); return s.length > 140 ? s.slice(0, 137) + '…' : s; };
+
+  function criterion(k, M, o) {
+    o = o || {}; const lang = o.lang, sch = !!o.scholarly, said = []; let mark = 0, at = null, tip = '';
+    const few = M.words < 120;
+    if (k === 'structure') {
+      const want = M.words >= 600 ? 4 : M.words >= 250 ? 3 : 1;
+      const paraOK = M.paragraphs >= want && M.paraMedian <= (sch ? 260 : 200);
+      mark = clamp(Math.round(1 + (paraOK ? 1 : 0) + 1.6 * M.openShare + 1.4 * M.linkShare), 1, 5);
+      said.push(M.paragraphs + ' paragraph' + (M.paragraphs === 1 ? '' : 's') + ' in ' + M.words + ' words' + (paraOK ? '' : (M.paragraphs < want ? ' (a page this long usually has ' + want + ' or more)' : ' (some paragraphs run long)')));
+      const o2 = M.opens.filter(x => x.ok !== null); if (o2.length) said.push(o2.filter(x => x.ok).length + ' of ' + o2.length + ' paragraphs open with a sentence that names what they go on to discuss');
+      if (M.links.length) said.push(M.links.filter(x => x.ok).length + ' of ' + M.links.length + ' paragraphs are linked to the one before (a signpost or a shared key word)');
+      const weak = M.opens.find(x => x.ok === false) || M.links.find(x => !x.ok);
+      if (weak && weak.first) at = { start: weak.first.start, end: weak.first.start + weak.first.text.length, text: short(weak.first.text) };
+      tip = weak ? 'Open that paragraph with one sentence that says what it will show, then link it to the paragraph before ("Similarly", "By contrast", or the key word you used last).' : 'The paragraphs open and link well. Check that each one makes only one point.';
+    } else if (k === 'argument') {
+      const parts = (M.thesis ? 1.3 : 0) + clamp(M.reasons / 0.6, 0, 1) + clamp(M.concessions / (M.words > 500 ? 3 : 1.5), 0, 1.2) + (M.boosts > M.hedges + 0.4 ? -0.5 : 0.5);
+      mark = clamp(Math.round(1 + parts), 1, 5);
+      said.push(M.thesis ? 'A position is stated near the start: “' + short(M.thesis.text) + '”' : 'No sentence near the start states your position or what the page will argue');
+      said.push(M.reasons >= 0.05 ? M.reasons.toFixed(1) + ' reasoning words (because, therefore, this shows…) per 100 words' : 'No reasoning words (because, therefore, this shows…)');
+      said.push(M.concessions ? M.concessions + ' place' + (M.concessions === 1 ? '' : 's') + ' where another view is weighed (however, although, critics…)' : 'No other view is weighed');
+      if (M.boosts > M.hedges + 0.4) said.push('More certainty words (clearly, always, proves) than careful ones (suggests, may, likely)');
+      if (!M.thesis && M.P[0]) { const s = sentences(M.P[0]); const f = s[s.length - 1] || s[0]; if (f) at = { start: f.start, end: f.start + f.text.length, text: short(f.text) }; }
+      tip = !M.thesis ? 'End your opening paragraph with one sentence that says what you will argue: "I argue that…", or a plain claim another reader could dispute.'
+        : !M.concessions ? 'Weigh one objection: "Some argue that…; however…". Answering it makes your claim stronger.'
+        : M.reasons < 0.4 ? 'After each claim, give its reason: "because…", "this shows that…".' : 'Check that every paragraph’s point serves the position you state at the start.';
+    } else if (k === 'evidence') {
+      const per = M.evidencePer500, c = M.citesPer500;
+      mark = band(sch ? c * 0.8 + per * 0.2 : per, sch ? [1, 2.5, 4.5, 7] : [1, 2.5, 4, 6]);
+      said.push(M.cites + ' citation' + (M.cites === 1 ? '' : 's') + ', ' + M.quotes + ' quotation' + (M.quotes === 1 ? '' : 's') + ', ' + M.data + ' figure' + (M.data === 1 ? '' : 's') + ' or date' + (M.data === 1 ? '' : 's') + ', ' + M.examples + ' signalled example' + (M.examples === 1 ? '' : 's'));
+      said.push(per.toFixed(1) + ' pieces of support per 500 words' + (sch ? '; ' + c.toFixed(1) + ' citations per 500 words' : ''));
+      if (sch && M.cites && !M.refList) said.push('Citations, but no reference list or notes');
+      const bare = M.bodyEv.find(x => x.n === 0 && x.p.words >= 40);
+      if (bare) { const s = sentences(bare.p)[0]; if (s) at = { start: s.start, end: s.start + s.text.length, text: short(s.text) }; }
+      tip = bare ? 'That paragraph makes its point without support. Add one source, figure, quotation or example ("For example…", "(Author Year)") and say what it shows.' : 'Every paragraph carries support. Check that each piece is explained, not only cited.';
+    } else if (k === 'introduction') {
+      const s0 = M.P[0] ? sentences(M.P[0]) : [];
+      mark = clamp(1 + (s0.length >= 2 ? 1 : 0) + (M.thesis ? 2 : 0) + (M.P[0] && M.P[0].words >= 40 && M.P[0].words <= 220 ? 1 : 0), 1, 5);
+      said.push(M.P[0] ? 'The opening paragraph has ' + s0.length + ' sentence' + (s0.length === 1 ? '' : 's') + ' and ' + M.P[0].words + ' words' : 'No opening paragraph');
+      said.push(M.thesis ? 'It states a position: “' + short(M.thesis.text) + '”' : 'It does not state what the page will argue');
+      if (s0[0]) at = { start: s0[0].start, end: s0[0].start + s0[0].text.length, text: short(s0[0].text) };
+      tip = M.thesis ? 'Make the first sentence earn attention: a question, a tension or a striking fact from your topic.' : 'Move from the topic, to the problem, to your answer in one sentence at the end of the opening.';
+    } else if (k === 'conclusion') {
+      const lp = M.paragraphs > 1 ? M.P[M.paragraphs - 1] : null;
+      mark = clamp(1 + (lp ? 1 : 0) + (M.concludes ? 2 : 0) + (lp && /\b(?:implication|significan|matters|future|further|should|limitation|question)\w*/i.test(lp.text) ? 1 : 0), 1, 5);
+      said.push(lp ? 'The closing paragraph has ' + lp.words + ' words' : 'No closing paragraph');
+      said.push(M.concludes ? 'It draws the page together (a summing-up or your opening claim again)' : 'It does not return to your main claim');
+      if (lp) { const s = sentences(lp); const f = s[s.length - 1]; if (f) at = { start: f.start, end: f.start + f.text.length, text: short(f.text) }; }
+      tip = M.concludes ? 'End with why it matters, or the question it leaves open, not only a summary.' : 'Restate your answer in new words, then say why it matters.';
+    } else if (k === 'clarity' && lang) {
+      const f = lang.features; mark = band(-(f.clarity * 1.2 + f.longShare * 10), [-6, -4, -2.4, -1.2]);
+      said.push(f.clarity.toFixed(1) + ' clarity notes per 100 words'); said.push('Typical sentence ' + f.medianSentence + ' words; ' + Math.round(f.longShare * 100) + '% of sentences over 45 words');
+      tip = f.longShare > 0.1 ? 'Split the longest sentences: one idea each.' : 'Read the clarity notes on the page; each one says what to cut or move.';
+    } else if (k === 'vocabulary' && lang) {
+      const f = lang.features; mark = band((f.avgWord - 4.2) * 2 + (f.variety - 0.7) * 10, [-0.6, 0.2, 1, 1.8]);
+      said.push('Average word ' + f.avgWord.toFixed(1) + ' letters; variety ' + Math.round(f.variety * 100) + ' different words in every 100');
+      tip = 'Where a word repeats in a paragraph, try the alternatives Inkwell offers when you select it.';
+    } else if (k === 'register' && lang) {
+      const f = lang.features, bad = f.contractions + f.exclamations + (sch ? f.you : 0);
+      mark = band(-bad, [-3, -1.5, -0.6, -0.2]);
+      said.push(f.contractions.toFixed(1) + ' contractions, ' + f.exclamations.toFixed(1) + ' exclamations' + (sch ? ', ' + f.you.toFixed(1) + ' uses of "you"' : '') + ' per 100 words');
+      tip = sch ? 'In scholarly writing, write words in full and address the subject, not the reader.' : 'Keep one register from start to finish.';
+    } else return null;
+    if (few) { mark = Math.min(mark, 3); said.push('The page is short, so the counts say little yet'); }
+    return { mark, said, at, tip, by: 'Inkwell' };
+  }
+
+  const api = { kind, measure, criterion, paragraphs };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else root.INKGRADE = api;
+})(typeof self !== 'undefined' ? self : this);
+
+/* INKWELL  |  Copyright (c) 2026 Yannie D. Forest. All rights reserved.
+   No licence is granted. See LICENCE.txt.
+
+   7.49: "Draft with me" (INKDRAFT), without a model. Inkwell asks the few
+   questions a piece of a given kind answers (a paragraph: its point, the
+   reason, the evidence, what the evidence shows, the link onward), the
+   writer answers in their own words, and Inkwell joins the answers into
+   prose with the connecting words the register wants. Every sentence keeps
+   the name of the move it makes, so the draft also shows how such a piece
+   is built. Inkwell adds connecting words only; the ideas, facts and
+   sources are the writer's.
+
+   INKDRAFT.KINDS                  {key: {label, about, steps: [{role, q, ph, opt}]}}
+   INKDRAFT.build(kind, answers, reg)  {text, parts: [{role, text}], missing: [roles]} */
+(function (root) {
+  'use strict';
+  const KINDS = {
+    paragraph: {
+      label: 'An argument paragraph',
+      about: 'A paragraph that argues moves from its point, to the reason, to the evidence, to what the evidence shows, and then onward.',
+      steps: [
+        { role: 'Point', q: 'What is the one point this paragraph makes?', ph: 'Remote work has made the city centre matter less to careers.' },
+        { role: 'Reason', q: 'Why is it true? Give the reason.', ph: 'many firms now hire people wherever they live' },
+        { role: 'Evidence', q: 'What shows it? A source, a figure, a quotation or an example.', ph: 'in 2023 a third of new posts at one large bank were fully remote (Smith 2024)' },
+        { role: 'Meaning', q: 'What does that evidence show about your point?', ph: 'the old pull of the office is weakening' },
+        { role: 'Link', q: 'Where does this lead: your next point, or back to your main claim? (You may leave it.)', ph: 'this shift changes what young graduates look for in a city', opt: true }
+      ]
+    },
+    introduction: {
+      label: 'An introduction',
+      about: 'An introduction moves from the topic, to the problem in it, to your answer, and says the route the page will take.',
+      steps: [
+        { role: 'Topic', q: 'What is the subject, in one sentence a newcomer would follow?', ph: 'Cities have long drawn workers to their centres.' },
+        { role: 'Problem', q: 'What is unsettled or puzzling about it?', ph: 'it is no longer clear that they still do' },
+        { role: 'Answer', q: 'What is your answer, the claim you will defend?', ph: 'remote work is moving careers away from the centre' },
+        { role: 'Route', q: 'In what order will you show it? (You may leave it.)', ph: 'the page looks first at hiring, then at housing, then at what remains' , opt: true }
+      ]
+    },
+    conclusion: {
+      label: 'A conclusion',
+      about: 'A conclusion gives the answer again in new words, gathers the main points, says why it matters, and may name what is still open.',
+      steps: [
+        { role: 'Answer', q: 'What, in the end, is your answer? Say it in new words.', ph: 'the centre has lost its hold on working life' },
+        { role: 'Points', q: 'Which main points brought you there?', ph: 'hiring has spread out and housing has followed' },
+        { role: 'Significance', q: 'Why does it matter, and to whom?', ph: 'planners still build as if the old pattern held' },
+        { role: 'Open question', q: 'What is still open? (You may leave it.)', ph: 'whether the change will last once offices adapt', opt: true }
+      ]
+    },
+    email: {
+      label: 'An email or letter',
+      about: 'A clear message says who it is for and why at once, gives what the reader needs, asks plainly, and closes.',
+      steps: [
+        { role: 'To', q: 'Who is it for?', ph: 'Dr Patel' },
+        { role: 'Purpose', q: 'Why are you writing? Say it as you would aloud.', ph: 'ask for a short extension on the second essay' },
+        { role: 'Details', q: 'What does the reader need to know?', ph: 'I was ill last week and have a note from the health centre' },
+        { role: 'Request', q: 'What exactly do you ask, and by when?', ph: 'could I hand it in by Friday the 24th' },
+        { role: 'From', q: 'Your name, as you sign it.', ph: 'Sam' }
+      ]
+    },
+    summary: {
+      label: 'A summary of a source',
+      about: 'A summary names the source, gives its main claim, says how it argues, and ends with your own view of it.',
+      steps: [
+        { role: 'Source', q: 'Who wrote it, and what is it?', ph: 'In her 2019 study of remote teams, Jones' },
+        { role: 'Claim', q: 'What is its main claim?', ph: 'argues that trust, not tools, decides whether such teams work' },
+        { role: 'Method', q: 'How does it argue or what does it rest on?', ph: 'she draws on interviews with forty managers' },
+        { role: 'Your view', q: 'What do you make of it? (You may leave it.)', ph: 'her sample is small, but the pattern is clear', opt: true }
+      ]
+    }
+  };
+
+  /* the opening words that already connect, so Inkwell adds none */
+  const JOINED = /^(?:because|since|as|this|that|these|those|thus|so|therefore|hence|for example|for instance|according|in |as |by |however|moreover|furthermore|in turn|yet|but|and|which|it follows|consequently|overall|in conclusion|to conclude|finally|first|to show|i |we )/i;
+  /* a first word that may lose its capital inside a sentence */
+  const COMMON = /^(?:the|a|an|this|that|these|those|it|its|there|their|they|people|many|most|some|our|we|he|she|his|her|one|each|every|all|no|not|more|less|new|old|in|on|at|for|with|from|by|of|to|as|when|while|if|because|since|after|before|remote|work|students|cities|firms|planners)\b/i;
+  const tidy = s => String(s || '').replace(/\s+/g, ' ').trim();
+  const cap = s => s ? s[0].toUpperCase() + s.slice(1) : s;
+  const low = s => (s && COMMON.test(s) && !/^I\b/.test(s)) ? s[0].toLowerCase() + s.slice(1) : s;
+  const stop = s => /[.!?…]["”’)]?$/.test(s) ? s : s.replace(/[,;:]+$/, '') + '.';
+  const join = (lead, s) => (JOINED.test(s) ? cap(s) : lead + low(s));
+
+  const LEADS = {
+    scholarly: { reason: 'This is so because ', evidence: 'For example, ', meaning: 'This suggests that ', link: 'In turn, ', problem: 'Yet ', answer: 'I argue that ', route: 'To show this, ', concl: 'In conclusion, ', points: 'As the preceding sections show, ', sig: 'This matters because ', open: 'What remains open is ', view: 'In my view, ' },
+    professional: { reason: 'This is because ', evidence: 'For example, ', meaning: 'This shows that ', link: 'As a result, ', problem: 'Yet ', answer: 'This piece argues that ', route: 'To show this, ', concl: 'In short, ', points: 'As we have seen, ', sig: 'This matters because ', open: 'A question remains: ', view: 'In my view, ' },
+    casual: { reason: 'That’s because ', evidence: 'For example, ', meaning: 'So ', link: 'And ', problem: 'But ', answer: 'I think ', route: 'Here’s how: ', concl: 'So, all told, ', points: 'We’ve seen that ', sig: 'It matters because ', open: 'What I still wonder is ', view: 'For me, ' }
+  };
+
+  function build(kind, answers, reg) {
+    const K = KINDS[kind] || KINDS.paragraph, L = LEADS[reg] || LEADS[reg === 'creative' ? 'casual' : 'professional'];
+    const A = (answers || []).map(tidy), parts = [], missing = [];
+    K.steps.forEach((st, i) => {
+      const a = A[i] || '';
+      if (!a) { if (!st.opt) missing.push(st.role); return; }
+      let t = a;
+      if (kind === 'paragraph') {
+        t = st.role === 'Point' ? cap(a) : st.role === 'Reason' ? join(L.reason, a) : st.role === 'Evidence' ? (/^["“]/.test(a) ? 'As one source puts it, ' + a : join(L.evidence, a)) : st.role === 'Meaning' ? join(L.meaning, a) : join(L.link, a);
+      } else if (kind === 'introduction') {
+        t = st.role === 'Topic' ? cap(a) : st.role === 'Problem' ? (/\?$/.test(a) ? cap(a) : join(L.problem, a)) : st.role === 'Answer' ? join(L.answer, a) : join(L.route, a);
+      } else if (kind === 'conclusion') {
+        t = st.role === 'Answer' ? join(L.concl, a) : st.role === 'Points' ? join(L.points, a) : st.role === 'Significance' ? join(L.sig, a) : (/\?$/.test(a) ? cap(a) : join(L.open, a));
+      } else if (kind === 'email') {
+        t = st.role === 'To' ? (/^(?:dear|hello|hi)\b/i.test(a) ? cap(a).replace(/[.,]?$/, ',') : (reg === 'casual' ? 'Hi ' : 'Dear ') + a.replace(/[.,]$/, '') + ',')
+          : st.role === 'Purpose' ? (/^I\b/.test(a) ? a : 'I am writing to ' + low(a))
+          : st.role === 'Request' ? (/^(?:could|would|can|may|please)\b/i.test(a) ? cap(a).replace(/[.]?$/, /^(?:could|would|can|may)\b/i.test(a) ? '?' : '.') : 'Could you ' + low(a).replace(/[.?]?$/, '?'))
+          : st.role === 'From' ? (reg === 'casual' ? 'Thanks,\n' : 'With best wishes,\n') + a.replace(/[.,]$/, '')
+          : cap(a);
+      } else if (kind === 'summary') {
+        t = st.role === 'Source' ? cap(a) : st.role === 'Your view' ? join(L.view, a) : a;
+      }
+      if (!(kind === 'email' && (st.role === 'To' || st.role === 'From' || st.role === 'Request')) && !(kind === 'summary' && st.role === 'Source')) t = stop(t);
+      parts.push({ role: st.role, text: t });
+    });
+    let text;
+    if (kind === 'email') {
+      const to = parts.find(p => p.role === 'To'), from = parts.find(p => p.role === 'From');
+      const body = parts.filter(p => p !== to && p !== from).map(p => p.text).join(' ');
+      text = [to && to.text, body, from && from.text].filter(Boolean).join('\n\n');
+    } else if (kind === 'summary') {
+      /* the source runs into its claim: "In her 2019 study, Jones argues …" */
+      const src = parts.find(p => p.role === 'Source'), cl = parts.find(p => p.role === 'Claim');
+      const rest = parts.filter(p => p !== src && p !== cl).map(p => cap(p.text));
+      const head = src && cl ? stop(src.text.replace(/[.]$/, '') + ' ' + low(cl.text.replace(/^[A-Z]/, c => c))) : (src ? stop(src.text) : cl ? cap(cl.text) : '');
+      text = [head].concat(rest).filter(Boolean).join(' ');
+    } else text = parts.map(p => p.text).join(' ');
+    return { text, parts, missing };
+  }
+
+  const api = { KINDS, build };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else root.INKDRAFT = api;
+})(typeof self !== 'undefined' ? self : this);
+
+/* INKWELL  |  Copyright (c) 2026 Yannie D. Forest. All rights reserved.
+   No licence is granted. See LICENCE.txt.
+
+   7.49: one way throughout (INKCONSIST). A document that writes the same
+   thing two ways is marked where it departs from the way it uses most, with
+   that way as the fix: a term's capitals ("Internet", "internet"), its
+   hyphen ("e-mail", "email"), the quotation marks and apostrophes (straight
+   or curly), the dash (spaced en dash, closed em dash, a spaced hyphen, two
+   hyphens), the ellipsis ("..." or "…"), number ranges (hyphen or en dash),
+   large numbers (10000 or 10,000) and a unit's space ("5 km", "5km"). (The
+   serial comma was tried and left out: a list cannot be told from a clause
+   without parsing, and on published articles most of its marks were not
+   lists.)
+
+   A form is marked only when the document has a clear majority (at least
+   two thirds of the uses, and at least two of them). Names are left alone:
+   a capital beside another capital is part of a name ("Church of England"),
+   and words whose capital changes their sense ("the State", "the state")
+   are not compared. References, headings and the masked places (quotations,
+   citations, addresses) are not counted.
+
+   INKCONSIST.check(text, {ranges, markRanges, masked(i), maskedMarks(i), common(word)})
+     -> [{start, end, orig, fix, why, fam}]
+     ranges or masked: places not to read for words; markRanges or
+     maskedMarks: for the marks
+     (quotation marks, apostrophes, dashes); common: a word that is an
+     ordinary lower-case English word */
+(function (root) {
+  'use strict';
+  const MAJ = 2 / 3;
+  /* capitals that change the sense, or names that are also common words */
+  const SENSE = new Set(('state states church churches government governments crown court courts party parties parliament congress senate union republic university universities college colleges school schools city cities county river street road north south east west northern southern eastern western president presidents king kings queen queens prince princess emperor empire pope bishop minister ministry department office army navy constitution revolution reformation renaissance enlightenment romantic romanticism classical modern modernism realism bible scripture god gods heaven hell earth sun moon nature web net mark will bill bush rose grace hope faith joy may june august frank rich rob pat sue jack guy bob carol dawn eve ray wood ford brown white black green young king park hall hill lee long bell cook baker smith turner cooper mason shepherd stone rock fox wolf bird lamb hunt field house land chapter section figure table appendix part volume book act scene article plate map note notes page pages fig box us it who aids').split(' '));
+  const FUNC = new Set(('the this that these those there their they them then than thus such some also first second third finally firstly secondly however therefore moreover furthermore rather still yet instead indeed hence while when where which who whom whose what why how here for from with without into onto upon about above below after before between among within across through during against towards toward and but nor not only just even both either neither each every all any many most more much other another own same very our your his her its was were are is be been being have has had does did can could would should will shall might must may let one two three four five six seven eight nine ten').split(' '));
+  const lc = s => s.toLowerCase();
+  const most = m => { let best = null, n = 0, tot = 0; for (const [k, v] of m) { tot += v.length; if (v.length > n) { n = v.length; best = k; } } return { best, n, tot }; };
+
+  /* the places counted: no headings, no references, nothing masked. The
+     places left out are marked once in a byte map, so a 100,000-word
+     thesis is read in one pass. o.ranges ([[start, end), ...]) is the fast
+     way to give the masked places; o.masked(i) a slower one. */
+  function scope(t, o, ranges, fn) {
+    const map = new Uint8Array(t.length + 1), mark = (a, b) => { for (let i = Math.max(0, a); i < Math.min(b, t.length); i++) map[i] = 1; };
+    const ref = t.search(/^(?:#{1,3}\s*)?(?:References|Bibliography|Works Cited|Sources|Literature|Notes)\s*:?\s*$/im);
+    if (ref >= 0) mark(ref, t.length);
+    /* headings: marked ones, and short lines with no closing stop */
+    let at = 0;
+    for (const line of t.split('\n')) { const l = line.trim();
+      if (l && (/^#{1,6}\s/.test(l) || (l.split(/\s+/).length <= 14 && !/[.!?:;"”)\]]$/.test(l)))) mark(at, at + line.length);
+      at += line.length + 1; }
+    for (const r of ranges || []) mark(r[0], r[1]);
+    return fn ? (i => map[i] === 1 || fn(i)) : (i => map[i] === 1);
+  }
+  function startOfSentence(t, i) {
+    let j = i - 1;
+    while (j >= 0 && /["“‘'(\[\s*_]/.test(t[j]) && t[j] !== '\n') j--;
+    if (j < 0 || t[j] === '\n') return true;
+    return /[.!?:;…]/.test(t[j]) || (t[j] === '>' );
+  }
+
+  function capitals(t, out, skipAt, o) {
+    const re = /\p{L}[\p{L}'’]*(?:-[\p{L}0-9]+)*/gu, forms = new Map(); let m;
+    const toks = [];
+    while ((m = re.exec(t))) toks.push({ w: m[0], s: m.index, e: m.index + m[0].length });
+    const kind = w => /^[\p{Lu}0-9-]+$/u.test(w) && /\p{Lu}.*\p{Lu}/u.test(w) ? 'upper' : /^\p{Lu}[^\p{Lu}]*$/u.test(w) ? 'cap' : /^[^\p{Lu}]+$/u.test(w) ? 'low' : 'mixed';
+    /* a title in quotation marks or italics keeps its own capitals */
+    const tmap = new Uint8Array(t.length + 1), qre = /“[^”\n]{1,200}”|"[^"\n]{1,200}"|‘[^’\n]{1,120}’(?![a-z])|\*[^*\n]{1,200}\*|_[^_\n]{1,200}_|\([^)\n]{0,160}\)/g; let q;
+    while ((q = qre.exec(t))) for (let j = q.index + 1; j < q.index + q[0].length - 1; j++) tmap[j] = 1;
+    const inTitle = i => tmap[i] === 1;
+    /* names: a capital cited with a year or a note number ("Said (1993)", "Said, [12]") */
+    const named = new Set(); { const nre = /(\p{Lu}[\p{L}'’-]+)(?:,? (?:\(?\d{4}|et al)|\s*\((?:\d{4}|n\.d\.)|,?\s*\[\d)/gu; let x; while ((x = nre.exec(t))) named.add(lc(x[1])); }
+    const prevWord = i => toks[i - 1] && /^[ \t]+$/.test(t.slice(toks[i - 1].e, toks[i].s)) ? lc(toks[i - 1].w) : '';
+    /* terms written both ways after "the": one term, two forms */
+    const theLow = new Set(), theCap = new Set();
+    toks.forEach((k, i) => { if (prevWord(i) !== 'the' || inTitle(k.s) || skipAt(k.s)) return; const key = lc(k.w); (/^\p{Lu}/u.test(k.w) ? theCap : theLow).add(key); });
+    for (let i = 0; i < toks.length; i++) {
+      const k = toks[i], key = lc(k.w).replace(/['’]s$/, '');
+      if (inTitle(k.s)) continue;
+      if (key.length < 3 || SENSE.has(key) || SENSE.has(key.replace(/s$/, '')) || FUNC.has(key) || named.has(key)) continue;
+      if (skipAt(k.s) || startOfSentence(t, k.s)) continue;
+      const f = kind(k.w); if (f === 'mixed') continue;
+      if (f === 'upper' && key.length < 4) continue;
+      if (f !== 'low') {
+        /* a capital counts only inside a clause: a small word or a comma
+           just before it (after a citation, a note number or a bracket it
+           may begin a sentence: "[32] This", "abilities.4 For") */
+        let pj = k.s - 1; while (pj >= 0 && (t[pj] === ' ' || t[pj] === '\t')) pj--;
+        const pc = pj >= 0 ? t[pj] : '';
+        if (!/[\p{Ll},]/u.test(pc)) continue;
+        /* "the Fund", "the Absolute", "Level 3": a capital the writer chose,
+           unless the same term also stands after "the" in lower case */
+        if ((prevWord(i) === 'the' && !theLow.has(key)) || /^\s*\d/.test(t.slice(k.e, k.e + 3))) continue;
+        /* part of a name or a title: a capital beside a capital, across
+           "of", "and", "&" or a comma ("Ministry of Health", "Autonomy,
+           Paternalism, and Consent") */
+        const capNear = (j, d) => { for (let n = 0; n < 3; n++, j += d) { const x = toks[j]; if (!x) return false; if (/^(?:of|and|for|the|de|la|von|van|du|del|on|in)$/.test(x.w)) continue; if (FUNC.has(lc(x.w))) return false; return /^\p{Lu}/u.test(x.w); } return false; };
+        if (capNear(i - 1, -1) || capNear(i + 1, 1)) continue;
+      }
+      if (!forms.has(key)) forms.set(key, new Map());
+      const fm = forms.get(key), sf = k.w.replace(/['’]s$/, '');
+      const fk = f === 'low' ? 'low' : f === 'cap' ? 'cap' : 'upper';
+      if (!fm.has(fk)) fm.set(fk, []);
+      fm.get(fk).push({ s: k.s, e: k.s + sf.length, w: sf });
+    }
+    for (const [key, fm] of forms) {
+      if (fm.size < 2) continue;
+      const { best, n, tot } = most(fm);
+      if (n < 2 || n / tot < MAJ) continue;
+      /* a common word in lower case is not raised to a capital the document
+         gives it in names and titles ("said" beside Edward Said) */
+      if (best !== 'low' && fm.has('low') && o.common && o.common(key)) continue;
+      if (best === 'low' && n < 3) continue;
+      const shown = fm.get(best)[0].w;
+      for (const [k2, list] of fm) {
+        if (k2 === best) continue;
+        for (const x of list) {
+          const fix = best === 'low' ? lc(x.w) : best === 'upper' ? x.w.toUpperCase() : x.w[0].toUpperCase() + lc(x.w.slice(1));
+          if (fix === x.w) continue;
+          out.push({ start: x.s, end: x.e, orig: x.w, fix, fam: 'caps', why: 'Capitalisation consistency: this document writes “' + shown + '” ' + n + ' times; keep one form' });
+        }
+      }
+    }
+  }
+
+  function hyphens(t, out, skipAt) {
+    const hy = new Map(), re = /\b([A-Za-z]+(?:-[A-Za-z]{2,})+)\b/g; let m;
+    while ((m = re.exec(t))) { if (skipAt(m.index)) continue; const k = lc(m[1]); if (/^re-/.test(k)) continue; if (!hy.has(k)) hy.set(k, []); hy.get(k).push({ s: m.index, e: m.index + m[1].length, w: m[1] }); }
+    if (!hy.size) return;
+    const words = new Map(), wre = /\b[A-Za-z]{3,}\b/g; let w;
+    while ((w = wre.exec(t))) { if (t[w.index - 1] === '-' || t[w.index + w[0].length] === '-') continue; const k = lc(w[0]); if (!words.has(k)) words.set(k, []); words.get(k).push({ s: w.index, e: w.index + w[0].length, w: w[0] }); }
+    for (const [k, hl] of hy) {
+      const cl = (words.get(k.replace(/-/g, '')) || []).filter(c => !skipAt(c.s));
+      if (!cl.length) continue;
+      const tot = hl.length + cl.length, hyW = hl.length >= cl.length;
+      const n = Math.max(hl.length, cl.length);
+      if (n < 2 || n / tot < MAJ) continue;
+      const minor = hyW ? cl : hl;
+      for (const x of minor) {
+        const fix = hyW ? (() => { /* put the hyphens back where the document has them */ let r = '', j = 0; for (const ch of hl[0].w) { if (ch === '-') { r += '-'; continue; } r += x.w[j++] || ''; } return r; })() : x.w.replace(/-/g, '');
+        out.push({ start: x.s, end: x.e, orig: x.w, fix, fam: 'hyph', why: 'Hyphen consistency: this document writes “' + (hyW ? hl[0].w : cl[0].w) + '” ' + n + ' times; keep one form' });
+      }
+    }
+  }
+
+  /* competing forms of one mark; each form's pattern starts with a prefix
+     group (no lookbehind: Safari before 16.4 cannot read one), and its
+     "to" turns any match into that form. The minority is marked with the
+     majority's form. */
+  function symbols(t, out, skipAt, fam, forms, why) {
+    const seen = forms.map(f => { const L = []; f.re.lastIndex = 0; let m;
+      while ((m = f.re.exec(t))) { const pre = m[1] || '', core = m[0].slice(pre.length), at = m.index + pre.length;
+        if (!skipAt(at)) L.push({ at, core, m }); if (!m[0].length) f.re.lastIndex++; }
+      return L; });
+    let bi = -1, n = 0, tot = 0;
+    seen.forEach((L, i) => { tot += L.length; if (forms[i].to && L.length > n) { n = L.length; bi = i; } });
+    if (bi < 0 || n < 2 || n / tot < MAJ || n === tot) return;
+    const want = forms[bi];
+    seen.forEach((L, i) => { if (i === bi) return;
+      for (const x of L) { const fix = want.to(x.core, x.at, t); if (fix == null || fix === x.core) continue;
+        out.push({ start: x.at, end: x.at + x.core.length, orig: x.core, fix, fam, why: why(want, n) }); } });
+  }
+  const opening = (t, i) => i === 0 || /[\s(\[{—–-]/.test(t[i - 1]);
+  const W = "([A-Za-z,;)”’\"])", A = "(?=[A-Za-z(“‘\"])";
+
+  function check(text, o) {
+    o = o || {};
+    const t = String(text || ''), out = [], skipAt = scope(t, o, o.ranges, o.masked);
+    /* the marks are the writer's typesetting even inside a quotation, so
+       they take a lighter mask (addresses, code) where one is given */
+    const skipMk = (o.markRanges || o.maskedMarks) ? scope(t, o, o.markRanges, o.maskedMarks) : skipAt;
+    try { capitals(t, out, skipAt, o); } catch (e) {}
+    try { hyphens(t, out, skipAt); } catch (e) {}
+    const run = (fam, forms, why) => { try { symbols(t, out, skipMk, fam, forms, why); } catch (e) {} };
+    run('quotes', [
+      { name: 'curly', re: /()[“”]/g, to: (c, at, t2) => opening(t2, at) ? '“' : '”' },
+      { name: 'straight', re: /()"/g, to: () => '"' }
+    ], w => 'Quotation mark consistency: this document mostly uses ' + (w.name === 'curly' ? 'curly quotation marks (“ ”)' : 'straight quotation marks (")') + '; keep one kind');
+    run('apos', [
+      { name: 'curly', re: /([A-Za-z])’(?=[A-Za-z])/g, to: () => '’' },
+      { name: 'straight', re: /([A-Za-z])'(?=[A-Za-z])/g, to: () => "'" }
+    ], w => 'Apostrophe consistency: this document mostly uses ' + (w.name === 'curly' ? 'the curly apostrophe (’)' : 'the straight apostrophe (\')') + '; keep one kind');
+    run('dash', [
+      { name: 'a closed em dash (word—word)', re: new RegExp(W + '—' + A, 'g'), to: () => '—' },
+      { name: 'a spaced em dash (word — word)', re: / — /g, to: () => ' — ' },
+      { name: 'a spaced en dash (word – word)', re: / – /g, to: () => ' – ' },
+      { name: 'hyph', re: new RegExp(W + ' - ' + A, 'g') },
+      { name: 'dbl', re: new RegExp(W + ' ?-- ?' + A, 'g') }
+    ], w => 'Dash consistency: this document mostly sets a dash as ' + w.name + '; keep one kind');
+    run('ellipsis', [
+      { name: 'char', re: /()…/g, to: () => '…' },
+      { name: 'dots', re: /(^|[^.])\.\.\.(?!\.)/g, to: () => '...' }
+    ], w => 'Ellipsis consistency: this document mostly writes ' + (w.name === 'char' ? 'the ellipsis as one character (…)' : 'the ellipsis as three full stops (...)') + '; keep one form');
+    run('range', [
+      { name: 'en', re: /(^|[^\d.\-–/])\d{1,4}–\d{1,4}(?![\d\-–/])/g, to: c => c.replace('-', '–') },
+      { name: 'hy', re: /(^|[^\d.\-–/])\d{1,4}-\d{1,4}(?![\d\-–/])/g, to: c => c.replace('–', '-') }
+    ], w => 'Range consistency: this document mostly writes number ranges with ' + (w.name === 'en' ? 'an en dash (10–20)' : 'a hyphen (10-20)') + '; keep one form');
+    run('thou', [
+      { name: 'comma', re: /(^|[^\d.,])\d{2,3},\d{3}(?:,\d{3})*(?![\d,])(?!\.\d)/g, to: c => c.replace(/,/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',') },
+      { name: 'bare', re: /(^|[^\d.,A-Za-z/#\-])\d{5,}(?!\d|,\d|[A-Za-z/\-])/g, to: c => c.replace(/,/g, '') }
+    ], w => 'Number consistency: this document mostly writes large numbers ' + (w.name === 'comma' ? 'with commas (10,000)' : 'without commas (10000)') + '; keep one form');
+    const U = '(?:km|kg|cm|mm|mg|ml|mL|GB|MB|KB|kB|TB|Hz|kHz|MHz|GHz|kW|MW|kWh|mph)';
+    run('unit', [
+      { name: 'spaced', re: new RegExp('()\\b\\d+(?:[.,]\\d+)? ' + U + '\\b', 'g'), to: c => c.replace(/(\d)(?=[A-Za-z])/, '$1 ') },
+      { name: 'closed', re: new RegExp('()\\b\\d+(?:[.,]\\d+)?' + U + '\\b', 'g'), to: c => c.replace(/ (?=[A-Za-z])/, '') }
+    ], w => 'Unit consistency: this document mostly writes ' + (w.name === 'spaced' ? 'a space before a unit (5 km)' : 'units closed up (5km)') + '; keep one form');
+    return out.sort((x, y) => x.start - y.start);
+  }
+
+  const LESSONS = {
+    'Capitalisation consistency': ['A term takes its capital, or not, the same way each time: "internet" or "Internet", "Covid-19" or "COVID-19". Choose one, ideally the one your style guide or field uses, and keep it.', '"the Internet … the internet" → one form'],
+    'Hyphen consistency': ['Some words are written closed, hyphenated or open as English changes ("e-mail", "email"). Either may be right; a document chooses one and keeps it.', '"well-being … wellbeing" → one form'],
+    'Quotation mark consistency': ['Curly quotation marks (“ ”) are the typeset form; straight ones (") come from the keyboard. A finished document uses one kind.', '"straight" beside “curly” → one kind'],
+    'Apostrophe consistency': ['The curly apostrophe (’) is the typeset form, the straight one (\') the typed form. Keep one throughout.', 'don\'t … don’t → one kind'],
+    'Dash consistency': ['A dash that sets off a phrase is either a closed em dash (word—word, common in US style) or a spaced en dash (word – word, common in British style). A spaced hyphen or two hyphens stand in for one when typing.', '"word -- word" → "word—word" or "word – word"'],
+    'Ellipsis consistency': ['An ellipsis is three full stops or one character (…). Either is accepted; keep one.', '"..." beside "…" → one form'],
+    'Range consistency': ['Style guides set number ranges with an en dash (10–20); a hyphen is the typed stand-in. Keep one form.', '"pp. 10-20" beside "pp. 30–40" → one form'],
+    'Number consistency': ['Numbers of five digits or more usually take commas (10,000) in running text, or a thin space in some styles. Keep one form.', '"12000" beside "15,000" → one form'],
+    'Unit consistency': ['Most styles (SI, Chicago, APA) put a space between a number and its unit: "5 km". Keep one form throughout.', '"5km" beside "8 km" → one form']
+  };
+
+  const api = { check, LESSONS };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else root.INKCONSIST = api;
+})(typeof self !== 'undefined' ? self : this);
+
+/* INKWELL  |  Copyright (c) 2026 Yannie D. Forest. All rights reserved.
+   No licence is granted. See LICENCE.txt.
+
    7.44: My way of working (INKWAY), the same in Inkwell, Tabula, Scriba and
    Fontes. Each part is off until the writer switches it on, and one choice
    serves all four: inside Inkwell they share the device's storage, and a
@@ -9817,7 +10462,7 @@ function inkFoldDefault(v){return (v===null||v===undefined)?(window.innerWidth<7
 window.__inkBootMarks=[];
 function inkMark(m){try{window.__inkBootMarks.push(m);}catch(e){}}
 
-const BUILD='7.48 · XVIII · OCTOBRIS · MMXXVI';
+const BUILD='7.49 · XIX · OCTOBRIS · MMXXVI';
 /* ================= THE WRITER'S VOICE — assist, never lead ================= */
 function analyzeVoice(){const docs=S.docs.filter(d=>d.text&&d.text.trim());
  if(!docs.length)return toast('Add documents first; the voice is measured from your own writing');
@@ -10254,7 +10899,7 @@ stats:LS('stats')||{},showStyle:inkStyleDefault(),modelRepo:LS('modelRepo')||'',
 solo:LS('solo')||false,readable:LS('readable')||false,noTips:LS('noTips')||false,tipSeen:LS('tipSeen')||{},
 motion:LS('motion')||'full',rtab:LS('rtab')||'sugg',door:LS('door')!==false,
 sideFold:inkFoldDefault(LS('sideFold')),panelFold:inkFoldDefault(LS('panelFold')),notes:LS('notes')||[],
-tipPos:LS('tipPos')||null,tipMin:LS('tipMin')||false,footFold:LS('footFold')||false,showThink:LS('showThink')||false,sound:LS('sound')!==false,voice:LS('voice')||'',aiRules:LS('aiRules')||[],muteWords:LS('muteWords')||[],spellDict:LS('spellDict')||[],spellOff:LS('spellOff')||false,dialect:LS('dialect')||'off',markLevel:LS('markLevel')||'ug',markMode:LS('markMode')||'w',argMarks:LS('argMarks')||null,citeStyle:LS('citeStyle')||'harvard',cslStyle:LS('cslStyle')||'',writerAuto:LS('writerAuto')||false,writerKind:LS('writerKind')||'',tabletAuto:LS('tabletAuto')||false,tabletFile:LS('tabletFile')||'',engineFirst:LS('engineFirst')||'device',tmThreads:LS('tmThreads')||0,goals:LS('goals')||{aud:'Academic readers',dom:'General document',intent:'Argue'}};
+tipPos:LS('tipPos')||null,tipMin:LS('tipMin')||false,footFold:LS('footFold')||false,showThink:LS('showThink')||false,sound:LS('sound')!==false,voice:LS('voice')||'',aiRules:LS('aiRules')||[],muteWords:LS('muteWords')||[],spellDict:LS('spellDict')||[],spellOff:LS('spellOff')||false,dialect:LS('dialect')||'off',markLevel:LS('markLevel')||'ug',markMode:LS('markMode')||'w',argMarks:LS('argMarks')||null,draftKind:LS('draftKind')||'paragraph',dismissed:LS('dismissed')||{},draftAns:LS('draftAns')||{},statEx:LS('statEx')||{},rubric:LS('rubric')||'',gradeBy:LS('gradeBy')||'inkwell',selfMarks:LS('selfMarks')||{},citeStyle:LS('citeStyle')||'harvard',cslStyle:LS('cslStyle')||'',writerAuto:LS('writerAuto')||false,writerKind:LS('writerKind')||'',tabletAuto:LS('tabletAuto')||false,tabletFile:LS('tabletFile')||'',engineFirst:LS('engineFirst')||'device',tmThreads:LS('tmThreads')||0,goals:LS('goals')||{aud:'Academic readers',dom:'General document',intent:'Argue'}};
 let SNAPS=LS('snaps')||{};
 inkMark('storage');
 var state = {}; Object.defineProperty(state, 'stickyNotes', { get() { return S.notes; }, set(v) { S.notes = v; } });
@@ -13774,6 +14419,7 @@ const MENUS={
   ['🧩 My way of working: comfort, where I was, three at a time',()=>openModal('myway'),()=>{try{const g=INKWAY.get();return (g.comfort.on||g.where.on||g.three.on)?'on':'';}catch(e){return '';}}],
   ['🔊 Soundscape',()=>toggleSound(),()=>S.sound?'on':''],
   ['🎯 Goals: who, what, why',()=>openModal('goals')],
+  ['📊 Performance: counts, times, readability',()=>openPerformance()],
   ['🧭 Guided tour',()=>startTour()],
   ['1× One suggestion at a time',()=>toggleSolo(),()=>S.solo?'on':''],
   ['◌ Motion: '+({full:'Full',calm:'Calm',minimal:'Minimal'}[S.motion]),()=>cycleMotion()]],
@@ -14417,9 +15063,13 @@ const GRAM5=[
 const GRAM6=[
  /* the bare lowercase pronoun and the calendar */
  {re:/\bi\b(?=[\s'’.,!?;:\)]|$)/g,cs:true,to:'I',cat:'g',label:'Capital I'},
- {re:/\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b/g,cs:true,to:null,cat:'g',label:'Days of the week carry a capital'},
- {re:/\b(january|february|march|april|may|june|july|august|september|october|november|december)\b/g,cs:true,to:null,cat:'g',label:'Months carry a capital'},
- {re:/\bthe english language\b/g,to:null,cs:true,cat:'g',label:'Proper adjectives carry a capital'},
+ /* 7.49: each with its capital as the fix; "march", "may" and "august"
+    are ordinary words too, so only where they stand as a date */
+ {re:/\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday)s?\b/g,cs:true,to:m=>m[0].toUpperCase()+m.slice(1),cat:'g',label:'Days of the week carry a capital'},
+ {re:/\b(january|february|april|june|july|september|october|november|december)\b/g,cs:true,to:m=>m[0].toUpperCase()+m.slice(1),cat:'g',label:'Months carry a capital'},
+ {re:/\b(?:(?:in|of|early|late|mid|since|until|till|by|during|from) (march|may|august)(?=[,.;:!?)]|\s+(?:\d|of\b|and\b|or\b|to\b|when\b)|$)|(march|may|august)(?= \d{1,2}(?:st|nd|rd|th)?\b| \d{4}\b)|\d{1,2}(?:st|nd|rd|th)? (march|may|august)\b)/g,cs:true,fx:r=>r.replace(/\b(march|may|august)\b/,x=>x[0].toUpperCase()+x.slice(1)),cat:'g',label:'Months carry a capital'},
+ {re:/\b(english|french|spanish|german|italian|chinese|japanese|korean|russian|portuguese|dutch|greek|hindi|urdu|bengali|punjabi|tamil|latin|hebrew|swedish|norwegian|danish|finnish|icelandic|irish|scottish|welsh|british|american|african|asian|european|canadian|australian|mexican|brazilian|argentinian|argentine|chilean|colombian|peruvian|venezuelan|cuban|jamaican|indian|pakistani|bangladeshi|nepali|sri lankan|egyptian|nigerian|kenyan|ghanaian|ethiopian|moroccan|algerian|tunisian|turkish|iranian|iraqi|israeli|palestinian|syrian|lebanese|saudi|vietnamese|thai|indonesian|malaysian|filipino|swiss|belgian|austrian|hungarian|czech|slovak|ukrainian|romanian|bulgarian|serbian|croatian|bosnian|albanian|lithuanian|latvian|estonian|muslim|christian|jewish|buddhist|hindu|sikh|protestant|islamic|christmas|easter|ramadan|england|scotland|wales|britain|france|spain|germany|italy|japan|korea|russia|portugal|netherlands|greece|ireland|sweden|norway|denmark|finland|america|europe|africa|asia|australia|canada|mexico|brazil|argentina|colombia|peru|india|pakistan|bangladesh|egypt|nigeria|kenya|ethiopia|morocco|iran|iraq|israel|vietnam|thailand|indonesia|malaysia|singapore|philippines|switzerland|belgium|austria|hungary|ukraine|romania|bulgaria|london|paris|berlin|madrid|rome|tokyo|moscow|beijing|edinburgh|dublin|sydney|toronto|chicago|boston)\b(?! (?:numerals?|fries|windows?|doors?|toast|press|horns?|polish|type)\b)/g,cs:true,to:m=>m.replace(/\b[a-z]/g,x=>x.toUpperCase()),cat:'g',label:'Names of peoples, languages, places and feasts carry a capital'},
+ {re:/\btv\b/g,cs:true,to:'TV',cat:'g',label:'"TV" is written in capitals'},
  /* tense slips */
  {re:/\b(?:I|you|we|they|he|she) have went\b/gi,to:null,cat:'g',label:'“Have gone” — went takes no auxiliary'},
  {re:/\b(?:I|you|we|they|he|she) have did\b/gi,to:null,cat:'g',label:'“Have done” — did takes no auxiliary'},
@@ -15180,7 +15830,7 @@ function dialectPack(){
     the doctoral checks. "Analyze" is American in every British style. */
  DIALCACHE[key]=DIALECT.filter(pair=>!(S.dialect==='uk'&&/ize$/.test(pair[0])&&/ise$/.test(pair[1]))).map(pair=>{
   const other=S.dialect==='us'?pair[1]:pair[0], want=S.dialect==='us'?pair[0]:pair[1];
-  return {re:new RegExp('\\b'+other+'(s|ed|ing|es)?\\b','gi'),to:want+'$1',cat:'g',
+  return {re:new RegExp('\\b'+other+'(s|ed|ing|es)?\\b','gi'),to:want+'$1',cat:'g',dict:true,
    label:(S.dialect==='us'?'British form; US English prefers':'US form; British English prefers')+' '+want};});
  if(S.dialect==='us')DIALCACHE[key]=DIALCACHE[key].concat([
   {re:/\bwhilst\b/gi,to:'while',cat:'g',label:'US English prefers "while"'},
@@ -15313,17 +15963,28 @@ function commaSpliceCheck(t,ms,out){
       there needs" close a phrase; "Applied to the human being, it",
       "Considering these forms, we", "Should this prove productive, it"
       open with a participle or an inversion */
-   var seg=before.slice(Math.max(before.lastIndexOf(','),before.lastIndexOf(';'),before.lastIndexOf(':'),before.lastIndexOf('—'),before.lastIndexOf('('))+1).trim();
+   var seg=before.slice(Math.max(before.lastIndexOf(','),before.lastIndexOf(';'),before.lastIndexOf(':'),before.lastIndexOf('—'),before.lastIndexOf(' – '),before.lastIndexOf('('))+1).trim();
    if(!CS_VERB.test(seg))continue;
    var sw0=(seg.split(/\s+/)[0]||'').replace(/[^A-Za-z]/g,'');
    if(CS_INTRO.test(sw0)||/^(?:[A-Za-z]+(?:ed|ing|en)|Should|Had|Were|To|Unlike|Like|As|Applied|Given|Compared)$/.test(sw0))continue;
+   /* 7.49: an opening clause ("And even when you can, it is") is no splice */
+   var segL=seg.replace(/^[^A-Za-z]+/,'');
+   if(/^(?:(?:and|but|so|or|yet)\s+)?(?:(?:even|only|just|especially|particularly|mainly|also)\s+)?(?:when|whenever|if|although|though|because|since|as|while|whereas|unless|until|after|before|once|wherever)\b/i.test(segL))continue;
+   /* an aside closes before the comma: a relative clause ("where the
+      protests were taking place, she"), or "that is", "in other words" */
+   if(/^(?:especially|particularly|even|only|also|mainly|largely|partly|chiefly)\s+(?:in|on|at|for|with|by|from|during|under|within|through|after|before|despite|among|between|against|over|beyond|upon|like|unlike|to|as)\b/i.test(segL))continue;
+   if(/^(?:where|which|who|whom|whose|whereby)\b/i.test(segL)||/(?:^|\s)(?:that is|in other words|namely|i\.e\.|e\.g\.|for example|for instance|however|therefore|thus|indeed|moreover|in fact|of course|in turn|in short)$/i.test(segL))continue;
+   /* a conditional or a reason inside the clause ("says even if ..., it") */
+   if(/\b(?:if|when|whenever|although|though|because|since|while|whereas|unless|until|once|provided|given that|now that|in case|in the case that|as long as|so long as|insofar as|that as|and as)\b/i.test(segL))continue;
    var lastSub=seg.search(/\b(that|which|who|whom|whose|because|although|though|if|when|while|whereas|since|unless|until|after|before|once|where)\b(?![\s\S]*\b(that|which|who|whom|whose|because|although|though|if|when|while|whereas|since|unless|until|after|before|once|where)\b)/i);
    if(lastSub>=0&&!CS_VERB.test(seg.slice(lastSub).replace(/^\w+/,'')))continue;
    var abs=sbase+commaPos;
    if(inMask(abs,ms))continue;
    if(out.some(function(o){return abs<o.end&&abs+1>o.start;}))continue;
-   out.push({start:abs,end:abs+1,orig:',',fix:null,cat:'g',
-    why:'Possible comma splice: use a full stop, a semicolon, or a joining word'});
+   /* 7.49: the fix ends the first sentence; the card names the other ways */
+   var pro=cm[1],pEnd=abs+cm[0].indexOf(pro)+pro.length;
+   out.push({start:abs,end:pEnd,orig:t.slice(abs,pEnd),fix:'. '+pro[0].toUpperCase()+pro.slice(1),cat:'g',
+    why:'Comma splice: two sentences joined by a comma. End the first with a full stop, or use a semicolon if they belong together, or join them with a word such as "and" or "because"'});
   }
  }
 }
@@ -15460,6 +16121,23 @@ function capitalCheck(t,ms,out){
   if(ovTaken(out,start,start+1))continue;
   out.push({start:start,end:start+1,orig:m[3],fix:m[3].toUpperCase(),cat:'g',
    why:'New sentence begins in lowercase'});
+ }
+ /* 7.49: after a question or an exclamation, and at the head of a
+    paragraph; not a list item, a note, a word written with an inner
+    capital ("iPhone", "eBay") or an abbreviation ("e.g.") */
+ var re2=/([!?]\s+|(?:^|\n)[ \t]*)(["“‘(]?)([a-z][a-zA-Z'’\-]*)(\.?)/g;guard=0;
+ while((m=re2.exec(t))&&guard++<4000){
+  var w=m[3],st=m.index+m[1].length+m[2].length;
+  if(/[A-Z]/.test(w)||(m[4]&&w.length<=4)||SENT_ABBR.test(w+m[4]))continue;
+  /* a line that carries on the one before (verse, a list after a colon) */
+  if(!/^[!?]/.test(m[1])&&m.index>0){var pv=t.slice(Math.max(0,m.index-400),m.index+1).replace(/\s+$/,'');
+   if(!/(?:[.!?]["”’)]?)$/.test(pv)&&!(/\n\s*\n\s*$/.test(t.slice(Math.max(0,m.index-6),m.index+1))&&!/:$/.test(pv)))continue;}
+  /* a title or a cry inside the sentence: "Jeopardy! and", "Why? asked she" */
+  if(/^[!?]/.test(m[1])&&(/[A-Z][\w'’]*[!?]$/.test(t.slice(Math.max(0,m.index-24),m.index+1))||/^(?:and|or|but|nor|as|said|asked|cried|replied|he|she|they|we|you|i)$/.test(w)))continue;
+  if(inMask(st,ms))continue;
+  if(ovTaken(out,st,st+1))continue;
+  out.push({start:st,end:st+1,orig:w[0],fix:w[0].toUpperCase(),cat:'g',
+   why:'A sentence begins with a capital letter'});
  }
 }
 /* Missing space after a full stop: "end.Another". The two-lowercase-letter run
@@ -15643,11 +16321,13 @@ function consistencyChecks(t,ms,out){
    if(cU&&cK&&cU+cK>=3){
     var minRe=cU<=cK?reU:reK,wantU=cU<=cK?us:uk,otherU=cU<=cK?uk:us;
     var mm,g=0;
+    if(inkDictHas(wantU))continue;
     while((mm=minRe.exec(t))&&g++<60){
      if(inMask(mm.index,ms)||isName(mm.index))continue;
      if(ovTaken(out,mm.index,mm.index+mm[0].length))continue;
-     out.push({start:mm.index,end:mm.index+mm[0].length,orig:mm[0],fix:null,cat:'g',
-      why:'Spelling consistency: this document uses both "'+wantU+'" and "'+otherU+'"'});
+     /* 7.49: the fix is the spelling the document uses most */
+     out.push({start:mm.index,end:mm.index+mm[0].length,orig:mm[0],fix:matchCase(mm[0],otherU+(mm[1]||'')),cat:'g',dict:true,
+      why:'Spelling consistency: this document uses both "'+wantU+'" and "'+otherU+'"; it mostly writes "'+otherU+'"'});
     }
    }
   }
@@ -16145,6 +16825,44 @@ const IRREG_PL={childs:'children',womans:'women',foots:'feet',tooths:'teeth',mou
 const MODALS='can|could|will|would|shall|should|may|might|must|cannot';
 const NEG_AUX="didn['’]t|doesn['’]t|don['’]t|did not|does not|do not|can['’]t|couldn['’]t|won['’]t|wouldn['’]t|shouldn['’]t|mustn['’]t";
 const TRANSITIONS='However|Moreover|Furthermore|Nevertheless|Nonetheless|Consequently|Additionally|Nowadays|Firstly|Secondly|Thirdly|Lastly|Unfortunately|Fortunately|Personally|Honestly|Surprisingly|Interestingly|In addition|For example|For instance|In conclusion|To conclude|To sum up|In my opinion|In my view|On the other hand|On the one hand|Of course|In fact|As a result|In general|In short|In summary|Above all|All in all|After all|In other words|To be honest|As a matter of fact';
+/* 7.49: inclusive language, as Grammarly's delivery notes offer it: a
+   word that names people by one sex, a disability, an age or an origin in a
+   way many readers now find narrow, with the plainer words style guides
+   (APA's guidance on bias-free language among them) suggest. Advice, not
+   correction: it is a style note, never inside a quotation, and not in
+   creative writing, where the words may be a character's. */
+const INCL_PL=(m,one,many)=>/(?:men|women|s)$/i.test(m)?many:one;
+const INCL=[
+ {re:/\bchair(?:wo)?m[ae]n\b/gi,to:m=>INCL_PL(m,'chair','chairs'),alts:['chair','chairperson'],cat:'s',ncre:true,label:'Inclusive language: "chair" names the role, not the sex'},
+ {re:/\bmankind\b/gi,to:'humanity',alts:['humanity','humankind','people'],cat:'s',ncre:true,label:'Inclusive language: "humanity" or "humankind" includes everyone'},
+ {re:/\bmanpower\b/gi,to:'workforce',alts:['workforce','staff','personnel'],cat:'s',ncre:true,label:'Inclusive language: "workforce" or "staff"'},
+ {re:/\bman-made\b/gi,to:'artificial',alts:['artificial','synthetic','human-made'],cat:'s',ncre:true,label:'Inclusive language: "artificial", "synthetic" or "human-made"'},
+ {re:/\bman-hours?\b/gi,to:m=>/s$/i.test(m)?'person-hours':'person-hour',cat:'s',ncre:true,label:'Inclusive language: "person-hours"'},
+ {re:/\bpolice(?:wo)?m[ae]n\b/gi,to:m=>INCL_PL(m,'police officer','police officers'),cat:'s',ncre:true,label:'Inclusive language: "police officer"'},
+ {re:/\bfirem[ae]n\b/gi,to:m=>INCL_PL(m,'firefighter','firefighters'),cat:'s',ncre:true,label:'Inclusive language: "firefighter"'},
+ {re:/\b(?:post|mail)m[ae]n\b/gi,to:m=>INCL_PL(m,'postal worker','postal workers'),alts:['postal worker','mail carrier'],cat:'s',ncre:true,label:'Inclusive language: "postal worker" or "mail carrier"'},
+ {re:/\bbusiness(?:wo)?m[ae]n\b/gi,to:m=>INCL_PL(m,'businessperson','businesspeople'),alts:['businessperson','executive','entrepreneur'],cat:'s',ncre:true,label:'Inclusive language: "businessperson" or "executive"'},
+ {re:/\bspokes(?:wo)?m[ae]n\b/gi,to:m=>INCL_PL(m,'spokesperson','spokespeople'),cat:'s',ncre:true,label:'Inclusive language: "spokesperson"'},
+ {re:/\bsales(?:wo)?m[ae]n\b/gi,to:m=>INCL_PL(m,'salesperson','salespeople'),cat:'s',ncre:true,label:'Inclusive language: "salesperson"'},
+ {re:/\bstewardess(?:es)?\b/gi,to:m=>/es$/i.test(m)?'flight attendants':'flight attendant',cat:'s',ncre:true,label:'Inclusive language: "flight attendant"'},
+ {re:/\bcameram[ae]n\b/gi,to:m=>INCL_PL(m,'camera operator','camera operators'),cat:'s',ncre:true,label:'Inclusive language: "camera operator"'},
+ {re:/\bforefathers\b/gi,to:'ancestors',alts:['ancestors','forebears'],cat:'s',ncre:true,label:'Inclusive language: "ancestors" or "forebears"'},
+ {re:/\blayman['’]s terms\b/gi,to:'plain terms',alts:['plain terms','lay terms','everyday language'],cat:'s',ncre:true,label:'Inclusive language: "plain terms" or "lay terms"'},
+ {re:/\blaym[ae]n\b/gi,to:m=>INCL_PL(m,'layperson','laypeople'),cat:'s',ncre:true,label:'Inclusive language: "layperson"'},
+ {re:/\bthe common man\b/gi,to:'ordinary people',cat:'s',ncre:true,label:'Inclusive language: "ordinary people"'},
+ {re:/\b(is|are|was|were|be|been|being) (?:wheelchair[- ]bound|confined to a wheelchair)\b/gi,to:(m,v)=>({is:'uses',are:'use',was:'used',were:'used',be:'use',been:'used',being:'using'}[v.toLowerCase()])+' a wheelchair',cat:'s',ncre:true,label:'Inclusive language: "uses a wheelchair": the chair gives freedom, it does not bind or confine'},
+ {re:/\bthe (?:disabled|handicapped)\b(?! (?:toilet|toilets|parking|space|spaces|entrance|access|bay|bays)\b)/gi,to:'disabled people',alts:['disabled people','people with disabilities'],cat:'s',ncre:true,label:'Inclusive language: "disabled people" or "people with disabilities", not a group named by its condition'},
+ {re:/\bhandicapped\b/gi,to:'disabled',cat:'s',ncre:true,label:'Inclusive language: "disabled" is the word most people now use'},
+ {re:/\bthe (?:blind|deaf)\b(?=[\s,.;:]+(?:and|or|are|were|have|had|who|in|to|of|can|could|[,.;:]))/gi,to:m=>m.replace(/^the /i,'')+' people',cat:'s',ncre:true,label:'Inclusive language: name the people ("blind people"), not the condition'},
+ {re:/\bthe elderly\b/gi,to:'older people',alts:['older people','older adults'],cat:'s',ncre:true,label:'Inclusive language: "older people" or "older adults"'},
+ {re:/\belderly (people|persons|patients|adults|women|men|residents)\b/gi,to:'older $1',cat:'s',ncre:true,label:'Inclusive language: "older" describes without labelling'},
+ {re:/\bmentally retarded\b/gi,to:'with an intellectual disability',cat:'s',ncre:true,label:'Inclusive language: "with an intellectual disability"'},
+ {re:/\b(?:black|white)list(?:s|ed|ing)?\b/gi,to:m=>m.replace(/^black/i,x=>x[0]==='B'?'Block':'block').replace(/^white/i,x=>x[0]==='W'?'Allow':'allow'),cat:'s',ncre:true,label:'Inclusive language: "blocklist" and "allowlist" say what the list does'},
+ {re:/\billegal (alien|aliens|immigrant|immigrants)\b/gi,to:(m,a)=>'undocumented '+(/s$/i.test(a)?'immigrants':'immigrant'),cat:'s',ncre:true,label:'Inclusive language: "undocumented immigrant" names a status, not a person'},
+ {re:/\bOriental (people|man|woman|men|women|person|persons)\b/g,cs:true,to:'Asian $1',cat:'s',ncre:true,label:'Inclusive language: "Asian" (or the country) for people; "Oriental" now reads as dated'},
+ {re:/\bEskimos?\b/g,cs:true,to:null,alts:['Inuit','Yupik','Iñupiat'],cat:'s',ncre:true,label:'Inclusive language: name the people, "Inuit" or "Yupik", where you can'},
+ {re:/\bcommit(?:ted|s|ting)? suicide\b/gi,to:m=>/committed/i.test(m)?'died by suicide':/commits/i.test(m)?'dies by suicide':/committing/i.test(m)?'dying by suicide':'die by suicide',cat:'s',ncre:true,label:'Inclusive language: "died by suicide", as health writers now say: "commit" carries the old sense of a crime'}
+];
 const GRAM39=[
  /* the pronoun I in lower case, wherever it stands alone; not a list marker
     ("(i)", "i)"), a numeral ("part i", "chapter i") or an abbreviation ("i.e.") */
@@ -16757,7 +17475,7 @@ function ruleEdits(t){
  /* 7.44: the whole text is the key. The old key (its length and its two
     ends) returned stale notes after a same-length change in the middle,
     such as "teh" corrected to "the" */
- var sig=S.reg+'|'+(S.docType||'')+'|'+(S.dialect||'')+'|'+(S.rules?S.rules.length:0)+'|'+(S.muteWords||[]).length+'|'+(S.citeStyle||'')+'|'+(INK_BLOCK_MODE?1:0);
+ var sig=S.reg+'|'+(S.docType||'')+'|'+(S.dialect||'')+'|'+(S.rules?S.rules.length:0)+'|'+(S.muteWords||[]).length+'|'+(S.citeStyle||'')+'|'+(INK_BLOCK_MODE?1:0)+'|'+(S.spellDict||[]).join(',');
  if(__ruleSig===sig&&__ruleText===t&&__ruleAns)return __ruleAns;
  __ruleSig=sig;__ruleText=t;WB=null;
  const ms=masks(t);
@@ -16766,7 +17484,7 @@ function ruleEdits(t){
  var _pkey=S.reg+'|'+(S.docType||'')+'|'+(S.dialect||'')+'|'+((S.muteWords||[]).length)+'|'+(S.citeStyle||'');
  if(__packSig!==_pkey||!__packArr){
   __packSig=_pkey;
-  __packArr=GRAM47.concat(BASE).concat(MORE).concat(DPHIL).concat(REDUN).concat(CONFUSE).concat(SVAGREE).concat(GRAM2).concat(GRAM3).concat(GRAM4).concat(GRAM5).concat(GRAM6).concat(GRAM7).concat(GRAM8).concat(GRAM9).concat(GRAM10).concat(GRAM11).concat(GRAM12).concat(GRAM13).concat(GRAM14).concat(GRAM15).concat(GRAM16).concat(GRAM17).concat(GRAM18).concat(GRAM19).concat(GRAM20).concat(GRAM21).concat(GRAM22).concat(GRAM23).concat(GRAM24).concat(GRAM25).concat(GRAM26).concat(GRAM27).concat(GRAM28).concat(GRAM29).concat(GRAM30).concat(GRAM31).concat(GRAM32).concat(GRAM33).concat(GRAM34).concat(GRAM35).concat(GRAM36).concat(GRAM37).concat(GRAM38).concat(GRAM39);
+  __packArr=GRAM47.concat(BASE).concat(MORE).concat(DPHIL).concat(REDUN).concat(CONFUSE).concat(SVAGREE).concat(GRAM2).concat(GRAM3).concat(GRAM4).concat(GRAM5).concat(GRAM6).concat(GRAM7).concat(GRAM8).concat(GRAM9).concat(GRAM10).concat(GRAM11).concat(GRAM12).concat(GRAM13).concat(GRAM14).concat(GRAM15).concat(GRAM16).concat(GRAM17).concat(GRAM18).concat(GRAM19).concat(GRAM20).concat(GRAM21).concat(GRAM22).concat(GRAM23).concat(GRAM24).concat(GRAM25).concat(GRAM26).concat(GRAM27).concat(GRAM28).concat(GRAM29).concat(GRAM30).concat(GRAM31).concat(GRAM32).concat(GRAM33).concat(GRAM34).concat(GRAM35).concat(GRAM36).concat(GRAM37).concat(GRAM38).concat(GRAM39).concat(INCL);
   if(S.reg==='scholarly')__packArr=__packArr.concat(SCHOLAR).concat(SCHOLAR_XTRA).concat(SCHOLAR3).concat(SCHOLAR4).concat(SCHOLAR5).concat(SCHOLAR6).concat(SCHOLAR7).concat(SCHOLAR8).concat(SCHOLAR9).concat(SCHOLAR10).concat(SCHOLAR11).concat(SCHOLAR12).concat(SCHOLAR13).concat(SCHOLAR13B).concat(SCHOLAR14).concat(SCHOLAR15).concat(SCHOLAR16).concat(SCHOLAR17).concat(SCHOLAR18);
   if(S.reg==='creative')__packArr=__packArr.concat(CREATIVE);
   var _knob=(typeof docKnob==='function')?docKnob():null;
@@ -16785,11 +17503,14 @@ function ruleEdits(t){
   if(r.npre&&r.npre.test(t.slice(Math.max(0,m.start-24),m.start)))continue;
   if(S.reg==='casual'&&r.cat==='s')continue;
   if(r.nsch&&S.reg==='scholarly')continue;
+  if(r.ncre&&S.reg==='creative')continue;
+  if(r.dict&&inkDictHas(m.raw))continue;
   if(r.noparen){const pb=t.slice(Math.max(0,m.start-160),m.start);if(pb.lastIndexOf('(')>pb.lastIndexOf(')'))continue;}
   /* 7.37: fx gives the fix from the matched words directly, for a pattern that looks ahead past them */
   let fix=r.fx?r.fx(m.raw):r.to===null?null:m.raw.replace(rxOne(r.re,r.cs),r.to);
   if(fix)fix=matchCase(m.raw,fix);
   const o={start:m.start,end:m.start+m.raw.length,orig:m.raw,fix:(fix!==m.raw)?fix:null,why:r.label,cat:r.cat};
+  if(r.dict)o.dict=true;
   if(r.alts){const as=Array.isArray(r.alts)?r.alts:r.alts[m.raw.toLowerCase()];
    if(as&&as.length){o.alts=as;o.wb=m.raw.toLowerCase();}}
   out.push(o);}}
@@ -16824,7 +17545,7 @@ function ruleEdits(t){
  doubleHedgeCheck(t,ms,out);
  if(S.reg!=='casual'&&S.reg!=='creative')overuseCheck(t,ms,out);
  /* checks of the whole document run once on it, never paragraph by paragraph */
- if(!INK_BLOCK_MODE){consistencyChecks(t,ms,out);headingChecks(t,ms,out);}
+ if(!INK_BLOCK_MODE){consistencyChecks(t,ms,out);headingChecks(t,ms,out);inkConsistNotes(t,ms,out);}
  if(S.reg!=='casual')transitionCommaCheck(t,ms,out);
  if(typeof articleANCheck==='function')articleANCheck(t,ms,out);
  if(echoOpenCheck)echoOpenCheck(t,ms,out);
@@ -16883,6 +17604,8 @@ function hideTips(){try{var c=document.getElementById("tipCard");if(c)c.style.di
 function expandRow(i){EXPID=(EXPID===i?-1:i);renderCards();}
 function inkStyleSwitch(){
  return '<div style="margin:0 2px 10px"><button class="lkbtn" onclick="inkToggleStyle()">'+(S.showStyle?'Hide clarity and style notes':'Show clarity and style notes'+(INK_STYLE_HIDDEN?' ('+INK_STYLE_HIDDEN+')':''))+'</button></div>';}
+let INK_CATF=null;
+function inkCatFilter(k){INK_CATF=(k&&INK_CATF!==k)?k:null;EXPID=-1;CARDSIG='';renderCards();}
 function renderCards(){
  const c=document.getElementById('cards'),three=ink3On();
  document.getElementById('stCerr').textContent=three?(EDITS.length?'Worth a look':'Nothing to note'):EDITS.length+' issue'+(EDITS.length===1?'':'s');
@@ -16891,7 +17614,7 @@ function renderCards(){
     marks itself changes. The counts above stay truthful either way. */
  /* the signature keys on spans and fix lengths, not on whole strings, so a
     thesis-scale list does not spend its render budget copying text */
- const sig=(three?'3:'+ink3Shown().join(',')+':':'')+(S.solo?'s1:':'')+(S.showStyle?'st:':'')+INK_STYLE_HIDDEN+':'+EXPID+':'+EDITS.length+':'+EDITS.map(e=>e.start+'x'+e.end+'x'+((e.fix||'').length)).join(',');
+ const sig=(INK_CATF||'')+(three?'3:'+ink3Shown().join(',')+':':'')+(S.solo?'s1:':'')+(S.showStyle?'st:':'')+INK_STYLE_HIDDEN+':'+EXPID+':'+EDITS.length+':'+EDITS.map(e=>e.start+'x'+e.end+'x'+((e.fix||'').length)).join(',');
  if(sig===CARDSIG)return;
  CARDSIG=sig;
  if(!EDITS.length){c.innerHTML='<div class="inst" style="color:var(--mut);font-size:13px">'+(S.showStyle?'✨ Nothing to note.':'✨ No correctness issues found.')+'</div>'+inkStyleSwitch();return;}
@@ -16904,14 +17627,17 @@ function renderCards(){
    (more?'<button class="ink3Next" onclick="ink3Next()">Show the next three</button>':'')+inkStyleSwitch();
   return;}
  const counts={};EDITS.forEach(e=>counts[e.cat]=(counts[e.cat]||0)+1);
- const leg=['g','c','s','r','ai'].filter(k=>counts[k]).map(k=>'<span><i class="cdot c-'+k+'"></i>'+inkCap1(NAMES[k])+' <b>'+counts[k]+'</b></span>').join('');
+ /* 7.49: the legend filters the list, a kind at a time (Grammarly's tabs) */
+ if(INK_CATF&&!counts[INK_CATF])INK_CATF=null;
+ const leg=['g','c','s','r','ai'].filter(k=>counts[k]).map(k=>'<button type="button" class="catF'+(INK_CATF===k?' on':'')+'" title="'+(INK_CATF===k?'Show every kind again':'Show only '+NAMES[k]+' notes')+'" onclick="inkCatFilter(\''+k+'\')"><i class="cdot c-'+k+'"></i>'+inkCap1(NAMES[k])+' <b>'+counts[k]+'</b></button>').join('')+(INK_CATF?'<button type="button" class="catF" onclick="inkCatFilter(null)">All</button>':'');
  /* a very long list of flags is rendered as the first 400 plus a count; the
     rest appear as you work down. DOM weight stays bounded on a thesis-scale
     document, and Locate/Accept indexes stay true because the array is whole. */
- const CARCAP=400,shown=EDITS.slice(0,CARCAP),restN=EDITS.length-shown.length;
- c.innerHTML=(leg?'<div class="catLeg">'+leg+'</div>':'')+
+ const view=EDITS.map((e,i)=>[e,i]).filter(x=>!INK_CATF||x[0].cat===INK_CATF);
+ const CARCAP=400,shown=view.slice(0,CARCAP),restN=view.length-shown.length;
+ c.innerHTML=(leg?'<div class="catLeg catLegF">'+leg+'</div>':'')+
   '<div style="font-size:11px;color:var(--mut);margin:0 2px 9px">A quiet list. Tap a row to open it, or press <b>1×</b> above to go one at a time.</div>'+inkStyleSwitch()+
-  shown.map((e,i)=>EXPID===i?cardHTML(e,i,false):inkRowHTML(e,i)).join('')+
+  shown.map(([e,i])=>EXPID===i?cardHTML(e,i,false):inkRowHTML(e,i)).join('')+
   (restN>0?'<div style="font-size:12px;color:var(--mut);text-align:center;padding:10px 4px;font-style:italic">+ '+restN+' more; work down the list and they appear as the row above clears.</div>':'');}
 /* ================= MY WAY OF WORKING (7.44) =================
    INKWAY (src/lib/myway_core.js) holds the settings and the look; here they
@@ -17131,6 +17857,7 @@ function inkRowHTML(e,i){return '<div class="crow" onclick="expandRow('+i+')"><s
     (e.fix===''?'<span class="cfx" style="color:var(--gold)">remove ▸</span>':
     (e.alts&&e.alts.length?'<span class="cfx" style="color:var(--gold)">'+e.alts.length+(e.spell?(e.alts.length===1?' suggestion':' suggestions'):e.tryAlts?' to try':' stronger')+' ▸</span>':(e.ask?'<span class="cfx" style="color:var(--gold)">'+esc(e.ask.q)+' ▸</span>':''))))+
    '<span class="cwhy">'+esc(inkCap1(e.why||''))+'</span><span class="cexp">▾</span>'+
+   ((e.spell||e.dict)&&typeof e.fix!=='string'?'<button class="cadd" title="Add \u201c'+esc(e.orig)+'\u201d to your dictionary: it is never marked again" onclick="event.stopPropagation();spellAdd('+i+')">+ Add</button>':'')+
    '<button class="cremove" title="Dismiss this suggestion" onclick="event.stopPropagation();dismissOne('+i+')">✕</button></div>';}
 function soloMove(d){SOLOI=Math.max(0,Math.min(EDITS.length-1,SOLOI+d));renderCards();
  if(EDITS[SOLOI])locate(SOLOI);}
@@ -17147,7 +17874,20 @@ function undo(){if(!UNDO.length)return toast('Nothing to undo');ed.value=UNDO.po
 const CITE_UNDO=new Map();
 function citeUndoPoint(){pushUndo();const d=inkDoc();if(!d)return;
  CITE_UNDO.set(ed.value,JSON.stringify(d.citeRec||[]));if(CITE_UNDO.size>60)CITE_UNDO.delete(CITE_UNDO.keys().next().value);}
-function bumpStat(why){S.stats[why]=(S.stats[why]||0)+1;SV('stats',S.stats);renderPatterns();}
+/* a pattern's name: a long explanation is named by its head ("Comma splice") */
+function statKey(why){why=String(why||'');return why.length>48?why.split(/[:.]/)[0].trim():why;}
+function bumpStat(why,ex){why=statKey(why);S.stats[why]=(S.stats[why]||0)+1;SV('stats',S.stats);
+ /* 7.49: the writer's own slip is kept (six to a pattern) for practice */
+ if(ex&&ex.ctx){const all=S.statEx||{},L=(all[why]||[]).filter(x=>x.ctx!==ex.ctx);L.unshift(ex);all[why]=L.slice(0,6);S.statEx=all;SV('statEx',all);}
+ renderPatterns();}
+/* the sentence round a slip, with the slip's place in it, before the fix */
+function statExample(t,e){if(typeof e.fix!=='string'||e.end<=e.start)return null;
+ let a=e.start,b=e.end;while(a>0&&!/[.!?\n]/.test(t[a-1])&&e.start-a<220)a--;while(b<t.length&&!/[.!?\n]/.test(t[b])&&b-e.end<220)b++;if(b<t.length&&/[.!?]/.test(t[b]))b++;
+ const lead=t.slice(a,e.start).match(/^\s*/)[0].length;a+=lead;
+ const x={ctx:t.slice(a,b),at:e.start-a,len:e.end-e.start,fix:e.fix};
+ /* a splice may as well be mended with a semicolon */
+ if(/splice/i.test(e.why||'')){const o=t.slice(e.start,e.end).replace(/^,\s*/,'');x.alt=['; '+o,';'+o];}
+ return x;}
 function studyTop(){const top=Object.entries(S.stats).sort((a,b)=>b[1]-a[1]);
  if(!top.length)return;const L=lessonFor(top[0][0]);
  document.getElementById('modalBody').innerHTML='<h3>Study: '+esc(top[0][0])+'</h3><div style="font-family:Georgia,serif;font-size:15px;line-height:1.7">'+esc(L[0])+
@@ -17158,12 +17898,24 @@ function studyTop(){const top=Object.entries(S.stats).sort((a,b)=>b[1]-a[1]);
 function acceptOne(i){const e=EDITS[i];if(!e||typeof e.fix!=='string')return;pushUndo();inkAuthMark('f');
  const wasFirst=(Object.values(S.stats).reduce((a,b)=>a+b,0)===0);
  const orig=(typeof e.orig==='string'&&e.end>e.start)?e.orig:ed.value.slice(e.start,e.end);
+ const ex=statExample(ed.value,e);
  const r=inkSafeReplace(e.start,e.end,orig,e.fix,ed.value.slice(Math.max(0,e.start-40),e.start));
  if(!r){scan();return;}
- bumpStat(e.why||'');
+ bumpStat(e.why||'',ex);
  ed.setSelectionRange(r.e,r.e);afterChange();SND.accept();showUndoChip();
  if(wasFirst)showTip('learn');toast('Accepted ✔');clearSel();}
-function dismissOne(i){SND.dismiss();EDITS.splice(i,1);if(S.solo&&SOLOI>0)SOLOI--;EXPID=-1;renderCards();renderHL();clearSel();}
+function inkDictHas(w){const l=String(w||'').toLowerCase();return (S.spellDict||[]).some(x=>{x=String(x).toLowerCase();return x===l||l.indexOf(x)===0&&/^(?:s|ed|ing|es)$/.test(l.slice(x.length));});}
+/* 7.49: a dismissed note stays dismissed in its document: it is known by
+   its kind, its words and the words around it, so it returns only if that
+   place is rewritten */
+function inkDismKey(t,e){const a=Math.max(0,e.start-24);
+ return statKey(e.why||'')+'\u0001'+(t.slice(a,e.start)+'\u2016'+t.slice(e.start,e.end)+'\u2016'+t.slice(e.end,e.end+24)).replace(/\s+/g,' ');}
+function inkUndismissed(list,t){const D=(S.dismissed||{})[S.active];if(!D||!D.length)return list;const set=new Set(D);
+ return list.filter(e=>!set.has(inkDismKey(t,e)));}
+function dismissOne(i){SND.dismiss();const e=EDITS[i];
+ if(e){const all=S.dismissed||{},L=all[S.active]||[];L.push(inkDismKey(ed.value,e));all[S.active]=L.slice(-2000);S.dismissed=all;SV('dismissed',all);}
+ EDITS.splice(i,1);if(S.solo&&SOLOI>0)SOLOI--;EXPID=-1;renderCards();renderHL();clearSel();}
+function inkUndismissAll(){const all=S.dismissed||{};delete all[S.active];S.dismissed=all;SV('dismissed',all);openModal('rules');scan();toast('The notes you dismissed in this document are back');}
 function wbAccept(i,a){const e=EDITS[i];if(!e)return;
  /* 7.42: the chip names its place in the list, so no wording is lost in the
     page's markup; a wording the refiner built has its case and its span */
@@ -17190,7 +17942,7 @@ function wbMute(i){const e=EDITS[i];if(!e||!e.wb)return;const w=e.wb;
 function wbUnmute(i){S.muteWords.splice(i,1);SV('muteWords',S.muteWords);WB=null;openModal('rules');scan();}
 function acceptAll(){const es=EDITS.filter(e=>typeof e.fix==='string');if(!es.length)return toast('Nothing to fix');inkAuthMark('f');
  if(es.length>=4)snap('Before Fix all');
- pushUndo();es.forEach(e=>bumpStat(e.why||''));let t=ed.value;
+ pushUndo();{const t0=ed.value;es.forEach(e=>bumpStat(e.why||'',statExample(t0,e)));}let t=ed.value;
  es.slice().sort((a,b)=>b.start-a.start).forEach(e=>{t=t.slice(0,e.start)+e.fix+t.slice(e.end)});
  ed.value=t;afterChange();SND.fixall();showUndoChip();clearSel();
  const r=+document.getElementById('rhCount').textContent;
@@ -17235,7 +17987,7 @@ function cardHTML(e,i,solo){
  ((typeof e.fix==='string')?'<button class="primary" onclick="acceptOne('+i+')">'+(e.fix===''?'Remove':'Accept')+'</button>':'')+
  '<button onclick="dismissOne('+i+')">Dismiss</button>'+
  (e.wb?'<button class="lkbtn" onclick="wbMute('+i+')" title="Never flag this word again">Mute word</button>':'')+
- (e.spell?'<button class="lkbtn" onclick="spellAdd('+i+')" title="This word is right: never mark it again">Add to dictionary</button>':'')+
+ ((e.spell||e.dict)?'<button class="lkbtn" onclick="spellAdd('+i+')" title="This word is right: never mark it again">Add to dictionary</button>':'')+
  '<button class="lkbtn" onclick="toggleLesson('+i+')">Learn ▸</button></div></div>';}
 function toggleLesson(i){const el=document.getElementById('lrn'+i);if(!el)return;
  el.style.display=el.style.display==='block'?'none':'block';}
@@ -17339,6 +18091,7 @@ function inkSpellLoad(){
   /* a server that answers a missing file with a web page must never leave a
      word list that knows nothing: then every word would be marked */
   const D=INKSPELL.load(t);if(D.size<50000||!['the','which','because'].every(w=>INKSPELL.known(D,w)))return;
+  try{INKSPELL.addWords(D,S.spellDict||[]);}catch(e){}
   SPELLD=D;CARDSIG='';try{scan();}catch(e){}}).catch(()=>{});
  return SPELLLOAD;}
 /* 7.45: no correction takes a note's marker with it: a fix whose words
@@ -17365,13 +18118,26 @@ function inkSpellEdits(t,taken){
  return INKSPELL.check(SPELLD,t,{margin:0.2,maxScore:1.35,ignore:ignore,uses:INK_DOC_USES||undefined})
   .filter(e=>!inMask(e.start,ms)&&(refAt<0||e.start<refAt)&&!taken.some(o=>o.start<e.end&&e.start<o.end))
   .map(e=>{e.why=e.fix?'Spelling':'Spelling: not in the dictionary';return e;});}
-function spellAdd(i){const e=EDITS[i];if(!e||!e.spell)return;const w=String(e.orig).toLowerCase();
- S.spellDict=S.spellDict||[];if(S.spellDict.indexOf(w)<0){S.spellDict.push(w);SV('spellDict',S.spellDict);}
- EDITS=EDITS.filter(x=>!(x.spell&&String(x.orig).toLowerCase()===w));SOLOI=0;EXPID=-1;renderCards();updateStats();renderHL();
- toast('"'+e.orig+'" is in your dictionary now; remove it in Studio ▸ ⚖ Rules');}
+/* 7.49: a word the checker does not know, a less common spelling or a name
+   joins the writer's dictionary from any mark on it (spelling, US or UK
+   form, a spelling mixed in the document); a name keeps its capital, so it
+   is offered as the correction of its misspellings */
+function spellAddWord(raw,quiet){const w0=String(raw||'').trim().replace(/^['’"“”(]+|['’"“”).,;:!?]+$/g,'');if(!w0||/\s/.test(w0))return false;
+ const at0=ed.value.indexOf(w0),start=at0>=0&&/(?:^|[.!?]["”’)]?\s+|\n\s*)$/.test(ed.value.slice(Math.max(0,at0-4),at0));
+ const w=/^[A-Z][a-z]/.test(w0)&&start&&SPELLD&&INKSPELL.known(SPELLD,w0.toLowerCase())?w0.toLowerCase():w0;
+ S.spellDict=S.spellDict||[];const lw=w.toLowerCase();
+ if(!S.spellDict.some(x=>String(x).toLowerCase()===lw)){S.spellDict.push(w);SV('spellDict',S.spellDict);}
+ try{if(SPELLD)INKSPELL.addWords(SPELLD,[w]);}catch(e){}
+ EDITS=EDITS.filter(x=>!((x.spell||x.dict)&&String(x.orig).toLowerCase().replace(/(?:s|ed|ing|es)$/,'')===lw.replace(/(?:s|ed|ing|es)$/,'')&&String(x.orig).toLowerCase().indexOf(lw)===0));
+ SOLOI=0;EXPID=-1;CARDSIG='';renderCards();updateStats();renderHL();
+ if(!quiet)toast('\u201c'+w+'\u201d is in your dictionary now; it is never marked again. Studio \u25b8 \u2696 Rules lists your words.');
+ return true;}
+function spellAdd(i){const e=EDITS[i];if(!e||!(e.spell||e.dict))return;spellAddWord(e.orig);}
 window.addEventListener('load',()=>setTimeout(inkSpellLoad,300));
 function spellToggle(){S.spellOff=!S.spellOff;SV('spellOff',S.spellOff);openModal('rules');scan();toast(S.spellOff?'The spelling checker is off':'The spelling checker is on');}
-function spellRemove(i){S.spellDict.splice(i,1);SV('spellDict',S.spellDict);openModal('rules');scan();}
+function spellRemove(i){const w=S.spellDict[i];S.spellDict.splice(i,1);SV('spellDict',S.spellDict);try{if(SPELLD)INKSPELL.dropWord(SPELLD,w);}catch(e){}openModal('rules');scan();}
+function spellAddTyped(){const el=document.getElementById('dictIn');if(!el)return;const ws=el.value.split(/[\s,;]+/).filter(Boolean);let n=0;
+ ws.forEach(w=>{if(spellAddWord(w,true))n++;});el.value='';openModal('rules');scan();if(n)toast(n===1?'One word added to your dictionary':n+' words added to your dictionary');}
 /* 7.36: the grammar model, live. Until now it read only a selection ("Fix
    selection"), so the list never showed its suggestions. Now each paragraph
    is read once, in the background when the writer pauses, and its
@@ -17417,6 +18183,30 @@ async function inkModelPump(){
    creative writing only the marks. Measured on 40 published articles and a
    100,000-word thesis: about 30 ms for the thesis. */
 let INKDP={t:null,sig:'',ans:[]};
+/* 7.49: one way throughout (INKCONSIST, src/lib/consist_core.js): a term's
+   capitals and hyphen, the quotation marks, apostrophes, dashes, ellipses,
+   ranges, large numbers and units, each marked where the document departs
+   from the way it uses most. Placed like the doctoral notes: a place another
+   note holds keeps that note. */
+let INKCS={t:null,sig:'',ans:[]};
+function inkConsistNotes(t,ms,out){
+ if(typeof INKCONSIST==='undefined'||S.reg==='casual')return;
+ const sig=S.reg+'|'+(SPELLD?1:0)+'|'+(S.spellDict||[]).length;
+ if(INKCS.t!==t||INKCS.sig!==sig){
+  const weak=[],wre=/https?:\/\/\S+|⟦[^⟧]*⟧|`[^`\n]*`/g;let m;while((m=wre.exec(t)))weak.push([m.index,m.index+m[0].length]);
+  let ns=[];
+  try{ns=INKCONSIST.check(t,{ranges:ms,markRanges:weak,
+   common:w=>{if(!SPELLD)return true;const e=SPELLD.lower.get(w);return !!(e&&e.plain);}});}catch(e){console.warn('[inkwell] consistency',e);}
+  ns=ns.filter(n=>!(n.fam==='caps'||n.fam==='hyph')||!inkDictHas(n.orig));
+  INKCS={t:t,sig:sig,ans:ns};}
+ const ns=INKCS.ans;if(!ns.length)return;
+ const hs=out.slice().sort((a,b)=>a.start-b.start),far=[];let mx=-1;
+ for(const h of hs){mx=Math.max(mx,h.end);far.push(mx);}
+ for(const n of ns){
+  let lo=0,hi=hs.length-1,k=-1;
+  while(lo<=hi){const md=(lo+hi)>>1;if(hs[md].start<n.end){k=md;lo=md+1;}else hi=md-1;}
+  if(k>=0&&far[k]>n.start)continue;
+  out.push({start:n.start,end:n.end,orig:n.orig,fix:n.fix,why:n.why,cat:'c',fam:n.fam,tag:'consistency',dict:n.fam==='caps'||n.fam==='hyph'});}}
 function inkDphilNotes(t,ms,out){
  if(typeof INKDPHIL==='undefined'||S.reg==='casual')return;
  const sig=S.reg+'|'+(S.dialect||'')+'|'+(SPELLD?1:0);
@@ -17453,7 +18243,7 @@ function inkToggleStyle(){S.showStyle=!S.showStyle;SV('showStyle',S.showStyle);C
  toast(S.showStyle?'Clarity and style notes shown':'Only correctness: clarity and style notes hidden');}
 function scan(){
  if(ed.value.length>INK_CHUNK_MIN)return inkScanLong();
- EDITS=inkModelEdits(ed.value,inkRules(ed.value)).sort((a,b)=>a.start-b.start);EXPID=-1;
+ EDITS=inkUndismissed(inkModelEdits(ed.value,inkRules(ed.value)),ed.value).sort((a,b)=>a.start-b.start);EXPID=-1;
  renderCards();updateStats();renderHL();renderOutline();}
 /* ===== 7.44: a thesis-length document =====
    Measured with a 100,000-word thesis: the whole-document check took about
@@ -17529,7 +18319,7 @@ function inkRulesLong(t){
  if(INKRC.map.size>live.size*2+200)for(const k of Array.from(INKRC.map.keys()))if(!live.has(k))INKRC.map.delete(k);
  /* and the checks of the whole document */
  const ms=masks(t);all.sort((x,y)=>x.start-y.start);
- const doc=all.slice();consistencyChecks(t,ms,doc);headingChecks(t,ms,doc);
+ const doc=all.slice();consistencyChecks(t,ms,doc);headingChecks(t,ms,doc);inkConsistNotes(t,ms,doc);
  inkDphilNotes(t,ms,doc);
  /* 7.45: the names in the References or Bibliography are the document's
     authors, wherever they are written (a note read on its own does not see
@@ -17557,7 +18347,7 @@ function inkScanLong(){
   INK_DOC_USES=null;
   if(i<blocks.length){inkScanSay(Math.round(100*i/blocks.length));return setTimeout(step,0);}
   INKSCAN=null;inkScanSay(-1);
-  EDITS=inkModelEdits(t,inkRulesLong(t)).sort((a,b)=>a.start-b.start);EXPID=-1;
+  EDITS=inkUndismissed(inkModelEdits(t,inkRulesLong(t)),t).sort((a,b)=>a.start-b.start);EXPID=-1;
   renderCards();updateStats();renderHL();renderOutline();};
  step();}
 function inkScanSay(pc){const el=document.getElementById('stCerr');if(!el)return;
@@ -17762,6 +18552,8 @@ Object.assign(LESSONS,{
  'Missing word':['The sentence needs a word here to be grammatical, often a small one (to, the, is).','"She wants go" → "She wants to go"']});
 /* 7.45: the doctoral checks' lessons */
 if(typeof INKDPHIL!=='undefined')Object.assign(LESSONS,INKDPHIL.LESSONS);
+if(typeof INKCONSIST!=='undefined')Object.assign(LESSONS,INKCONSIST.LESSONS);
+LESSONS['Inclusive language']=['Words that name people by one sex ("chairman"), by a condition ("the disabled") or by an old label leave some readers out. Style guides, APA\u2019s guidance on bias-free language among them, suggest plainer words that name the role or the people. In a quotation or a character\u2019s speech, the words stay as they were said.','"The chairman spoke to the elderly." \u2192 "The chair spoke to older people."'];
 function lessonFor(why){
  /* exact prefix first; then the part after a model's name ("Laptop model:
     Verb form"); a contained key only when it is long enough not to catch an
@@ -19016,10 +19808,12 @@ const RUBRICS={
 let GRADE=null;
 function openGrader(){
  const keys=Object.keys(RUBRICS),cur=S.rubric||RUBRICS[keys[0]];
+ const ai=window.inkScribaAI,st=ai&&ai.status();
  document.getElementById('modalBody').innerHTML='<h3>🏛 Grade against a rubric</h3>'+
-  '<p style="font-size:12.5px;color:var(--mut);line-height:1.6;margin:0 0 8px">One criterion per line, as <b>Name: what it asks</b>. Start from a template or paste your own marking criteria. Each is marked 1 to 5 by your writing model, with feedback that quotes your page; Mechanics is counted by Inkwell itself.</p>'+
+  '<p style="font-size:12.5px;color:var(--mut);line-height:1.6;margin:0 0 8px">One criterion per line, as <b>Name: what it asks</b>. Start from a template or paste your own marking criteria. Inkwell marks each one from what it can count on your page (paragraphs and their openings, signposts, claims, reasons, sources), shows what it counted and the place to look first, and one way to raise it. A line it cannot count becomes a question for you to answer and mark. No model is needed.</p>'+
   '<div class="row" style="gap:6px;flex-wrap:wrap;margin:0 0 6px">'+keys.map(k=>'<button class="lkbtn" onclick="document.getElementById(\'rubricIn\').value=RUBRICS[\''+k+'\']">'+esc(k)+'</button>').join('')+'</div>'+
   '<textarea id="rubricIn" rows="8" style="width:100%;box-sizing:border-box;font:13px/1.5 Georgia,serif;padding:8px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)">'+esc(cur)+'</textarea>'+
+  (st&&st.ok?'<label style="display:flex;gap:6px;align-items:center;font-size:12.5px;margin-top:6px;color:var(--mut)"><input type="checkbox" id="gradeModel"'+(S.gradeBy==='model'?' checked':'')+'> Ask the writing model ('+esc(st.by||'on')+') instead, for the lines it can read</label>':'')+
   '<div class="row" style="margin-top:8px"><button class="primary" onclick="gradeRun()">Grade this page</button></div><div id="gradeOut" style="margin-top:12px"></div>';
  document.getElementById('modal').style.display='flex';document.body.classList.add('modalOn');}
 function gradeMechanics(t){
@@ -19027,23 +19821,47 @@ function gradeMechanics(t){
  const mark=per<=0.5?5:per<=1.5?4:per<=3?3:per<=5?2:1,by={};E.forEach(e=>{const k=String(e.why||'').split(':')[0].slice(0,40);by[k]=(by[k]||0)+1;});
  const top=Object.entries(by).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,n])=>k+' ('+n+')').join(', ');
  return {mark:mark,fb:E.length+' correctness issue'+(E.length===1?'':'s')+' in '+words+' words ('+per.toFixed(1)+' per 100 words)'+(top?'; most often: '+top:'')+'. Counted by Inkwell\u2019s checks, not by the model.',by:'Inkwell'};}
+/* 7.49: a page marked by Inkwell's own counts (INKGRADE), offline; the
+   writing model only when the writer asks for it */
+function gradeShow(i){const r=GRADE&&GRADE.rows[i];if(!r||!r.at)return;closeModal();locatePos(r.at.start,r.at.end);}
+function gradeSelf(i,m){const r=GRADE&&GRADE.rows[i];if(!r)return;r.mark=m;
+ const all=S.selfMarks||{},k=S.active+'|'+r.name;all[k]=m;S.selfMarks=all;SV('selfMarks',all);if(GRADE.draw)GRADE.draw();}
 async function gradeRun(){
  const t=ed.value.trim(),out=document.getElementById('gradeOut');if(!t)return toast('Write something first 🙂');
  const rub=(document.getElementById('rubricIn').value||'').trim();S.rubric=rub;SV('rubric',rub);
  const crit=rub.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{const i=l.indexOf(':');return i>0?{name:l.slice(0,i).trim(),desc:l.slice(i+1).trim()}:{name:l,desc:l};}).slice(0,10);
  if(!crit.length)return toast('Write at least one criterion');
- const ai=window.inkScribaAI,st=ai&&ai.status();
- const words=t.split(/\s+/),essay=words.length>2400?words.slice(0,2400).join(' '):t,cut=words.length>2400;
- GRADE={rows:[],cut:cut,by:st&&st.ok?st.by:''};
+ const ai=window.inkScribaAI,st=ai&&ai.status(),gm=document.getElementById('gradeModel');
+ S.gradeBy=gm&&gm.checked?'model':'inkwell';SV('gradeBy',S.gradeBy);
+ const useModel=S.gradeBy==='model'&&st&&st.ok;
+ const words=t.split(/\s+/),essay=words.length>2400?words.slice(0,2400).join(' '):t,cut=useModel&&words.length>2400;
+ const sch=S.reg==='scholarly',GM=window.INKGRADE?INKGRADE.measure(ed.value):null;
+ let lang=null;try{lang=window.INKMARK?INKMARK.mark(t,inkRules(t),{scholarly:sch}):null;}catch(e){}
+ GRADE={rows:[],cut:cut,by:useModel?st.by:''};
  const draw=()=>{const done=GRADE.rows.filter(r=>r.mark);const avg=done.length?(done.reduce((a,r)=>a+r.mark,0)/done.length):0;
+  const byInk=done.length&&done.every(r=>r.by==='Inkwell'||r.self);
   out.innerHTML=(cut?'<p style="font-size:12px;color:var(--gold)">The model read the first 2,400 words; the page is longer.</p>':'')+
-   GRADE.rows.map(r=>'<div class="para" style="align-items:flex-start"><div class="pn" style="min-width:42px">'+(r.mark?r.mark+'/5':'…')+'</div><div class="pt"><b>'+esc(r.name)+'</b><div style="font-size:13px;line-height:1.55;margin-top:3px">'+r.html+'</div>'+(r.warn?'<div style="font-size:11.5px;color:#b03a2e;margin-top:3px">'+esc(r.warn)+'</div>':'')+'</div></div>').join('')+
-   (done.length?'<p style="font-size:13px;margin-top:10px">Average: <b>'+avg.toFixed(1)+' / 5</b>'+(GRADE.by?' · marked by '+esc(GRADE.by):'')+'. Rough feedback from a model on your own device, not a predicted grade.'+
-    (done.filter(r=>r.mark===5).length>=Math.max(3,done.length-1)?' Small models tend to give top marks to most writing (in testing, the tablet\u2019s model gave 5 out of 5 to every criterion); read the feedback, not the numbers.':'')+'</p>':'');};
+   GRADE.rows.map((r,i)=>'<div class="para" style="align-items:flex-start"><div class="pn" style="min-width:42px">'+(r.mark?r.mark+'/5':(r.self?'?':'…'))+'</div><div class="pt"><b>'+esc(r.name)+'</b>'+
+    (r.by==='Inkwell'?' <span style="font-size:11px;color:var(--mut)">counted by Inkwell</span>':r.self?' <span style="font-size:11px;color:var(--mut)">your own mark</span>':'')+
+    (r.said?'<ul style="margin:4px 0 0 18px;padding:0;font-size:12.5px;line-height:1.55">'+r.said.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'')+
+    (r.at?'<div style="font-size:12.5px;margin-top:5px;font-style:italic">“'+esc(r.at.text)+'” <button class="lkbtn" style="font-style:normal" onclick="gradeShow('+i+')">Show me</button></div>':'')+
+    (r.tip?'<div style="font-size:12.5px;margin-top:5px"><b>To raise it:</b> '+esc(r.tip)+'</div>':'')+
+    (r.self?'<div style="font-size:13px;line-height:1.55;margin-top:3px">'+esc(r.q)+'</div><div class="row" style="gap:4px;margin-top:5px">'+[1,2,3,4,5].map(m=>'<button class="lkbtn'+(r.mark===m?' on':'')+'" style="min-width:30px'+(r.mark===m?';font-weight:700':'')+'" onclick="gradeSelf('+i+','+m+')">'+m+'</button>').join('')+'</div>':'')+
+    (r.html?'<div style="font-size:13px;line-height:1.55;margin-top:3px">'+r.html+'</div>':'')+(r.warn?'<div style="font-size:11.5px;color:#b03a2e;margin-top:3px">'+esc(r.warn)+'</div>':'')+'</div></div>').join('')+
+   (done.length?'<p style="font-size:13px;margin-top:10px">Average: <b>'+avg.toFixed(1)+' / 5</b>'+(byInk?'. Counted by Inkwell from your page, with no model: these are counts, not an examiner\u2019s judgement, so read what was counted.':(GRADE.by?' · marked by '+esc(GRADE.by)+'. Rough feedback from a model on your own device, not a predicted grade.':''))+
+    (!byInk&&done.filter(r=>r.mark===5&&!r.self&&r.by!=='Inkwell').length>=Math.max(3,done.length-1)?' Small models tend to give top marks to most writing (in testing, the tablet\u2019s model gave 5 out of 5 to every criterion); read the feedback, not the numbers.':'')+'</p>':'');};
+ GRADE.draw=draw;
  for(const c of crit){
   const row={name:c.name,mark:0,html:'Marking…'};GRADE.rows.push(row);draw();
-  if(/mechanic|grammar|spelling|punctuation|accuracy/i.test(c.name+' '+c.desc)&&c.desc.length<80){const m=gradeMechanics(t);row.mark=m.mark;row.html=esc(m.fb);draw();continue;}
-  if(!st||!st.ok){row.html='Needs a writing model: start one in ⚙ Engine (the tablet\u2019s own, Apple\u2019s, or your laptop\u2019s).';draw();continue;}
+  if(/mechanic|grammar|spelling|punctuation|accuracy/i.test(c.name+' '+c.desc)&&c.desc.length<80){const m=gradeMechanics(t);row.mark=m.mark;row.html=esc(m.fb);row.by='Inkwell';draw();continue;}
+  const k=window.INKGRADE?INKGRADE.kind(c.name,c.desc):'';
+  if(!useModel&&k&&GM){const r=INKGRADE.criterion(k,GM,{lang:lang,scholarly:sch});
+   if(r){row.mark=r.mark;row.said=r.said;row.at=r.at;row.tip=r.tip;row.by='Inkwell';row.html='';draw();continue;}}
+  if(!useModel){
+   /* a line Inkwell cannot count: the writer reads for it and marks it */
+   const d=c.desc&&c.desc!==c.name?c.desc:c.name;
+   row.self=true;row.html='';row.q='Inkwell cannot count this one. Read your page for it: \u201c'+d.replace(/[.\s]+$/,'')+'.\u201d How fully does the page do it? Mark it yourself, 1 (not yet) to 5 (fully).';
+   row.mark=(S.selfMarks||{})[S.active+'|'+c.name]||0;draw();continue;}
   try{
    const sys='You are an experienced, fair examiner. Mark the essay on ONE criterion only. Criterion: '+c.name+': '+c.desc+'. Reply in exactly this form:\nMARK: a whole number from 1 (poor) to 5 (excellent)\nFEEDBACK: two or three sentences that say what works and what to improve, quoting the essay\u2019s own words in double quotation marks.\nJudge only what the essay contains; invent nothing.';
    const r=await ai.ask(sys,essay,340);
@@ -19063,9 +19881,9 @@ async function gradeRun(){
    if(!row.mark)row.warn=(row.warn?row.warn+' ':'')+'The model gave no mark.';
   }catch(e){row.html='The model did not answer: '+esc(String(e&&e.message||e));}
   draw();}
- /* 7.43: the model's marks (not Inkwell's own Mechanics count) feed the
+ /* 7.43: the model's marks (not Inkwell's own counts) feed the
     "Writing and argument" mark, kept with this page and its length */
- const am=GRADE.rows.filter(r=>r.mark&&!/mechanic|grammar|spelling|punctuation|accuracy/i.test(r.name)).map(r=>r.mark);
+ const am=GRADE.rows.filter(r=>r.mark&&!r.self&&r.by!=='Inkwell'&&!/mechanic|grammar|spelling|punctuation|accuracy/i.test(r.name)).map(r=>r.mark);
  if(am.length&&GRADE.by){S.argMarks={doc:S.active,marks:am,words:wordCt(t),by:GRADE.by};SV('argMarks',S.argMarks);MARKC.sig='';updateStats();}}
 
 /* ================= CITATION HELP (the queue's last item) ================= */
@@ -19582,7 +20400,7 @@ function chunkText(t,limit){
 async function correct(){
  if(!ed.value.trim())return toast('Write something first 🙂');
  const rules=inkRules(ed.value);
- EDITS=rules.slice().sort((a,b)=>a.start-b.start);SOLOI=0;renderCards();updateStats();renderHL();
+ EDITS=inkUndismissed(rules.slice(),ed.value).sort((a,b)=>a.start-b.start);SOLOI=0;renderCards();updateStats();renderHL();
  const PROOF_SYS='You are a careful copy editor. Correct only errors of grammar, spelling and punctuation in the user\'s text. Change as little as possible: keep every word that is already correct, keep the writer\'s meaning, register and voice, keep names, numbers, quotations and citations exactly. If the text is already correct, return it unchanged. Output only the corrected text, with no explanation.';
  let engine=null,label='';
  if(inkSrv()){
@@ -19743,7 +20561,7 @@ function showHoverFix(edit,i,rect){
  '<div class="why" style="margin:5px 0 8px;font-size:11px">'+esc(edit.why||'')+'</div>'+
  /* 7.36: a misspelt word offers its other suggestions, and the dictionary */
  ((edit.spell&&edit.alts&&edit.alts.length)?'<div style="display:flex;flex-wrap:wrap;gap:5px;margin:0 0 8px">'+edit.alts.filter(a=>a!==edit.fix).slice(0,4).map(a=>'<button style="padding:4px 10px;font-size:11.5px" onclick="wbAccept('+i+',\''+String(a).replace(/'/g,"\\'")+'\');hideHoverFix()">'+esc(a)+'</button>').join('')+'</div>':'')+
- '<div style="display:flex;gap:6px;flex-wrap:wrap">'+((typeof edit.fix==='string')?'<button class="primary" style="padding:5px 13px;font-size:11.5px" onclick="hoverAccept()">'+(edit.fix===''?'Remove':'Fix it ▸')+'</button>':'')+'<button style="padding:5px 12px;font-size:11.5px" onclick="hoverDismiss()">Not now</button>'+(edit.spell?'<button style="padding:5px 12px;font-size:11.5px" onclick="spellAdd('+i+');hideHoverFix()">Add to dictionary</button>':'')+'</div>';
+ '<div style="display:flex;gap:6px;flex-wrap:wrap">'+((typeof edit.fix==='string')?'<button class="primary" style="padding:5px 13px;font-size:11.5px" onclick="hoverAccept()">'+(edit.fix===''?'Remove':'Fix it ▸')+'</button>':'')+'<button style="padding:5px 12px;font-size:11.5px" onclick="hoverDismiss()">Not now</button>'+((edit.spell||edit.dict)?'<button style="padding:5px 12px;font-size:11.5px" onclick="spellAdd('+i+');hideHoverFix()">Add to dictionary</button>':'')+'</div>';
  c.style.display='block';
  c.style.left=Math.min(innerWidth-340,Math.max(8,rect.left-6))+'px';
  c.style.top=Math.min(innerHeight-200,rect.bottom+6)+'px';
@@ -20220,7 +21038,8 @@ function renderAlts(status){
  if(!ALTMODE)return;
  const c=document.getElementById('altCard');if(!c)return;
  const prompt=ALTSEL&&ALTSEL.prompt,mode=prompt?'prompt':ACST.mode;
- const title=mode==='prompt'?'✍ Rewrite with a prompt':mode==='rewrite'?'↻ Rewrite':'✨ Alternatives';
+ const drafting=ALTS.length>0&&ALTS.every(a=>a.kind==='Draft');
+ const title=mode==='prompt'?'✍ Rewrite with a prompt':mode==='rewrite'?'↻ Rewrite':drafting?'✨ Draft':'✨ Alternatives';
  let html='<div class="acGrab" aria-hidden="true"></div><div class="altHead">'+title+'<button class="lkbtn" onclick="closeAlts()" title="Close (Esc)" aria-label="Close">✕</button></div>';
  if(ALTSEL&&ALTSEL.t)html+='<div class="acSel">'+esc(ALTSEL.t.trim().length>160?ALTSEL.t.trim().slice(0,157)+'…':ALTSEL.t.trim())+'</div>';
  if(mode==='rewrite'||mode==='prompt')html+='<div class="acTabs" role="tablist">'+AC_TABS.map(x=>'<button role="tab" aria-selected="'+(mode==='rewrite'&&ACST.style===x[0])+'" class="'+(mode==='rewrite'&&ACST.style===x[0]?'on':'')+'" onclick="inkRewriteTab(\''+x[0]+'\')">'+x[1]+'</button>').join('')
@@ -20249,7 +21068,7 @@ function renderAlts(status){
  if(ACST.busy)html+='<div class="acNote"><span class="acBusy" aria-hidden="true"></span>'+esc(ACST.busy)+'</div>';
  if(!any&&!ACST.busy&&!(mode==='prompt'&&!status))html+='<div class="aempty">'+esc(status||inkCardEmpty(mode))+'</div>';
  else if(status)html+='<div class="acNote">'+esc(status)+'</div>';
- if(any)html+='<div class="acNote">'+(cards?'Nothing changes until you choose “Use this”. ':'')+'Offline versions come from Inkwell’s own rules and word lists; '+(inkSrv()||PRO?'the writing model adds its own.':'a writing model (⚙ Engine) would add more.')+'</div>';
+ if(any)html+='<div class="acNote">'+(cards?'Nothing changes until you choose “Use this”. ':'')+(drafting?'Inkwell\u2019s checks read the draft once it is on the page.':'Offline versions come from Inkwell’s own rules and word lists; '+(inkSrv()||PRO?'the writing model adds its own.':'a writing model (⚙ Engine) would add more.'))+'</div>';
  const keep=c.scrollTop;c.innerHTML=html;c.style.display='block';c.scrollTop=keep;
  inkCardPlace();}
 /* why there is nothing to show, said plainly */
@@ -20567,14 +21386,53 @@ function inkRewriteAI(mode,t,sel){
  inkModelVersions(instr+' Register: '+(mode==='plain'?'plain':S.reg)+'.'+voiceNotes(),t,guard,label,()=>ALTMODE&&ALTSEL&&ALTSEL.t===guard&&ACST.style===mode);}
 function inkPromptTab(){if(!ALTSEL)return;ALTSEL.prompt=true;ACST.mode='prompt';ACST.style='';ACST.words=null;ACST.chips=null;renderAlts('');
  setTimeout(function(){const i=document.getElementById('pmIn');if(i)i.focus();},60);}
+/* 7.49: Draft opens on "Draft with me" (INKDRAFT): Inkwell asks, the writer
+   answers, and the answers are joined into prose that shows each move.
+   A writing model, where one is on, is a second way in. */
+function draftHasModel(){return !!(inkSrv()||PRO);}
 function compose(){
+ const mb=document.getElementById('modalBody');if(!mb||!window.INKDRAFT)return composeModel();
+ const K=INKDRAFT.KINDS,kind=K[S.draftKind]?S.draftKind:'paragraph',st=K[kind].steps;
+ const ans=(S.draftAns&&S.draftAns[kind])||[];
+ const sel=(ed.selectionEnd>ed.selectionStart)?ed.value.slice(ed.selectionStart,ed.selectionEnd).trim():'';
+ if(sel&&sel.length<400&&!ans.some(Boolean))ans[0]=sel;
+ mb.innerHTML='<h3>✨ Draft with me</h3>'
+  +'<p style="color:var(--mut);font-size:13px;line-height:1.6;margin:0 0 10px">Answer a few questions in your own words, as short as you like. Inkwell joins your answers into prose and shows the move each sentence makes. The ideas and sources stay yours; Inkwell adds only the joining words. No model is needed.</p>'
+  +'<div class="row" style="gap:6px;flex-wrap:wrap;margin:0 0 10px">'+Object.keys(K).map(k=>'<button class="lkbtn'+(k===kind?' on':'')+'" style="'+(k===kind?'font-weight:700':'')+'" onclick="draftKind(\''+k+'\')">'+esc(K[k].label)+'</button>').join('')+'</div>'
+  +'<div style="font-size:12.5px;color:var(--mut);font-style:italic;margin:0 0 8px">'+esc(K[kind].about)+'</div>'
+  +st.map((x,i)=>'<label style="display:block;margin:0 0 8px"><span style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold)">'+esc(x.role)+'</span> <span style="font-size:13px">'+esc(x.q)+'</span>'
+   +'<textarea id="drA'+i+'" rows="2" oninput="draftPreview()" style="display:block;width:100%;box-sizing:border-box;margin-top:3px;font:14px/1.45 Georgia,serif;padding:7px 9px;border-radius:8px;border:1px solid var(--line);background:var(--card-hi);color:var(--text)" placeholder="'+esc('e.g. '+x.ph)+'">'+esc(ans[i]||'')+'</textarea></label>').join('')
+  +'<div id="drPrev" style="margin-top:6px"></div>'
+  +'<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="primary" onclick="draftUse()">Put it beside the page ▸</button><button class="lkbtn" onclick="draftClear()">Clear</button>'
+  +(draftHasModel()?'<button class="lkbtn" onclick="composeModel()">Ask the writing model instead</button>':'')+'<button class="lkbtn" onclick="closeModal()">Cancel</button></div>';
+ try{document.getElementById('modal').style.display='flex';document.body.classList.add('modalOn');}catch(e){}
+ draftPreview();
+ setTimeout(()=>{try{const f=st.findIndex((x,i)=>!ans[i]);document.getElementById('drA'+(f<0?0:f)).focus();}catch(e){}},60);
+}
+function draftAnswers(){const K=INKDRAFT.KINDS,kind=K[S.draftKind]?S.draftKind:'paragraph';
+ return {kind:kind,ans:K[kind].steps.map((x,i)=>{const el=document.getElementById('drA'+i);return el?el.value:'';})};}
+function draftKeep(){const d=draftAnswers();const all=S.draftAns||{};all[d.kind]=d.ans;S.draftAns=all;SV('draftAns',all);return d;}
+function draftKind(k){draftKeep();S.draftKind=k;SV('draftKind',k);compose();}
+function draftClear(){const d=draftAnswers();d.ans.forEach((x,i)=>{const el=document.getElementById('drA'+i);if(el)el.value='';});draftKeep();draftPreview();}
+function draftPreview(){const box=document.getElementById('drPrev');if(!box)return;const d=draftKeep(),r=INKDRAFT.build(d.kind,d.ans,S.reg);
+ if(!r.parts.length){box.innerHTML='';return;}
+ box.innerHTML='<div style="border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--card);font:14.5px/1.7 Georgia,serif;white-space:pre-wrap">'
+  +r.parts.map(p=>'<span title="'+esc(p.role)+'" style="font-family:Georgia,serif"><sup style="font:600 9.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);margin-right:3px">'+esc(p.role)+'</sup>'+esc(p.text)+'</span>').join(' ')+'</div>'
+  +(r.missing.length?'<div style="font-size:12px;color:var(--mut);margin-top:5px">Still to answer: '+esc(r.missing.join(', '))+'.</div>':'');}
+function draftUse(){const d=draftKeep(),r=INKDRAFT.build(d.kind,d.ans,S.reg);
+ if(!r.parts.length){toast('Answer the first question, then Inkwell can draft.');return;}
+ try{closeModal();}catch(e){}
+ const at=ed.selectionEnd;inkAltsOpen({s:at,e2:at,t:''},'');
+ ALTS.push({kind:'Draft',text:r.text,why:'Built from your answers ('+r.parts.map(p=>p.role.toLowerCase()).join(', ')+'). The ideas are yours; Inkwell added only the joining words.'+(r.missing.length?' Still to answer: '+r.missing.join(', ').toLowerCase()+'.':'')});
+ renderAlts('');}
+function composeModel(){
  const mb=document.getElementById('modalBody');if(!mb)return;
  mb.innerHTML='<h3>✨ Draft</h3>'
   +'<p style="color:var(--mut);font-size:13px;margin-bottom:12px">Say what to write. The draft appears in a card beside your cursor; <b>Use this</b> puts it there. Nothing is inserted until you choose.</p>'
   +'<textarea id="composeInput" style="width:100%;min-height:90px;font-family:inherit;font-size:14px;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--card-hi);color:var(--text)" placeholder="e.g. A short paragraph introducing my research question on urban heat islands, for a general reader"></textarea>'
   +'<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">'
   +'<button class="primary" onclick="composeRun(document.getElementById(\'composeInput\').value)">Draft ▸</button>'
-  +'<button class="lkbtn" onclick="closeModal()">Cancel</button></div>'
+  +'<button class="lkbtn" onclick="compose()">◂ Draft with me</button><button class="lkbtn" onclick="closeModal()">Cancel</button></div>'
   +'<div style="margin-top:12px;font-size:11px;color:var(--mut);line-height:1.6">Drafting needs a writing model: the server (⚙ Engine) or the Pro model. It never invents citations, numbers or facts; check every claim it makes.</div>';
  try{document.getElementById('modal').style.display='flex';document.body.classList.add('modalOn');}catch(e){}
  setTimeout(()=>{try{document.getElementById('composeInput').focus();}catch(e){}},60);
@@ -20788,6 +21646,54 @@ function syl(w){w=w.toLowerCase().replace(/[^a-z]/g,'');if(!w)return 0;
    number of notes of every kind: a thesis chapter read as a Fail, and a
    beginner's essay scored like a native student's. */
 let MARKC={sig:'',at:0,m:null};
+/* 7.49: Performance, as Grammarly shows it, from Inkwell's own counts: the
+   page's size, its reading and speaking time (250 and 130 words a minute),
+   its word and sentence length beside measured texts (the median of 40
+   open-access articles and of 50 native student essays, LOCNESS), two
+   readability scores in plain words, the share of different and of rare
+   words, and the writing mark. The report can be saved as a text file. */
+const PERF_REF={pub:{w:5.6,s:21},stu:{w:4.6,s:20}};
+function inkClock(min){const m=Math.floor(min),s=Math.round((min-m)*60);return (m?m+' min ':'')+(s||!m?s+' sec':'');}
+function inkPerf(t){
+ const words=wordCt(t),sl=INKMARK.sentences(t),sents=sl.length||1,P=typeof INKGRADE!=='undefined'?INKGRADE.paragraphs(t):[];
+ const toks=(INKMARK.prose(t).match(/[A-Za-z][A-Za-z'’-]*/g)||[]);
+ let sy=0;for(const w of toks)sy+=syl(w);
+ const nw=toks.length||1,wl=toks.reduce((a,w)=>a+w.replace(/['’]s$/,'').length,0)/nw,sLen=nw/sents;
+ const fre=Math.round(Math.max(0,Math.min(100,206.835-1.015*sLen-84.6*(sy/nw)))),fkg=Math.max(0,Math.round((0.39*sLen+11.8*(sy/nw)-15.59)*10)/10);
+ const low=toks.map(w=>w.toLowerCase().replace(/['’]s$/,'')),uniq=new Set(low).size;
+ let rare=null;if(SPELLD){let r=0;for(const w of low){const lv=INKSPELL.level(SPELLD,w);if(lv<0||lv>=50)r++;}rare=r/nw;}
+ return {chars:t.length,charsNS:t.replace(/\s/g,'').length,words,sents:sl.length,paras:P.length,read:words/250,speak:words/130,wl,sLen,fre,fkg,uniq:uniq/nw,rare};}
+function inkFreText(f){return f>=70?'easy for most readers':f>=50?'plain enough for a general reader':f>=30?'hard: it suits readers used to academic prose':'very hard: likely to be understood by graduates, and heavy going for many readers';}
+function openPerformance(){
+ const t=ed.value;if(!t.trim())return toast('Write something first 🙂');
+ const p=inkPerf(t);let mk=null;try{mk=inkMarkNow(t);}catch(e){}
+ const row=(k,v)=>'<div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line)"><span>'+k+'</span><b style="color:var(--acc)">'+v+'</b></div>';
+ const cmp=(v,ref,unit)=>{const lo=Math.min(v,ref.stu,ref.pub)*0.85,hi=Math.max(v,ref.stu,ref.pub)*1.1,pc=x=>Math.round(100*(x-lo)/(hi-lo));
+  return '<div style="position:relative;height:8px;border-radius:4px;background:var(--line);margin:6px 0 3px"><i title="Student essays" style="position:absolute;left:'+pc(ref.stu)+'%;top:-3px;width:2px;height:14px;background:var(--mut)"></i><i title="Published articles" style="position:absolute;left:'+pc(ref.pub)+'%;top:-3px;width:2px;height:14px;background:var(--gold)"></i><i style="position:absolute;left:calc('+pc(v)+'% - 6px);top:-2px;width:12px;height:12px;border-radius:50%;background:var(--acc)"></i></div>'+
+   '<div style="font-size:11px;color:var(--mut)">Yours '+v.toFixed(1)+unit+' · student essays '+ref.stu+unit+' · published articles '+ref.pub+unit+'</div>';};
+ const d=S.docs.find(x=>x.id===S.active);
+ document.getElementById('modalBody').innerHTML='<h3>📊 Performance</h3>'+
+  (mk?'<p style="font-size:13px;line-height:1.6;margin:0 0 10px">Writing mark: <b>'+esc(inkMarkText(mk.mark))+'</b>. It counts accuracy, clarity, vocabulary, sentences and register; working through the notes raises it.</p>':'')+
+  '<h4 style="font-family:Georgia,serif;margin:12px 0 4px">Counts</h4><div style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px;font-size:13px">'+
+   row('Characters',p.chars.toLocaleString())+row('Reading time',inkClock(p.read))+row('Characters without spaces',p.charsNS.toLocaleString())+row('Speaking time',inkClock(p.speak))+
+   row('Words',p.words.toLocaleString())+row('Paragraphs',p.paras.toLocaleString())+row('Sentences',p.sents.toLocaleString())+row('Different words',Math.round(p.uniq*100)+'%')+'</div>'+
+  '<h4 style="font-family:Georgia,serif;margin:14px 0 4px">Readability</h4><div style="font-size:13px">'+
+   '<div style="margin:6px 0 10px"><b>Word length</b>'+cmp(p.wl,{stu:PERF_REF.stu.w,pub:PERF_REF.pub.w},' letters')+'</div>'+
+   '<div style="margin:6px 0 10px"><b>Sentence length</b>'+cmp(p.sLen,{stu:PERF_REF.stu.s,pub:PERF_REF.pub.s},' words')+'</div>'+
+   row('Reading ease (Flesch, 0 to 100)',p.fre)+row('School grade (Flesch\u2013Kincaid, US)',p.fkg)+(p.rare!==null?row('Rare words',Math.round(p.rare*100)+'%'):'')+
+   '<p style="font-size:12.5px;line-height:1.6;margin:8px 0 0;font-family:Georgia,serif">Your text is '+esc(inkFreText(p.fre))+'. Scholarly prose usually scores between 10 and 40; that is no fault in itself, but a long sentence can often be split.</p></div>'+
+  '<p style="font-size:11px;color:var(--mut);line-height:1.5;margin:10px 0 0">Reading time at 250 words a minute, speaking time at 130. The comparison is the median of 40 open-access articles and of 50 native student essays (LOCNESS), measured once; none of those texts is kept in Inkwell. Rare words are those outside the common part of Inkwell\u2019s word list; specialist terms count among them.</p>'+
+  '<div class="row" style="margin-top:12px;gap:8px"><button class="primary" onclick="perfSave()">Save the report</button><button class="lkbtn" onclick="closeModal()">Close</button></div>';
+ document.getElementById('modal').style.display='flex';document.body.classList.add('modalOn');}
+function perfSave(){const t=ed.value,p=inkPerf(t),d=S.docs.find(x=>x.id===S.active),title=(d&&d.title)||'Untitled';let mk=null;try{mk=inkMarkNow(t);}catch(e){}
+ const L=['Inkwell performance report','Document: '+title,'Date: '+new Date().toLocaleString(),'',
+  mk?'Writing mark: '+inkMarkText(mk.mark):'','Characters: '+p.chars+' ('+p.charsNS+' without spaces)','Words: '+p.words,'Sentences: '+p.sents,'Paragraphs: '+p.paras,
+  'Reading time: '+inkClock(p.read)+' (250 words a minute)','Speaking time: '+inkClock(p.speak)+' (130 words a minute)','',
+  'Word length: '+p.wl.toFixed(1)+' letters (student essays '+PERF_REF.stu.w+', published articles '+PERF_REF.pub.w+')',
+  'Sentence length: '+p.sLen.toFixed(1)+' words (student essays '+PERF_REF.stu.s+', published articles '+PERF_REF.pub.s+')',
+  'Reading ease (Flesch): '+p.fre+', '+inkFreText(p.fre),'School grade (Flesch-Kincaid, US): '+p.fkg,'Different words: '+Math.round(p.uniq*100)+'%',
+  p.rare!==null?'Rare words: '+Math.round(p.rare*100)+'%':'','','Issues waiting: '+EDITS.length].filter(x=>x!==null);
+ inkSaveString(title.replace(/[\\/:*?"<>|]+/g,' ').trim()+' - performance.txt','text/plain',L.join('\n'));}
 function inkMarkNow(t){
  const sig=t.length+'|'+EDITS.length+'|'+S.reg+'|'+(S.docType||'');
  const now=Date.now();
@@ -21898,7 +22804,11 @@ function openModalDo(which){
  '<input id="arI" placeholder="A rule the AI must always follow…">'+
  '<button class="primary" onclick="addAiRule()">Add rule</button>'+
  '<h4 style="font-family:Georgia,serif;margin:16px 0 6px">Spelling</h4><p style="font-size:12.5px;margin:0 0 6px">The dictionary checker (British, American and Canadian spellings) is <b>'+(S.spellOff?'off':'on')+'</b>. <button class="lkbtn" onclick="spellToggle()">'+(S.spellOff?'Turn it on':'Turn it off')+'</button></p>'+
- ((S.spellDict||[]).length?'<h4 style="font-family:Georgia,serif;margin:16px 0 6px">Your dictionary</h4><div>'+S.spellDict.map((w,i)=>'<button class="tipchip" style="margin:0 6px 6px 0" title="Remove from your dictionary" onclick="spellRemove('+i+')">'+esc(w)+' ✕</button>').join('')+'</div><p style="font-size:11.5px;color:var(--mut)">Words you added with “Add to dictionary” are never marked as misspelt.</p>':'')+
+ '<h4 style="font-family:Georgia,serif;margin:16px 0 6px">Your dictionary'+((S.spellDict||[]).length?' ('+S.spellDict.length+')':'')+'</h4>'+
+ '<p style="font-size:11.5px;color:var(--mut);margin:0 0 6px;line-height:1.55">Names, rare words and spellings of your own. They are never marked, and a slip in one is corrected to it. Add them here, or with \u201c+ Add\u201d on a spelling note.</p>'+
+ '<div class="row" style="gap:6px;margin:0 0 8px"><input id="dictIn" style="flex:1" placeholder="Words or names, separated by spaces (Gadamer, biopower, judgement)" onkeydown="if(event.key===\'Enter\')spellAddTyped()"><button class="primary" onclick="spellAddTyped()">Add</button></div>'+
+ ((S.spellDict||[]).length?'<div>'+S.spellDict.map((w,i)=>'<button class="tipchip" style="margin:0 6px 6px 0" title="Remove from your dictionary" onclick="spellRemove('+i+')">'+esc(w)+' ✕</button>').join('')+'</div>':'')+
+ (((S.dismissed||{})[S.active]||[]).length?'<p style="font-size:12px;margin:8px 0 0">'+((S.dismissed||{})[S.active]).length+' note'+(((S.dismissed||{})[S.active]).length===1?'':'s')+' dismissed in this document stay dismissed. <button class="lkbtn" onclick="inkUndismissAll()">Show them again</button></p>':'')+
  (S.muteWords.length?'<h4 style="font-family:Georgia,serif;margin:16px 0 6px">Muted word-bank words</h4><div>'+S.muteWords.map((w,i)=>'<button class="tipchip" style="margin:0 6px 6px 0" title="Wake this word" onclick="wbUnmute('+i+')">'+esc(w)+' ✕</button>').join('')+'</div><p style="font-size:11.5px;color:var(--mut)">Muted words rest everywhere until woken here.</p>':'');}
  if(which==='display'){b.innerHTML='<h3>☀ Display &amp; Sound</h3>'+
   '<p style="font-size:12.5px;color:var(--mut);margin:0 0 12px;line-height:1.6;font-family:Georgia,serif">Everything here is a preference, never a penalty: the desk keeps every one of them off until you ask for it. Some people want the paper to breathe and chime; some want it silent and still. Both are welcome.</p>'+
@@ -22022,6 +22932,9 @@ function ac(){try{
  document.addEventListener('touchstart',_unlock,true);
  document.addEventListener('keydown',_unlock,true);
 })();
+/* 7.49: Safari on iPhone and iPad shows a button's pressed state only when the
+   page listens for touches, so the press reads under a finger as under a mouse */
+try{document.addEventListener('touchstart',function(){},{passive:true});}catch(e){}
 /* a fresh context starts suspended and its resume is async; a tone scheduled
    into that gap plays into silence. That was the door's mute Open button: the
    first gesture created the context, and the chime expired before resume.
@@ -22286,7 +23199,7 @@ const TOUR=[
   t:'A rewrite, offline',b:'Here is Concise, from the rules engine, on this device, in a card beside the words. The tabs try the other styles: Scholarly, Casual, Plainer and more. A rewrite never touches the page until you press Use this. With a writing model, its version appears too.',
   tip:'Read both versions aloud. The one you can say in a breath usually wins.'},
  {chap:'Rewriting and drafting',sub:'Draft',spot:'.hdr .draftBtn',go:()=>{try{closeAlts();}catch(e){}},
-  t:'✨ Draft',b:'Draft writes to order from a short brief. It needs a writing model: on this device, on your laptop, or on your Mac mini. Without one, Inkwell says so rather than guess.'},
+  t:'✨ Draft',b:'Draft with me asks a few questions (for a paragraph: its point, the reason, the evidence, what it shows) and joins your answers into prose, each sentence labelled with the move it makes. No model is needed. With a writing model on, you may ask it to draft from a brief instead.'},
  {chap:'The coach',sub:'The menu',spot:'#menu',go:()=>tourMenu('coach'),
   t:'🎓 Coach',b:'The Coach menu holds the tests a good supervisor would run: questions, objections, reader reactions, a structure pass, a memo, references, originality, and a grade against a rubric.'},
  {chap:'The coach',sub:'Socrat',spot:'#modalBody',go:()=>{hideMenu();openModal('socrat');},
@@ -22295,7 +23208,7 @@ const TOUR=[
  {chap:'The coach',sub:'Authorship',spot:'#modalBody',go:()=>{closeModal();openModal('authorship');},
   t:'📜 Authorship',b:'Authorship records how a page came to be: typed, pasted, dictated, accepted from suggestions, or written by a model. A fair record you can save.'},
  {chap:'The coach',sub:'The rest',spot:'.hdr button[onclick*="\'coach\'"]',go:()=>{closeModal();},
-  t:'More from the coach',b:'Reviewer raises hostile objections; Reader reactions shows how the page will land; Deep read checks structure; Grade marks the page against a rubric. Some need a writing model, and each says so when it does.'},
+  t:'More from the coach',b:'Reviewer raises hostile objections; Reader reactions shows how the page will land; Deep read checks structure; Grade marks the page against a rubric from what Inkwell can count on it, and shows what it counted. All of them work offline.'},
  {chap:'Sources',sub:'Insert',spot:'#menu',go:()=>tourMenu('insert'),
   t:'✱ Insert',b:'Insert puts a citation, a footnote, or a References section at the caret, in the citation style you choose. Dictation starts here too.'},
  {chap:'Sources',sub:'Fontes',spot:'button[onclick*="openFontesStage"]',go:()=>hideMenu(),
@@ -22501,15 +23414,38 @@ function renderPatterns(){
     for, with the lesson itself attached so the pattern IS the teaching */
  var el=document.getElementById('patList');if(!el)return;
  var st=S.stats||{};
- var entries=Object.keys(st).filter(function(k){return st[k]>0;}).sort(function(a,b){return st[b]-st[a];});
+ /* 7.49: [name, count] pairs (the list once showed a name's first letter) */
+ var entries=Object.keys(st).filter(function(k){return st[k]>0&&k;}).sort(function(a,b){return st[b]-st[a];}).map(function(k){return [k,st[k]];});
  if(!entries.length){el.innerHTML='Accept a few fixes and Inkwell learns what to teach you.';return;}
  el.innerHTML='<div style="font-size:10.5px;color:var(--mut);margin-bottom:6px;letter-spacing:.06em;text-transform:uppercase">What your accepted fixes keep teaching</div>'+
  entries.slice(0,6).map(function(pair){
   var L=lessonFor(pair[0]);
   return '<div style="padding:8px 6px;border-bottom:1px solid var(--line)"><div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px"><span>'+esc(pair[0])+'</span><b style="color:var(--acc)">'+pair[1]+'×</b></div>'+
-  '<div style="font-size:11px;color:var(--mut);line-height:1.5;margin-top:3px;font-family:Georgia,serif">'+esc(L[0])+'</div></div>';
+  '<div style="font-size:11px;color:var(--mut);line-height:1.5;margin-top:3px;font-family:Georgia,serif">'+esc(L[0])+'</div>'+
+  (((S.statEx||{})[pair[0]]||[]).length?'<button class="lkbtn" style="margin-top:5px;font-size:11.5px" onclick="patPractise('+JSON.stringify(pair[0]).replace(/"/g,'&quot;')+')">Practise with your own sentences ▸</button>':'')+'</div>';
  }).join('');
 }
+/* 7.49: practice from the writer's own slips: each sentence as it was, the
+   slip underlined; the writer says what stands there, and the lesson answers */
+function patPractise(why){const ex=((S.statEx||{})[why]||[]).slice(0,3);if(!ex.length)return toast('Accept a fix of this kind first');
+ const L=lessonFor(why);PATP={why:why,ex:ex,ok:0};
+ document.getElementById('modalBody').innerHTML='<h3>Practise: '+esc(why)+'</h3>'+
+  '<p style="font-size:13px;color:var(--mut);line-height:1.6;margin:0 0 10px">'+(ex.length===1?'A sentence':ex.length+' sentences')+' from your own pages, as you first wrote '+(ex.length===1?'it':'them')+'. What should stand in place of the underlined words?</p>'+
+  ex.map((x,i)=>'<div style="padding:10px 0;border-bottom:1px solid var(--line)"><div style="font:15px/1.65 Georgia,serif">'+esc(x.ctx.slice(0,x.at))+'<u style="text-decoration-color:var(--gold);text-decoration-thickness:2px">'+esc(x.ctx.slice(x.at,x.at+x.len))+'</u>'+esc(x.ctx.slice(x.at+x.len))+'</div>'+
+   '<div class="row" style="gap:6px;margin-top:6px"><input id="pp'+i+'" style="flex:1;font:14px Georgia,serif;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--card-hi);color:var(--text)" placeholder="Type what belongs there" onkeydown="if(event.key===\'Enter\')patCheck('+i+')"><button class="lkbtn" onclick="patCheck('+i+')">Check</button></div><div id="ppr'+i+'" style="font-size:12.5px;margin-top:5px"></div></div>').join('')+
+  '<div style="font-size:12.5px;color:var(--mut);margin-top:10px;font-family:Georgia,serif;line-height:1.6">'+esc(L[0])+'</div>'+
+  '<div class="row" style="margin-top:10px"><button class="primary" onclick="closeModal()">Done</button></div>';
+ document.getElementById('modal').style.display='flex';document.body.classList.add('modalOn');
+ setTimeout(()=>{try{document.getElementById('pp0').focus();}catch(e){}},60);}
+let PATP=null;
+function patCheck(i){if(!PATP)return;const x=PATP.ex[i],inp=document.getElementById('pp'+i),out=document.getElementById('ppr'+i);if(!x||!inp||!out)return;
+ const n=v=>String(v).replace(/\s+/g,' ').trim(),got=n(inp.value),want=n(x.fix);
+ if(!got){inp.focus();return;}
+ if(got===want||(x.alt||[]).some(a=>n(a)===got)){out.innerHTML='<span style="color:#2e7d4f">\u2714 Yes: \u201c'+esc(want)+'\u201d.</span>';
+  if(!x.done){x.done=true;PATP.ok++;
+   /* each sentence mended here counts one off the pattern: the number going to zero is the mastery */
+   if(S.stats[PATP.why]>0){S.stats[PATP.why]--;SV('stats',S.stats);renderPatterns();}}}
+ else out.innerHTML='<span style="color:#b03a2e">Not quite.</span> The page took \u201c'+esc(want)+'\u201d'+(got.toLowerCase()===want.toLowerCase()?' (look at the capital letters)':'')+'.';}
 (function boot(){
  /* 6.57: every phase runs in its own guard. A fault names itself in the
     footer instead of quietly stranding everything after it. */

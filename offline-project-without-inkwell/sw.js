@@ -1,7 +1,7 @@
 /* The Offline Project's keeper: the hall, its pictures and icons are kept when it is installed, and each app the
    first time it is opened (with the files it reads later), so the whole site opens again with no connection. A new build
    brings a new name, and the old keep is let go. */
-const CACHE = "offline-project-1057-640-5.8";
+const CACHE = "offline-project-1058-641-5.9";
 const WITH = {};
 const SHELL = ["./", "index.html", "manifest.webmanifest", "assets/icons/favicon.ico", "assets/icons/shield-32.png", "assets/icons/shield-192.png", "assets/icons/shield-512.png", "assets/icons/apple-touch-icon.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
