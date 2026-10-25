@@ -1,14 +1,36 @@
 CARPE DIEM  |  Copyright (c) 2026 Yannie D. Forest. All rights reserved.
-NO LICENCE IS GRANTED. No copying, adaptation, redistribution, reverse
-engineering or commercial use without the author's written permission.
-See LICENCE.txt. Every distributed copy carries a build marker.
+The sole original work of Yannie D. Forest. NO LICENCE IS GRANTED: no
+right of use, access, copying, adaptation or distribution without the
+author's written, revocable permission. See LICENCE.txt. Every
+distributed copy carries a build marker.
 --------------------------------------------------------------------------
 
 # Carpe Diem — the committee demo, as a website
 
-**Build 1051, 12 October 2026.** The About panel ends with "1051 · 528171051 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
+**Build 1059, 25 October 2026.** The About panel ends with "1059 · 528171059 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
 
-**New in build 1051.** This demonstration carries no writing model: the optional model that writes
+**New in build 1059.** No date in the demonstrations is fixed any more. The first milestone, now called “First full draft
+of your project”, falls six weeks after the first visit, so no visitor sees an overdue proposal, and
+no public page names the owner's own work.
+
+The floating windows and their dock are back. Tabula, Abacus, Imago, Scriba and Fontes open again in
+a floating window inside Carpe Diem, and a folded window waits in the dock. The ↗ key on a window
+now asks where it should go: its own window on this device, its own page (a file), or nowhere
+(close). A room in its own window is a whole Carpe Diem, with the same side buttons at full size,
+the same solid notes panel, and right-click copy and paste in the notes and in Tabula. The light
+window of builds 1051 to 1058, which caused the odd layout, is gone.
+
+The licence now says plainly that Carpe Diem is the sole original work of Yannie D. Forest, that no
+one else has any right to it or any access to it, and that any permission is limited, personal and
+revocable at any time (LICENCE.txt; a French translation is in LICENCE-FR.txt). The open-source
+parts the apps use are named in THIRD_PARTY_NOTICES.txt.
+
+The page carries a security policy that limits where it may load code from and where it may send
+data. It also carries an integrity seal: if a copy has been altered since it was built, the About
+panel says so. Old comments and stale instructions are removed from the code; the copyright and
+licence lines stay.
+
+**Earlier, in build 1051.** This demonstration carries no writing model: the optional model that writes
 Scriba's summaries in the owner's own copy is left out here, with its engines and downloads, so no
 model in this demonstration writes, summarises or interprets text, and Scriba says so plainly if a
 summary is asked for. A copy of this page saved from a browser preview had picked up a script the app
