@@ -7,9 +7,13 @@ distributed copy carries a build marker.
 
 # Carpe Diem — the committee demo, as a website
 
-**Build 1059, 25 October 2026.** The About panel ends with "1059 · 528171059 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
+**Build 1060, 29 October 2026.** The About panel ends with "1060 · 528171060 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
 
-**New in build 1059.** No date in the demonstrations is fixed any more. The first milestone, now called “First full draft
+**New in build 1060.** The demonstrations carry no proposal date of their own, and their sample milestones are counted again from each visit, so none of them is ever behind it; a date the visitor chooses is kept. "Rename your writing" opens the writing's own details (its working title, an optional date with a key to clear it, and its sections' names); the curriculum's names have their own panel.
+
+The side buttons inside a floating window are drawn as the main window's are, without the stacked dark shadows; they keep their lift, the bell's ring and the hourglass's turn, and the 💭 there shows the number of thoughts in one flat colour, as the bell's. Timed reminders come in Carpe Diem's own blue card. On Windows 10 the side buttons show Microsoft's flat emoji drawings, as on Windows 11. While the page starts, a loading page says it is still being painted and how far it has got; Refresh (↻ beside Display, F5, or Ctrl+Shift+R) saves the work of every open room and starts again. The About panel is shorter.
+
+**Earlier, in build 1059.** No date in the demonstrations is fixed any more. The first milestone, now called “First full draft
 of your project”, falls six weeks after the first visit, so no visitor sees an overdue proposal, and
 no public page names the owner's own work.
 
