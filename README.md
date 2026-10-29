@@ -7,9 +7,11 @@ distributed copy carries a build marker.
 
 # Carpe Diem — the committee demo, as a website
 
-**Build 1062, 29 October 2026.** The About panel ends with "1062 · 528171062 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
+**Build 1063, 29 October 2026.** The About panel ends with "1063 · 528171063 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
 
-**New in build 1062.** Ingenium's Quiet Screen is here: the leaf 🌿 in the side column opens a still, dim page with a slow circle to breathe with, in English or French; Focus opens it too. The mini Forge in the Author Studio is The Forge 656, with its steady preview, and its loading page speaks French when the app does.
+**New in build 1063.** While the page is only being read (no key, pointer or touch for twenty seconds, or the window not in front), its background checks run at a third of their pace, so it sits lighter on a laptop or a tablet; the first touch brings them back at once.
+
+**Earlier, in build 1062.** Ingenium's Quiet Screen is here: the leaf 🌿 in the side column opens a still, dim page with a slow circle to breathe with, in English or French; Focus opens it too. The mini Forge in the Author Studio is The Forge 656, with its steady preview, and its loading page speaks French when the app does.
 
 **Earlier, in build 1061.** Carpe Diem and a room can share the screen: the ↗ key of a floating window offers "Side by side with Carpe Diem", with the room on the right, Carpe Diem on the left and a line between them that can be dragged; the same place then offers "Float again". It works on the tablet and the iPad too. The copy of a room as a page in the browser is no longer offered there. The small notes at the foot of the screen take the reminders' pastel card.
 
