@@ -7,9 +7,11 @@ distributed copy carries a build marker.
 
 # Carpe Diem — the committee demo, as a website
 
-**Build 1063, 29 October 2026.** The About panel ends with "1063 · 528171063 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
+**Build 1064, 30 October 2026.** The About panel ends with "1064 · 528171064 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
 
-**New in build 1063.** While the page is only being read (no key, pointer or touch for twenty seconds, or the window not in front), its background checks run at a third of their pace, so it sits lighter on a laptop or a tablet; the first touch brings them back at once.
+**New in build 1064.** The Quiet Screen's leaf follows its neighbours: it steps aside in the writing rooms, and folds and moves exactly as the other side keys do.
+
+**Earlier, in build 1063.** While the page is only being read (no key, pointer or touch for twenty seconds, or the window not in front), its background checks run at a third of their pace, so it sits lighter on a laptop or a tablet; the first touch brings them back at once.
 
 **Earlier, in build 1062.** Ingenium's Quiet Screen is here: the leaf 🌿 in the side column opens a still, dim page with a slow circle to breathe with, in English or French; Focus opens it too. The mini Forge in the Author Studio is The Forge 656, with its steady preview, and its loading page speaks French when the app does.
 
