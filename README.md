@@ -7,9 +7,11 @@ distributed copy carries a build marker.
 
 # Carpe Diem — the committee demo, as a website
 
-**Build 1066, 30 October 2026.** The About panel ends with "1066 · 528171066 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
+**Build 1067, 30 October 2026.** The About panel ends with "1067 · 528171067 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
 
-**New in build 1066.** In the writing rooms, the line under a room's header counts its rooms correctly, in English or French, and Research Writing no longer announces lessons it already holds.
+**New in build 1067.** Tabula's ribbon does what it says: a size gives that size (18 had made the text 48 px), and the text colour and highlight keys colour the selection with the colour shown under them, as in Word.
+
+**Earlier, in build 1066.** In the writing rooms, the line under a room's header counts its rooms correctly, in English or French, and Research Writing no longer announces lessons it already holds.
 
 **Earlier, in build 1065.** Refresh is the first row of the Display panel again, as in Ingenium and The Forge, and the door rings again when you open it: a touch while the page was still opening no longer uses up the day's chime.
 
