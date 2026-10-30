@@ -7,9 +7,11 @@ distributed copy carries a build marker.
 
 # Carpe Diem — the committee demo, as a website
 
-**Build 1067, 30 October 2026.** The About panel ends with "1067 · 528171067 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
+**Build 1068, 30 October 2026.** The About panel ends with "1068 · 528171068 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
 
-**New in build 1067.** Tabula's ribbon does what it says: a size gives that size (18 had made the text 48 px), and the text colour and highlight keys colour the selection with the colour shown under them, as in Word.
+**New in build 1068.** Abacus types as Excel does: one click chooses a cell and typing replaces it (until now it was added beside what was there), a double click or F2 writes inside it, and the arrow keys move between cells. Currency shows as $1,234.50.
+
+**Earlier, in build 1067.** Tabula's ribbon does what it says: a size gives that size (18 had made the text 48 px), and the text colour and highlight keys colour the selection with the colour shown under them, as in Word.
 
 **Earlier, in build 1066.** In the writing rooms, the line under a room's header counts its rooms correctly, in English or French, and Research Writing no longer announces lessons it already holds.
 
