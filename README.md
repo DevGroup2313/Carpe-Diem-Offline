@@ -7,9 +7,11 @@ distributed copy carries a build marker.
 
 # Carpe Diem — the committee demo, as a website
 
-**Build 1065, 30 October 2026.** The About panel ends with "1065 · 528171065 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
+**Build 1066, 30 October 2026.** The About panel ends with "1066 · 528171066 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
 
-**New in build 1065.** Refresh is the first row of the Display panel again, as in Ingenium and The Forge, and the door rings again when you open it: a touch while the page was still opening no longer uses up the day's chime.
+**New in build 1066.** In the writing rooms, the line under a room's header counts its rooms correctly, in English or French, and Research Writing no longer announces lessons it already holds.
+
+**Earlier, in build 1065.** Refresh is the first row of the Display panel again, as in Ingenium and The Forge, and the door rings again when you open it: a touch while the page was still opening no longer uses up the day's chime.
 
 **Earlier, in build 1064.** The Quiet Screen's leaf follows its neighbours: it steps aside in the writing rooms, and folds and moves exactly as the other side keys do.
 
