@@ -7,9 +7,11 @@ distributed copy carries a build marker.
 
 # Carpe Diem — the committee demo, as a website
 
-**Build 1069, 30 October 2026.** The About panel ends with "1069 · 528171069 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
+**Build 1070, 30 October 2026.** The About panel ends with "1070 · 528171070 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
 
-**New in build 1069.** Tabula opens Word documents whole by either key: tables, footnotes (with numbers drawn properly) and lists made with Word's list styles all arrive. Tested with a 100,000-word dissertation with 310 footnotes.
+**New in build 1070.** A lighter, quicker app: the moving decorations look the same but cost almost nothing, and hold still where they cannot be seen. Idle painting falls by about 97 per cent; typing in a very long document is about 40 per cent quicker.
+
+**Earlier, in build 1069.** Tabula opens Word documents whole by either key: tables, footnotes (with numbers drawn properly) and lists made with Word's list styles all arrive. Tested with a 100,000-word dissertation with 310 footnotes.
 
 **Earlier, in build 1068.** Abacus types as Excel does: one click chooses a cell and typing replaces it (until now it was added beside what was there), a double click or F2 writes inside it, and the arrow keys move between cells. Currency shows as $1,234.50.
 
