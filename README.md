@@ -9,6 +9,8 @@ distributed copy carries a build marker.
 
 **Build 1073, 30 October 2026.** The About panel ends with "1073 · 528171073 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
 
+**A sealed copy.** This page opens only with the access code the author gives to each committee: without it, nothing of Carpe Diem can be read here. Once open it carries no tool that hands out the app's code (no mini Forge, no Edit this app), its scripts are compact, and a mark at the foot of the screen names the copy and its terms.
+
 **New in build 1073.** No change in the browser: build 1073 is for the Mac and Windows apps (the rooms in windows of their own, on the Dock and the taskbar, with their own icons).
 
 **Earlier, in build 1072.** A Word or PDF file dropped on the desk opens in Tabula through the full readers of File, Open.
