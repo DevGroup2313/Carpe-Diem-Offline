@@ -7,9 +7,11 @@ distributed copy carries a build marker.
 
 # Carpe Diem — the committee demo, as a website
 
-**Build 1071, 30 October 2026.** The About panel ends with "1071 · 528171071 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
+**Build 1072, 30 October 2026.** The About panel ends with "1072 · 528171072 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
 
-**New in build 1071.** Tabula opens a PDF as a document to write in: paragraphs, headings, lists, bold and italic, and its footnotes as Tabula's own (tested with a 253-page dissertation and its 310 footnotes). Fill a PDF opens PDFs again.
+**New in build 1072.** A Word or PDF file dropped on the desk opens in Tabula through the full readers of File, Open.
+
+**Earlier, in build 1071.** Tabula opens a PDF as a document to write in: paragraphs, headings, lists, bold and italic, and its footnotes as Tabula's own (tested with a 253-page dissertation and its 310 footnotes). Fill a PDF opens PDFs again.
 
 **Earlier, in build 1070.** A lighter, quicker app: the moving decorations look the same but cost almost nothing, and hold still where they cannot be seen. Idle painting falls by about 97 per cent; typing in a very long document is about 40 per cent quicker.
 
