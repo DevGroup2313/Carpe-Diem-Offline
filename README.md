@@ -7,11 +7,13 @@ distributed copy carries a build marker.
 
 # Carpe Diem — the committee demo, as a website
 
-**Build 1077, 31 October 2026.** The About panel ends with "1077 · 528171077 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
+**Build 1078, 31 October 2026.** The About panel ends with "1078 · 528171078 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
 
 **A sealed copy.** This page opens only with the access code the author gives to each committee: without it, nothing of Carpe Diem can be read here. Once open it carries no tool that hands out the app's code (no mini Forge, no Edit this app), its scripts are compact, and a mark at the foot of the screen names the copy and its terms.
 
-**New in build 1077.** The Librarian's and Magister's conversations have a new look: Ingenium's chat in Carpe Diem's colours, in three looks chosen from the ⋯ menu (Carpe Diem, Soft, Clean), by day and by night, each message with its own keys. Home is no longer empty on a low-energy day: it shows the low day's own card, with Show everything again.
+**New in build 1078.** Home's tabs are compact, at the left of the row above Home, and Offline by design is a cream card. Assessments and Ascensus are redesigned in the Overview's look, with calm lists for Records and Marks, and every Ascensus course has its own number.
+
+**Earlier, in build 1077.** The Librarian's and Magister's conversations have a new look: Ingenium's chat in Carpe Diem's colours, in three looks chosen from the ⋯ menu (Carpe Diem, Soft, Clean), by day and by night, each message with its own keys. Home is no longer empty on a low-energy day: it shows the low day's own card, with Show everything again.
 
 **Earlier, in build 1076.** The Home overview now has the app's raised 3D feel: its keys rise under the pointer and sink when pressed, its cards lift, and its rings and bars fill in, by day and by night.
 
