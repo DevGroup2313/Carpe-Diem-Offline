@@ -7,11 +7,13 @@ distributed copy carries a build marker.
 
 # Carpe Diem — the committee demo, as a website
 
-**Build 1075, 30 October 2026.** The About panel ends with "1075 · 528171075 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
+**Build 1076, 31 October 2026.** The About panel ends with "1076 · 528171076 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
 
 **A sealed copy.** This page opens only with the access code the author gives to each committee: without it, nothing of Carpe Diem can be read here. Once open it carries no tool that hands out the app's code (no mini Forge, no Edit this app), its scripts are compact, and a mark at the foot of the screen names the copy and its terms.
 
-**New in build 1075.** The Home overview is redesigned in cream, light-blue, sage and butter cards: today with its parts of the day, today's energy with the next task on the Agenda and Begin, Ascensus, reading and streak, and French, by day and by night.
+**New in build 1076.** The Home overview now has the app's raised 3D feel: its keys rise under the pointer and sink when pressed, its cards lift, and its rings and bars fill in, by day and by night.
+
+**Earlier, in build 1075.** The Home overview is redesigned in cream, light-blue, sage and butter cards: today with its parts of the day, today's energy with the next task on the Agenda and Begin, Ascensus, reading and streak, and French, by day and by night.
 
 **Earlier, in build 1074.** The loading page is the Forge's and Ingenium's own: Carpe Diem's seal in a ring that turns, its name and how much of the page is painted, in Carpe Diem's colours, by day and by night. Back up now keeps a visit in one compressed file, sealed with a passphrase if wished, with its progress shown; Restore keeps a copy of the present visit first. A note's menu and keys are in French in French mode.
 
