@@ -3,9 +3,10 @@
    brings a new name, and the old keep is let go. The site of four apps and the site of three can live at one address (the
    second in a folder of the first): each keeps under a name of its own (4 or 3) and lets go only its own older keeps, and
    those of the builds before the names had a number of apps in them. */
-const CACHE = "offline-project-3-1080-656-6.9.2", MINE = "offline-project-3-";
+const CACHE = "offline-project-3-1080-656-6.9.3", MINE = "offline-project-3-";
 const WITH = {};
-const SHELL = ["./", "index.html", "manifest.webmanifest", "assets/icons/favicon.ico", "assets/icons/shield-32.png", "assets/icons/shield-192.png", "assets/icons/shield-512.png", "assets/icons/apple-touch-icon.png"];
+const SHELL = ["./", "index.html", "manifest.webmanifest", "assets/icons/favicon.ico", "assets/icons/shield-32.png", "assets/icons/shield-192.png", "assets/icons/shield-512.png", "assets/icons/apple-touch-icon.png",
+  "assets/icons/favicon-dark.ico", "assets/icons/shield-dark-32.png", "assets/icons/shield-dark-192.png", "assets/icons/shield-maskable-512.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => (k.startsWith(MINE) || /^offline-project-\d{3,}-/.test(k)) && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener("fetch", e => {
