@@ -7,11 +7,13 @@ distributed copy carries a build marker.
 
 # Carpe Diem — the committee demo, as a website
 
-**Build 1079, 31 October 2026.** The About panel ends with "1079 · 528171079 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
+**Build 1080, 1 November 2026.** The About panel ends with "1080 · 528171080 · Committee demo". It KEEPS the Backup button, so a committee member can export and import their visit. The public sample hides it.
 
 **A sealed copy.** This page opens only with the access code the author gives to each committee: without it, nothing of Carpe Diem can be read here. Once open it carries no tool that hands out the app's code (no mini Forge, no Edit this app), its scripts are compact, and a mark at the foot of the screen names the copy and its terms.
 
-**New in build 1079.** Ascensus has its neon lights back, in its new design. The Guidebook has a one-minute film of the app at work, with captions and no sound, in a calm player: nothing plays until asked, it can be slowed, jumped through by scene or read instead. The tour offers it too.
+**New in build 1080.** By night the little cards that name a key are solid and easy to read. The side keys stay with the Librarian's conversation. Every Fontes key carries Fontes's drawing. Offline by design is white acrylic in Classic and stays tan in Folio.
+
+**Earlier, in build 1079.** Ascensus has its neon lights back, in its new design. The Guidebook has a one-minute film of the app at work, with captions and no sound, in a calm player: nothing plays until asked, it can be slowed, jumped through by scene or read instead. The tour offers it too.
 
 **Earlier, in build 1078.** Home's tabs are compact, at the left of the row above Home, and Offline by design is a cream card. Assessments and Ascensus are redesigned in the Overview's look, with calm lists for Records and Marks, and every Ascensus course has its own number.
 
